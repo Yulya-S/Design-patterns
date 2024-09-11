@@ -1,9 +1,11 @@
+from Src.models.settings import settings
+from Src.abstract_logic import abstract_logic
+
 import json
 import os
-from Src.models.settings import settings
 
 
-class settings_manager():
+class settings_manager(abstract_logic):
     __file_name = "settings.json"
     __path = f"{os.curdir}"
     __settings: settings = settings()
@@ -12,6 +14,10 @@ class settings_manager():
         if not hasattr(cls, "instance"):
             cls.instance = super(settings_manager, cls).__new__(cls)
         return cls.instance
+
+    def __init__(self) -> None:
+        if self.__settings is None:
+            self.__settings = self.__default_setting()
 
     def open(self, file_name: str = "", path: str = ""):
         if not isinstance(file_name, str) or not isinstance(path, str):
@@ -51,3 +57,6 @@ class settings_manager():
         data.organization_name = "Рога и копыта"
         data.type_ownership = "OOOOO"
         return data
+
+    def set_exception(self, ex: Exception):
+        self._inner_set_exception(ex)
