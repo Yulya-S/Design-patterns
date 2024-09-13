@@ -1,4 +1,4 @@
-from Src.checks import value_check
+from Src.checks import type_check, value_check
 
 import random
 import string
@@ -14,5 +14,6 @@ class abstract_reference(ABC):
 
     @name.setter
     def name(self, value: str):
+        type_check(value, str)
         value_check(len(value) < 50)
         self.__name = value

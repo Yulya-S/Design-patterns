@@ -1,14 +1,14 @@
-from Src.abstract_reference import abstract_reference
 from Src.checks import type_check
+from Src.abstract_reference import abstract_reference
 
 
 class range_model(abstract_reference):
     __basic_unit_measurement = ""
     __conversion_factor = 0
 
-    def __init__(self, basic_unit_measurement: str, conversion_factor: int):
-        self.basic_unit_measurement(basic_unit_measurement)
-        self.conversion_factor(conversion_factor)
+    def __init__(self, basic_unit_measurement_name: str, conversion_factor_value: int):
+        self.basic_unit_measurement = basic_unit_measurement_name
+        self.conversion_factor = conversion_factor_value
 
     @property
     def basic_unit_measurement(self) -> str:

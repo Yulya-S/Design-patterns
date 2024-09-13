@@ -1,4 +1,4 @@
-import Src.checks as check
+from Src.checks import type_check, value_check
 from Src.models.settings import settings
 from Src.abstract_logic import abstract_logic
 
@@ -29,8 +29,8 @@ class settings_manager(abstract_logic):
         return self.__settings
 
     def open(self, file_name: str = "", path: str = ""):
-        check.type_check(file_name, str)
-        check.type_check(path, str)
+        type_check(file_name, str)
+        type_check(path, str)
 
         if file_name != "":
             self.__file_name = file_name

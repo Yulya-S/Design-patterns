@@ -1,7 +1,7 @@
+from Src.checks import type_check, value_check
 from Src.abstract_reference import abstract_reference
 from Src.models.nomenclature_group_model import nomenclature_group_model
 from Src.models.range_model import range_model
-import Src.checks as check
 
 
 class nomenclature_model(abstract_reference):
@@ -15,8 +15,8 @@ class nomenclature_model(abstract_reference):
 
     @full_name.setter
     def full_name(self, value: str):
-        check.type_check(value, str)
-        check.value_check(len(value) < 255)
+        type_check(value, str)
+        value_check(len(value) < 255)
         self.__full_name = value
 
     @property
@@ -25,14 +25,14 @@ class nomenclature_model(abstract_reference):
 
     @nomenclature_group.setter
     def nomenclature_group(self, value: nomenclature_group_model):
-        check.type_check(value, nomenclature_group_model)
+        type_check(value, nomenclature_group_model)
         self.__nomenclature_group = value
 
     @property
     def range(self):
-        return self.range
+        return self.__range
 
     @range.setter
     def range(self, value: range_model):
-        check.type_check(value, range_model)
+        type_check(value, range_model)
         self.__range = value

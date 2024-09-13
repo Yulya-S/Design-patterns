@@ -1,4 +1,5 @@
-import Src.checks as check
+from Src.checks import type_check, value_check
+
 
 class settings:
     __inn = ""
@@ -14,8 +15,8 @@ class settings:
 
     @inn.setter
     def inn(self, value: str):
-        check.type_check(value, str)
-        check.value_check(len(value) == 12)
+        type_check(value, str)
+        value_check(len(value) == 12)
         self.__inn = value
 
     @property
@@ -24,8 +25,8 @@ class settings:
 
     @account.setter
     def account(self, value: str):
-        check.type_check(value, str)
-        check.value_check(len(value) == 11)
+        type_check(value, str)
+        value_check(len(value) == 11)
         self.__account = value
 
     @property
@@ -34,8 +35,8 @@ class settings:
 
     @correspondent_account.setter
     def correspondent_account(self, value: str):
-        check.type_check(value, str)
-        check.value_check(len(value) == 11)
+        type_check(value, str)
+        value_check(len(value) == 11)
         self.__correspondent_account = value
 
     @property
@@ -44,8 +45,8 @@ class settings:
 
     @bic.setter
     def bic(self, value: str):
-        check.type_check(value, str)
-        check.value_check(len(value) == 9)
+        type_check(value, str)
+        value_check(len(value) == 9)
         self.__bic = value
 
     @property
@@ -54,7 +55,7 @@ class settings:
 
     @organization_name.setter
     def organization_name(self, value: str):
-        check.type_check(value, str)
+        type_check(value, str)
         self.__organization_name = value
 
     @property
@@ -63,6 +64,6 @@ class settings:
 
     @type_ownership.setter
     def type_ownership(self, value: str):
-        check.type_check(value, str)
-        check.value_check(len(value) == 5)
+        type_check(value, str)
+        value_check(len(value) == 5)
         self.__type_ownership = value

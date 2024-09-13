@@ -1,3 +1,4 @@
+from Src.checks import type_check
 from Src.abstract_model import abstract_model
 
 
@@ -9,8 +10,9 @@ class range(abstract_model):
         return self.__name
 
     @name.setter
-    def name(self, text: str):
-        self.__name = text
+    def name(self, value: str):
+        type_check(value, str)
+        self.__name = value
 
     def _equal(self, other) -> bool:
         if other is None or not isinstance(other, range):
