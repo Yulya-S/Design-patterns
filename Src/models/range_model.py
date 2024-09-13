@@ -1,8 +1,8 @@
 from Src.abstract_reference import abstract_reference
+from Src.checks import type_check
 
 
-class range(abstract_reference):
-    __name = ""
+class range_model(abstract_reference):
     __basic_unit_measurement = ""
     __conversion_factor = 0
 
@@ -15,8 +15,9 @@ class range(abstract_reference):
         return self.__basic_unit_measurement
 
     @basic_unit_measurement.setter
-    def basic_unit_measurement(self, text: str):
-        self.__basic_unit_measurement = text
+    def basic_unit_measurement(self, value: str):
+        type_check(value, str)
+        self.__basic_unit_measurement = value
 
     @property
     def conversion_factor(self) -> int:
@@ -24,23 +25,5 @@ class range(abstract_reference):
 
     @conversion_factor.setter
     def conversion_factor(self, value: int):
+        type_check(value, int)
         self.__conversion_factor = value
-
-
-
-
-    def _equal(self, other) -> bool:
-        if other is None or not isinstance(other, range):
-            return False
-        return self.name == other.name
-
-    def _noequal(self, other) -> bool:
-        if other is None or not isinstance(other, range):
-            return True
-        return self.name != other.name
-
-    def __eq__(self, other) -> bool:
-        return self._equal(other)
-
-    def __ne__(self, other) -> bool:
-        return self._noequal(other)

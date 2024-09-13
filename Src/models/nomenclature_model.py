@@ -1,29 +1,38 @@
 from Src.abstract_reference import abstract_reference
+from Src.models.nomenclature_group_model import nomenclature_group_model
+from Src.models.range_model import range_model
+import Src.checks as check
 
 
-class nomenclature(abstract_reference):
-    __name = ""
+class nomenclature_model(abstract_reference):
+    __full_name = ""
+    __nomenclature_group = None
+    __range = None
 
     @property
-    def name(self) -> str:
-        return self.__name
+    def full_name(self):
+        return self.__full_name
 
-    @name.setter
-    def name(self, text: str):
-        self.__name = text
+    @full_name.setter
+    def full_name(self, value: str):
+        check.type_check(value, str)
+        check.value_check(len(value) < 255)
+        self.__full_name = value
 
-    def _equal(self, other) -> bool:
-        if other is None or not isinstance(other, nomenclature):
-            return False
-        return self.unique_code == other.unique_code
+    @property
+    def nomenclature_group(self):
+        return self.__nomenclature_group
 
-    def _noequal(self, other) -> bool:
-        if other is None or not isinstance(other, nomenclature):
-            return True
-        return self.unique_code != other.unique_code
+    @nomenclature_group.setter
+    def nomenclature_group(self, value: nomenclature_group_model):
+        check.type_check(value, nomenclature_group_model)
+        self.__nomenclature_group = value
 
-    def __eq__(self, other) -> bool:
-        return self._equal(other)
+    @property
+    def range(self):
+        return self.range
 
-    def __ne__(self, other) -> bool:
-        return self._noequal(other)
+    @range.setter
+    def range(self, value: range_model):
+        check.type_check(value, range_model)
+        self.__range = value
