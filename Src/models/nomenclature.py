@@ -14,16 +14,6 @@ class nomenclature(abstract_model):
         type_check(value, str)
         self.__name = value
 
-    def _equal(self, other) -> bool:
-        if other is None or not isinstance(other, nomenclature):
-            return False
-        return self.unique_code == other.unique_code
-
-    def _noequal(self, other) -> bool:
-        if other is None or not isinstance(other, nomenclature):
-            return True
-        return self.unique_code != other.unique_code
-
     def __eq__(self, other) -> bool:
         return self._equal(other)
 

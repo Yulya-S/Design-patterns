@@ -13,14 +13,20 @@ class abstract_model(ABC):
     def unique_code(self) -> str:
         return self.__unique_code
 
-    @abstractmethod
     def _equal(self, other) -> bool:
         if other is None or not isinstance(other, abstract_model):
             return False
         return self.unique_code == other.unique_code
 
     @abstractmethod
+    def __eq__(self, other):
+        return self._equal(other)
+
     def _noequal(self, other) -> bool:
         if other is None or not isinstance(other, abstract_model):
             return True
         return self.unique_code != other.unique_code
+
+    @abstractmethod
+    def __ne__(self, other):
+        return self._noequal(other)

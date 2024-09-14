@@ -14,18 +14,12 @@ class range(abstract_model):
         type_check(value, str)
         self.__name = value
 
-    def _equal(self, other) -> bool:
+    def __eq__(self, other) -> bool:
         if other is None or not isinstance(other, range):
             return False
         return self.name == other.name
 
-    def _noequal(self, other) -> bool:
+    def __ne__(self, other) -> bool:
         if other is None or not isinstance(other, range):
             return True
         return self.name != other.name
-
-    def __eq__(self, other) -> bool:
-        return self._equal(other)
-
-    def __ne__(self, other) -> bool:
-        return self._noequal(other)
