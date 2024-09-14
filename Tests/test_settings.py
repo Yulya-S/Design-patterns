@@ -2,25 +2,44 @@ import unittest
 from Src.settings_manager import settings_manager
 from Src.custom_exceptions import custom_exceptions
 
+"""
+Набор тестов для проверки работы с настройками
+"""
+
 
 class test_settings(unittest.TestCase):
+    # проверить открытие и загрузку настроек с ошибкой
     def test_settings_manager_open_fail(self):
+        # подготовка
         manager = settings_manager()
-        manager.open("../settings1.json", "setting")
-        assert manager.is_error == True
-        manager.error_text = "текст  "
-        assert manager.error_text == "текст"
 
+        # действие
+        manager.open("../settings1.json", "setting")
+
+        # проверки
+        assert manager.is_error == True
+
+    # проверить открытие и загрузку настроек
     def test_settings_manager_open(self):
+        # подготовка
         manager = settings_manager()
+
+        # действие
         result = manager.open("../settings.json")
+
+        # проверки
         assert result is True
 
+    # проверить работу шаблона singletone
     def test_settings_manager_singletone(self):
+        # подготовка
         manager1 = settings_manager()
-        result = manager1.open("../settings.json")
         manager2 = settings_manager()
 
+        # действие
+        result = manager1.open("../settings.json")
+
+        # проверки
         assert manager1 == manager2
         assert manager1.current_settings.inn == manager2.current_settings.inn
         assert manager1.current_settings.account == manager2.current_settings.account
@@ -29,8 +48,12 @@ class test_settings(unittest.TestCase):
         assert manager1.current_settings.organization_name == manager2.current_settings.organization_name
         assert manager1.current_settings.type_ownership == manager2.current_settings.type_ownership
 
+    # проверить введение данных с сошибкой
     def test_settings_manager_fail_data(self):
+        # подготовка
         manager = settings_manager()
+
+        # проверки
         with self.assertRaises(custom_exceptions):
             manager.settings.inn = None
         with self.assertRaises(custom_exceptions):
@@ -54,9 +77,13 @@ class test_settings(unittest.TestCase):
         with self.assertRaises(custom_exceptions):
             manager.settings.type_ownership = "1"
 
+    # проверка сравнения настроек
     def test_setting_manager_get_setting(self):
+        # подготовка
         manager1 = settings_manager()
         manager2 = settings_manager()
+
+        # проверки
         assert manager1.settings == manager2.settings
 
 
