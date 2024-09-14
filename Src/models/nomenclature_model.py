@@ -1,10 +1,10 @@
 from Src.checks import type_check, value_check
-from Src.abstract_reference import abstract_reference
+from Src.abstract_model import abstract_model
 from Src.models.nomenclature_group_model import nomenclature_group_model
 from Src.models.range_model import range_model
 
 
-class nomenclature_model(abstract_reference):
+class nomenclature_model(abstract_model):
     __full_name = ""
     __nomenclature_group = None
     __range = None
@@ -36,3 +36,9 @@ class nomenclature_model(abstract_reference):
     def range(self, value: range_model):
         type_check(value, range_model)
         self.__range = value
+
+    def __eq__(self, other):
+        return self._equal(other)
+
+    def __ne__(self, other):
+        return self._noequal(other)
