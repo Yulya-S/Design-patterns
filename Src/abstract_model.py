@@ -4,10 +4,19 @@ from abc import ABC, abstractmethod
 
 
 class abstract_model(ABC):
+    __name = ""
     __unique_code: str = ""
 
     def __init__(self):
         self.__unique_code = ''.join(random.sample((string.ascii_letters + string.digits), 15))
+
+    @property
+    def name(self) -> str:
+        return self.__name
+
+    @name.setter
+    def name(self, value: str):
+        self.__name = value
 
     @property
     def unique_code(self) -> str:
