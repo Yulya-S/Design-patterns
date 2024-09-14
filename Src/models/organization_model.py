@@ -1,9 +1,9 @@
-from Src.checks import type_check
-from Src.abstract_reference import abstract_reference
+from Src.custom_exceptions import custom_exceptions
+from Src.abstract_model import abstract_model
 from Src.models.settings import settings
 
 
-class organization_model(abstract_reference):
+class organization_model(abstract_model):
     __inn = ""
     __account = ""
     __bic = ""
@@ -26,8 +26,15 @@ class organization_model(abstract_reference):
         return self.__type_ownership
 
     def __init__(self, data: settings):
-        type_check(data, settings)
+        if not isinstance(data, settings):
+            raise custom_exceptions().type(data, settings)
         self.__inn = data.inn
         self.__bic = data.bic
         self.__account = data.account
         self.__type_ownership = data.type_ownership
+
+    def __eq__(self, other):
+        return self._equal(other)
+
+    def __ne__(self, other):
+        return self._noequal(other)

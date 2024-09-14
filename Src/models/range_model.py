@@ -1,8 +1,8 @@
-from Src.checks import type_check
-from Src.abstract_reference import abstract_reference
+from Src.custom_exceptions import custom_exceptions
+from Src.abstract_model import abstract_model
 
 
-class range_model(abstract_reference):
+class range_model(abstract_model):
     __basic_unit_measurement = ""
     __conversion_factor = 0
 
@@ -16,7 +16,8 @@ class range_model(abstract_reference):
 
     @basic_unit_measurement.setter
     def basic_unit_measurement(self, value: str):
-        type_check(value, str)
+        if not isinstance(value, str):
+            raise custom_exceptions().type(value, str)
         self.__basic_unit_measurement = value
 
     @property
@@ -25,5 +26,16 @@ class range_model(abstract_reference):
 
     @conversion_factor.setter
     def conversion_factor(self, value: int):
-        type_check(value, int)
+        if not isinstance(value, int):
+            raise custom_exceptions().type(value, int)
         self.__conversion_factor = value
+
+    def __eq__(self, other) -> bool:
+        if other is None or not isinstance(other, range_model):
+            return False
+        return self.name == other.name
+
+    def __ne__(self, other) -> bool:
+        if other is None or not isinstance(other, range_model):
+            return True
+        return self.name != other.name

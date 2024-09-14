@@ -1,6 +1,7 @@
 import random
 import string
 from abc import ABC, abstractmethod
+from Src.custom_exceptions import custom_exceptions
 
 
 class abstract_model(ABC):
@@ -16,6 +17,10 @@ class abstract_model(ABC):
 
     @name.setter
     def name(self, value: str):
+        if not isinstance(value, str):
+            raise custom_exceptions().type(type(value), str)
+        if len(value) > 50:
+            raise custom_exceptions().length(len(value), 50, ">")
         self.__name = value
 
     @property

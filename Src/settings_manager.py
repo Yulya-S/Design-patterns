@@ -1,4 +1,4 @@
-from Src.checks import type_check, value_check
+from Src.custom_exceptions import custom_exceptions
 from Src.models.settings import settings
 from Src.abstract_logic import abstract_logic
 
@@ -29,8 +29,10 @@ class settings_manager(abstract_logic):
         return self.__settings
 
     def open(self, file_name: str = "", path: str = ""):
-        type_check(file_name, str)
-        type_check(path, str)
+        if not isinstance(file_name, str):
+            raise custom_exceptions().type(file_name, str)
+        if not isinstance(path, str):
+            raise custom_exceptions().type(path, str)
 
         if file_name != "":
             self.__file_name = file_name
@@ -70,4 +72,6 @@ class settings_manager(abstract_logic):
         return data
 
     def set_exception(self, ex: Exception):
+        if not isinstance(ex, Exception):
+            raise custom_exceptions().type(ex, Exception)
         self._inner_set_exception(ex)

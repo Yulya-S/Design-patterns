@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from Src.custom_exceptions import custom_exceptions
 
 """
 Абстрактный класс для обработки логики
@@ -14,6 +15,8 @@ class abstract_logic(ABC):
 
     @error_text.setter
     def error_text(self, message: str):
+        if not isinstance(message, str):
+            raise custom_exceptions().type(message, str)
         self.__error_text = message.strip()
 
     @property
@@ -21,6 +24,8 @@ class abstract_logic(ABC):
         return self.error_text != ""
 
     def _inner_set_exception(self, ex: Exception):
+        if not isinstance(ex, Exception):
+            raise custom_exceptions().type(ex, Exception)
         self.__error_text = f"Ошибка! Исключение {ex}"
 
     """
