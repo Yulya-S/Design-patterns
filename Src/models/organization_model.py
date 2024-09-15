@@ -1,0 +1,37 @@
+from Src.custom_exceptions import custom_exceptions
+from Src.abstract_model import abstract_model
+from Src.models.settings import settings
+
+
+class organization_model(abstract_model):
+    __inn = ""
+    __account = ""
+    __bic = ""
+    __type_ownership = ""
+
+    @property
+    def inn(self):
+        return self.__inn
+
+    @property
+    def account(self):
+        return self.__account
+
+    @property
+    def bic(self):
+        return self.__bic
+
+    @property
+    def type_ownership(self):
+        return self.__type_ownership
+
+    def __init__(self, data: settings):
+        if not isinstance(data, settings):
+            raise custom_exceptions().type(data, settings)
+        self.__inn = data.inn
+        self.__bic = data.bic
+        self.__account = data.account
+        self.__type_ownership = data.type_ownership
+
+    def set_compare_mode(self, other, equal: bool = True) -> bool:
+        return super().set_compare_mode(other, equal)
