@@ -30,12 +30,11 @@ class range_model(abstract_model):
             raise custom_exceptions().type(value, int)
         self.__conversion_factor = value
 
-    def __eq__(self, other) -> bool:
-        if other is None or not isinstance(other, range_model):
-            return False
-        return self.name == other.name
+    def set_compare_mode(self, other, equal: bool = True) -> bool:
+        # если equal = True, то проверяем что значения равны иначе проверяем не равенство
+        if other is None or not isinstance(other, abstract_model):
+            return not equal
 
-    def __ne__(self, other) -> bool:
-        if other is None or not isinstance(other, range_model):
-            return True
+        if equal:
+            return self.name == other.name
         return self.name != other.name

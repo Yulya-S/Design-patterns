@@ -41,8 +41,5 @@ class nomenclature_model(abstract_model):
             raise custom_exceptions().type(value, range_model)
         self.__range = value
 
-    def __eq__(self, other):
-        return self._equal(other)
-
-    def __ne__(self, other):
-        return self._noequal(other)
+    def set_compare_mode(self, other, equal: bool = True) -> bool:
+        return super().set_compare_mode(other, equal)

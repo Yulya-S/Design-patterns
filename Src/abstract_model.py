@@ -27,20 +27,18 @@ class abstract_model(ABC):
     def unique_code(self) -> str:
         return self.__unique_code
 
-    def _equal(self, other) -> bool:
-        if other is None or not isinstance(other, abstract_model):
-            return False
-        return self.unique_code == other.unique_code
-
     @abstractmethod
-    def __eq__(self, other):
-        return self._equal(other)
-
-    def _noequal(self, other) -> bool:
+    def set_compare_mode(self, other, equal: bool = True) -> bool:
+        # если equal = True, то проверяем что значения равны иначе проверяем не равенство
         if other is None or not isinstance(other, abstract_model):
-            return True
+            return not equal
+
+        if equal:
+            return self.unique_code == other.unique_code
         return self.unique_code != other.unique_code
 
-    @abstractmethod
+    def __eq__(self, other):
+        return self.set_compare_mode(other, True)
+
     def __ne__(self, other):
-        return self._noequal(other)
+        return self.set_compare_mode(other, False)
