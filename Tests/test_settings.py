@@ -49,7 +49,7 @@ class test_settings(unittest.TestCase):
         assert manager1.current_settings.type_ownership == manager2.current_settings.type_ownership
 
     # проверить введение данных с сошибкой
-    def test_settings_manager_fail_data(self):
+    def test_settings_manager_singletone_fail(self):
         # подготовка
         manager = settings_manager()
 
