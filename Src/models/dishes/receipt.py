@@ -11,6 +11,17 @@ class receipt_model(base_model_name):
     __number_servings: int = 0
     __cooking_time: str = ""
 
+    @property
+    def ingredients(self):
+        return self.__ingredients
+
+    @property
+    def get_names_ingredients(self):
+        names = []
+        for i in self.__ingredients:
+            names.append(i.name)
+        return names
+
     # Количество порций получающееся по рецепту
     @property
     def number_servings(self):

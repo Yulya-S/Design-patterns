@@ -22,7 +22,21 @@ class test_start(unittest.TestCase):
         receipt_book = receipt_book_menager()
 
         # Действие
-        start = start_service(reposity, manager, receipt_book_menager)
+        start = start_service(reposity, manager, receipt_book)
+
+        # Проверки
+        assert start is not None
+
+    def test_data_reposity_append_data(self):
+        # Подготовка
+        manager = settings_manager()
+        manager.open("../settings1.json")
+        reposity = data_reposity()
+        receipt_book = receipt_book_menager()
+
+        # Действие
+        start = start_service(reposity, manager, receipt_book)
+        start.create()
 
         # Проверки
         assert start is not None

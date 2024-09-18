@@ -21,6 +21,10 @@ class ingredient_model(base_model_name):
         self.__range_model = range
         self.__quantity = quantity
 
+    @property
+    def name(self):
+        return self.__product.name
+
     # Каким продуктом является ингредиент
     @property
     def product(self):

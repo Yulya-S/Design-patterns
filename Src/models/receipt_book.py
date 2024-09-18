@@ -7,6 +7,11 @@ class receipt_book_model(base_model_code):
     __ranges: list = list()
     __recipes: list = list()
 
+    # Получить список рецептов
+    @property
+    def receipes(self):
+        return self.__recipes
+
     # Добавить единицу измерения
     def add_range(self, basic_unit_measurement_name: str, conversion_factor_value: int):
         self.__ranges.append(range_model(basic_unit_measurement_name, conversion_factor_value))
