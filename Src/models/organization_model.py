@@ -3,10 +3,10 @@ from Src.settings import settings
 
 
 class organization_model(base_model_name):
-    __inn = ""
-    __account = ""
-    __bic = ""
-    __type_ownership = ""
+    __inn: str = ""
+    __account: str = ""
+    __bic: str = ""
+    __type_ownership: str = ""
 
     @property
     def inn(self):
@@ -25,8 +25,9 @@ class organization_model(base_model_name):
         return self.__type_ownership
 
     def __init__(self, data: settings):
+        super().__init__()
         if not isinstance(data, settings):
-            raise self.custom_exception.type(type(data), settings)
+            raise self._custom_exception.type(type(data), settings)
         self.__inn = data.inn
         self.__bic = data.bic
         self.__account = data.account

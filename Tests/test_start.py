@@ -8,7 +8,7 @@ import unittest
 """
 
 
-class test_settings(unittest.TestCase):
+class test_start(unittest.TestCase):
     """
     Проверить создание инстанса start_service
     """

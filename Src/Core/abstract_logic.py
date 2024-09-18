@@ -8,20 +8,16 @@ from Src.Core.custom_exceptions import custom_exceptions
 
 class abstract_logic(ABC):
     __error_text: str = ""
-    __custom_exception = custom_exceptions()
+    _custom_exception: custom_exceptions = custom_exceptions()
 
     @property
     def error_text(self) -> str:
         return self.__error_text.strip()
 
-    @property
-    def custom_exception(self):
-        return self.__custom_exception
-
     @error_text.setter
     def error_text(self, message: str):
         if not isinstance(message, str):
-            raise self.custom_exception.type(type(message), str)
+            raise self._custom_exception.type(type(message), str)
         self.__error_text = message.strip()
 
     @property

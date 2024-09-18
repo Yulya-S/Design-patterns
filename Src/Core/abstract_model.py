@@ -2,12 +2,13 @@ import random
 import string
 from abc import ABC, abstractmethod
 from Src.Core.custom_exceptions import custom_exceptions
+import uuid
 
 
 class abstract_model(ABC):
-    __name = ""
+    __name: str = ""
     __unique_code: str = ""
-    __custom_exception = custom_exceptions()
+    _custom_exception: custom_exceptions = custom_exceptions()
 
     def __init__(self):
         self.__unique_code = ''.join(random.sample((string.ascii_letters + string.digits), 15))
@@ -16,16 +17,12 @@ class abstract_model(ABC):
     def name(self) -> str:
         return self.__name
 
-    @property
-    def custom_exception(self):
-        return self.__custom_exception
-
     @name.setter
     def name(self, value: str):
         if not isinstance(value, str):
-            raise self.custom_exception.type(type(value), str)
+            raise self._custom_exception.type(type(value), str)
         if len(value) > 50:
-            raise self.custom_exception.length(len(value), 50, ">")
+            raise self._custom_exception.length(len(value), 50, ">")
         self.__name = value
 
     @property

@@ -29,9 +29,9 @@ class settings_manager(abstract_logic):
 
     def open(self, file_name: str = "", path: str = ""):
         if not isinstance(file_name, str):
-            raise self.custom_exception.type(type(file_name), str)
+            raise self._custom_exception.type(type(file_name), str)
         if not isinstance(path, str):
-            raise self.custom_exception.type(type(path), str)
+            raise self._custom_exception.type(type(path), str)
 
         if file_name != "":
             self.__file_name = file_name

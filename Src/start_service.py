@@ -18,9 +18,9 @@ class start_service(abstract_logic):
     def __init__(self, reposity: data_reposity, manager: settings_manager) -> None:
         super().__init__()
         if not isinstance(reposity, data_reposity):
-            self.custom_exception.type(type(reposity), data_reposity)
+            self._custom_exception.type(type(reposity), data_reposity)
         if not isinstance(manager, settings_manager):
-            self.custom_exception.type(type(manager), settings_manager)
+            self._custom_exception.type(type(manager), settings_manager)
         self.__reposity = reposity
         self.__settings_manager = manager
 
@@ -45,6 +45,7 @@ class start_service(abstract_logic):
     """
     Добавление новой еденицы измерения
     """
+
     def add_range(self, basic_unit_measurement_name: str, conversion_factor_value: int):
         self.__reposity.data["ranges"].append(range_model(basic_unit_measurement_name, conversion_factor_value))
 

@@ -2,14 +2,15 @@ from Src.Core.base_models import base_model_name
 
 
 class range_model(base_model_name):
-    __basic_unit_measurement = ""
-    __conversion_factor = 0
+    __basic_unit_measurement: str = ""
+    __conversion_factor: int = 0
 
     def __init__(self, basic_unit_measurement_name: str, conversion_factor_value: int):
+        super().__init__()
         if not isinstance(basic_unit_measurement_name, str):
-            raise self.custom_exception.type(type(basic_unit_measurement_name), str)
+            raise self._custom_exception.type(type(basic_unit_measurement_name), str)
         if not isinstance(conversion_factor_value, int):
-            raise self.custom_exception.type(type(conversion_factor_value), int)
+            raise self._custom_exception.type(type(conversion_factor_value), int)
         self.basic_unit_measurement = basic_unit_measurement_name
         self.conversion_factor = conversion_factor_value
 
@@ -20,7 +21,7 @@ class range_model(base_model_name):
     @basic_unit_measurement.setter
     def basic_unit_measurement(self, value: str):
         if not isinstance(value, str):
-            raise self.custom_exception.type(type(value), str)
+            raise self._custom_exception.type(type(value), str)
         self.__basic_unit_measurement = value
 
     @property
@@ -30,5 +31,5 @@ class range_model(base_model_name):
     @conversion_factor.setter
     def conversion_factor(self, value: int):
         if not isinstance(value, int):
-            raise self.custom_exception.type(type(value), int)
+            raise self._custom_exception.type(type(value), int)
         self.__conversion_factor = value
