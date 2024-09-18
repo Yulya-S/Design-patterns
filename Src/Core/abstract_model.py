@@ -2,7 +2,6 @@ import random
 import string
 from abc import ABC, abstractmethod
 from Src.Core.custom_exceptions import custom_exceptions
-import uuid
 
 
 class abstract_model(ABC):

@@ -1,5 +1,5 @@
 from Src.Core.base_models import base_model_name
-from Src.models.product import product_model
+from Src.models.dishes.product import product_model
 
 
 class warehouse_model(base_model_name):
