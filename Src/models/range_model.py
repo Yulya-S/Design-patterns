@@ -6,6 +6,10 @@ class range_model(base_model_name):
     __conversion_factor = 0
 
     def __init__(self, basic_unit_measurement_name: str, conversion_factor_value: int):
+        if not isinstance(basic_unit_measurement_name, str):
+            raise self.custom_exception.type(type(basic_unit_measurement_name), str)
+        if not isinstance(conversion_factor_value, int):
+            raise self.custom_exception.type(type(conversion_factor_value), int)
         self.basic_unit_measurement = basic_unit_measurement_name
         self.conversion_factor = conversion_factor_value
 
