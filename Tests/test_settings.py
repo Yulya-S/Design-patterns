@@ -1,6 +1,6 @@
 import unittest
 from Src.settings_manager import settings_manager
-from Src.custom_exceptions import custom_exceptions
+from Src.Core.custom_exceptions import custom_exceptions
 
 """
 Набор тестов для проверки работы с настройками

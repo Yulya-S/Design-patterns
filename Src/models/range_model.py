@@ -1,8 +1,7 @@
-from Src.custom_exceptions import custom_exceptions
-from Src.abstract_model import abstract_model
+from Src.Core.base_models import base_model_name
 
 
-class range_model(abstract_model):
+class range_model(base_model_name):
     __basic_unit_measurement = ""
     __conversion_factor = 0
 
@@ -17,7 +16,7 @@ class range_model(abstract_model):
     @basic_unit_measurement.setter
     def basic_unit_measurement(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self.custom_exception.type(type(value), str)
         self.__basic_unit_measurement = value
 
     @property
@@ -27,14 +26,5 @@ class range_model(abstract_model):
     @conversion_factor.setter
     def conversion_factor(self, value: int):
         if not isinstance(value, int):
-            raise custom_exceptions().type(value, int)
+            raise self.custom_exception.type(type(value), int)
         self.__conversion_factor = value
-
-    def set_compare_mode(self, other, equal: bool = True) -> bool:
-        # если equal = True, то проверяем что значения равны иначе проверяем не равенство
-        if other is None or not isinstance(other, abstract_model):
-            return not equal
-
-        if equal:
-            return self.name == other.name
-        return self.name != other.name

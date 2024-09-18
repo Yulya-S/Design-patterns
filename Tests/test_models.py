@@ -1,12 +1,11 @@
 import unittest
 
-from Src.custom_exceptions import custom_exceptions
+from Src.Core.custom_exceptions import custom_exceptions
 from Src.settings_manager import settings_manager
 from Src.models.range_model import range_model
 from Src.models.nomenclature_model import nomenclature_model
-from Src.models.nomenclature_group_model import nomenclature_group_model
+from Src.models.group_model import group_model
 from Src.models.organization_model import organization_model
-from Src.models.warehouse_model import warehouse_model
 
 """
 Набор тестов для проверки работы моделей
@@ -20,7 +19,7 @@ class test_models(unittest.TestCase):
         item1 = nomenclature_model()
         item1.name = "name"
         item2 = nomenclature_model()
-        common_nomenclature_group_model = nomenclature_group_model()
+        common_nomenclature_group_model = group_model()
         common_range_model = range_model("кг", 1)
         common_range_model.name = "1"
         item1.full_name = "Полное название"

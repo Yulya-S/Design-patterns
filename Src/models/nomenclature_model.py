@@ -1,12 +1,11 @@
-from Src.custom_exceptions import custom_exceptions
-from Src.abstract_model import abstract_model
-from Src.models.nomenclature_group_model import nomenclature_group_model
+from Src.Core.base_models import base_model_code
+from Src.models.group_model import group_model
 from Src.models.range_model import range_model
 
 
-class nomenclature_model(abstract_model):
+class nomenclature_model(base_model_code):
     __full_name = ""
-    __nomenclature_group = None
+    __group = None
     __range = None
 
     @property
@@ -16,20 +15,20 @@ class nomenclature_model(abstract_model):
     @full_name.setter
     def full_name(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self.custom_exception.type(type(value), str)
         if len(value) > 255:
-            raise custom_exceptions().length(len(value), 255, ">")
+            raise self.custom_exception.length(len(value), 255, ">")
         self.__full_name = value
 
     @property
     def nomenclature_group(self):
-        return self.__nomenclature_group
+        return self.__group
 
     @nomenclature_group.setter
-    def nomenclature_group(self, value: nomenclature_group_model):
-        if not isinstance(value, nomenclature_group_model):
-            raise custom_exceptions().type(value, nomenclature_group_model)
-        self.__nomenclature_group = value
+    def nomenclature_group(self, value: group_model):
+        if not isinstance(value, group_model):
+            raise self.custom_exception.type(type(value), group_model)
+        self.__group = value
 
     @property
     def range(self):
@@ -38,8 +37,5 @@ class nomenclature_model(abstract_model):
     @range.setter
     def range(self, value: range_model):
         if not isinstance(value, range_model):
-            raise custom_exceptions().type(value, range_model)
+            raise self.custom_exception.type(type(value), range_model)
         self.__range = value
-
-    def set_compare_mode(self, other, equal: bool = True) -> bool:
-        return super().set_compare_mode(other, equal)
