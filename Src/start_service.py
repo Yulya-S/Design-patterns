@@ -1,6 +1,8 @@
 from Src.Core.abstract_logic import abstract_logic
 from Src.data_reposity import data_reposity
 from Src.models.group_model import group_model
+from Src.models.nomenclature_model import nomenclature_model
+from Src.models.range_model import range_model
 from Src.settings_manager import settings_manager
 from Src.settings import settings
 
@@ -41,11 +43,19 @@ class start_service(abstract_logic):
         self.__reposity.data[data_reposity.group_key()] = list
 
     """
+    Добавление новой еденицы измерения
+    """
+    def add_range(self, basic_unit_measurement_name: str, conversion_factor_value: int):
+        self.__reposity.data["ranges"].append(range_model(basic_unit_measurement_name, conversion_factor_value))
+
+    """
     Первый старт
     """
 
     def create(self):
         self.__create_nomenclature_groups()
+        self.__reposity.data["nomenclature"] = nomenclature_model()
+        self.__reposity.data["ranges"] = list()
 
     """
     Перегрузка абстрактного метода
