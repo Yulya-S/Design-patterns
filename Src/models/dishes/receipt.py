@@ -1,6 +1,5 @@
 from Src.models.dishes.ingredient import ingredient_model
-from Src.models.dishes.product import product_model
-from Src.models.range_model import range_model
+from Src.models.nomenclature_model import nomenclature_model
 from Src.Core.base_models import base_model_name
 
 
@@ -45,8 +44,8 @@ class receipt_model(base_model_name):
         self.__cooking_time = value
 
     # Добавить ингридиент
-    def add_ingredient(self, product: product_model, range: range_model, quantity: int):
-        self.__ingredients.append(ingredient_model(product, range, quantity))
+    def add_ingredient(self, name: str, nomenclature: nomenclature_model, quantity: int):
+        self.__ingredients.append(ingredient_model(name, nomenclature, quantity))
 
     # Добавить шаги приготовления
     def add_steps_cooking(self, steps_cooking: list):

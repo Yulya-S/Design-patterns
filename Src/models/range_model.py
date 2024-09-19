@@ -33,3 +33,23 @@ class range_model(base_model_name):
         if not isinstance(value, int):
             raise self._custom_exception.type(type(value), int)
         self.__conversion_factor = value
+
+    @staticmethod
+    def default_range_kg():
+        return range_model("кг", 1)
+
+    @staticmethod
+    def default_range_gr():
+        return range_model("гр", 1000)
+
+    @staticmethod
+    def default_range_l():
+        return range_model("л", 1)
+
+    @staticmethod
+    def default_range_ml():
+        return range_model("мл", 1000)
+
+    @staticmethod
+    def default_range_pcs():
+        return range_model("шт", 1)

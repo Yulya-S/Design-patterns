@@ -39,3 +39,24 @@ class nomenclature_model(base_model_code):
         if not isinstance(value, range_model):
             raise self._custom_exception.type(type(value), range_model)
         self.__range = value
+
+    @staticmethod
+    def default_source_gr():
+        item = nomenclature_model()
+        item.range = range_model.default_range_gr()
+        item.nomenclature_group = group_model.default_group_source()
+        return item
+
+    @staticmethod
+    def default_source_ml():
+        item = nomenclature_model()
+        item.range = range_model.default_range_ml()
+        item.nomenclature_group = group_model.default_group_source()
+        return item
+
+    @staticmethod
+    def default_source_pcs():
+        item = nomenclature_model()
+        item.range = range_model.default_range_pcs()
+        item.nomenclature_group = group_model.default_group_source()
+        return item
