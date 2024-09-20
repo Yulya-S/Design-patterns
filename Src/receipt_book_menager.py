@@ -1,6 +1,6 @@
 from Src.Core.abstract_logic import abstract_logic
 from Src.models.dishes.receipt import receipt_model
-from Src.models.nomenclature_model import nomenclature_model
+from Src.data_reposity import data_reposity
 
 import os
 import codecs
@@ -60,14 +60,8 @@ class receipt_book_menager(abstract_logic):
             ingredients[i] = ingredients[i].strip()
             ingredients[i + 1] = ingredients[i + 1].strip()
 
-            nomenclature = ingredients[i + 1].split(" ")[1]
-            if nomenclature == "гр":
-                nomenclature = nomenclature_model.default_source_gr()
-            elif nomenclature == "мл":
-                nomenclature = nomenclature_model.default_source_ml()
-            elif nomenclature == "шт":
-                nomenclature = nomenclature_model.default_source_pcs()
-
+            data = data_reposity()
+            nomenclature = data.data[data_reposity.nomenclature_key()][ingredients[i + 1].split(" ")[1]]
             new_receipt.add_ingredient(ingredients[i], nomenclature, int(ingredients[i + 1].strip(" ")[0]))
             i += 3
 

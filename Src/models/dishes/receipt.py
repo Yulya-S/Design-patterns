@@ -5,7 +5,7 @@ from Src.Core.base_models import base_model_name
 
 # Класс рецепта
 class receipt_model(base_model_name):
-    __ingredients: list = list()
+    __ingredients: dict = dict()
     __steps_cooking: list = list()
     __number_servings: int = 0
     __cooking_time: str = ""
@@ -13,13 +13,6 @@ class receipt_model(base_model_name):
     @property
     def ingredients(self):
         return self.__ingredients
-
-    @property
-    def get_names_ingredients(self):
-        names = []
-        for i in self.__ingredients:
-            names.append(i.name)
-        return names
 
     # Количество порций получающееся по рецепту
     @property
@@ -45,7 +38,7 @@ class receipt_model(base_model_name):
 
     # Добавить ингридиент
     def add_ingredient(self, name: str, nomenclature: nomenclature_model, quantity: int):
-        self.__ingredients.append(ingredient_model(name, nomenclature, quantity))
+        self.__ingredients[name] = ingredient_model(name, nomenclature, quantity)
 
     # Добавить шаги приготовления
     def add_steps_cooking(self, steps_cooking: list):

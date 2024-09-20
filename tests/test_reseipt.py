@@ -7,6 +7,8 @@ import unittest
 """
 Набор тестов для проверки добавления рецептов
 """
+
+
 class test_reseipt(unittest.TestCase):
     def test_reseipts_append_ingredients(self):
         # Подготовка
@@ -20,6 +22,5 @@ class test_reseipt(unittest.TestCase):
         start.create()
 
         # Проверки
-        assert len(start.recipes) == 2
-        assert "Соль" in start.recipes[0].get_names_ingredients
-
+        assert len(reposity.data[data_reposity.receipt_key()]) == 2
+        assert "Соль" in list(reposity.data[data_reposity.receipt_key()][0].ingredients.keys())

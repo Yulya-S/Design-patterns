@@ -29,6 +29,18 @@ class data_reposity(abstract_logic):
     def group_key() -> str:
         return "group"
 
+    @staticmethod
+    def range_key() -> str:
+        return "range"
+
+    @staticmethod
+    def nomenclature_key() -> str:
+        return "nomenclature"
+
+    @staticmethod
+    def receipt_key() -> str:
+        return "receipt"
+
     """
     Перегрузка абстрактного метода
     """

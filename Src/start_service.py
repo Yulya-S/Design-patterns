@@ -38,12 +38,6 @@ class start_service(abstract_logic):
     def settings(self) -> settings:
         return self.__settings_manager.settings
 
-    # Список рецептов
-    @property
-    def recipes(self):
-        print()
-        return self.__reposity.data["recipes"]
-
     """
     Сформировать группы номенклатуры
     """
@@ -55,11 +49,11 @@ class start_service(abstract_logic):
         self.__reposity.data[data_reposity.group_key()] = list
 
     def __create_nomenclatures(self):
-        list = []
-        list.append(nomenclature_model.default_source_gr())
-        list.append(nomenclature_model.default_source_ml())
-        list.append(nomenclature_model.default_source_pcs())
-        self.__reposity.data["nomenclatures"] = list
+        dict = {}
+        dict[range_model.default_range_gr().name] = nomenclature_model.default_source_gr()
+        dict[range_model.default_range_ml().name] = nomenclature_model.default_source_ml()
+        dict[range_model.default_range_pcs().name] = nomenclature_model.default_source_pcs()
+        self.__reposity.data[data_reposity.nomenclature_key()] = dict
 
     def __create_ranges(self):
         dict = {}
@@ -68,7 +62,7 @@ class start_service(abstract_logic):
         dict[range_model.default_range_l().name] = range_model.default_range_l()
         dict[range_model.default_range_ml().name] = range_model.default_range_ml()
         dict[range_model.default_range_pcs().name] = range_model.default_range_pcs()
-        self.__reposity.data["ranges"] = dict
+        self.__reposity.data[data_reposity.range_key()] = dict
 
     """
     Первый старт
@@ -78,7 +72,7 @@ class start_service(abstract_logic):
         self.__create_nomenclature_groups()
         self.__create_ranges()
         self.__create_nomenclatures()
-        self.__reposity.data["recipes"] = self.__recipe_manager.open()
+        self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open()
 
     """
     Перегрузка абстрактного метода

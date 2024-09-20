@@ -2,27 +2,27 @@ from Src.Core.base_models import base_model_name
 
 
 class range_model(base_model_name):
-    __basic_unit_measurement: str = ""
+    __base = None
     __conversion_factor: int = 0
 
-    def __init__(self, basic_unit_measurement_name: str, conversion_factor_value: int):
+    def __init__(self, name: str, conversion_factor_value: int):
         super().__init__()
-        if not isinstance(basic_unit_measurement_name, str):
-            raise self._custom_exception.type(type(basic_unit_measurement_name), str)
+        if not isinstance(name, str):
+            raise self._custom_exception.type(type(name), str)
         if not isinstance(conversion_factor_value, int):
             raise self._custom_exception.type(type(conversion_factor_value), int)
-        self.basic_unit_measurement = basic_unit_measurement_name
+        self.name = name
         self.conversion_factor = conversion_factor_value
 
     @property
-    def basic_unit_measurement(self) -> str:
-        return self.__basic_unit_measurement
+    def base(self) -> str:
+        return self.__base
 
-    @basic_unit_measurement.setter
-    def basic_unit_measurement(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exception.type(type(value), str)
-        self.__basic_unit_measurement = value
+    @base.setter
+    def base(self, value) -> str:
+        if not isinstance(value, range_model):
+            raise self._custom_exception.type(type(value), range_model)
+        self.__base = value
 
     @property
     def conversion_factor(self) -> int:
@@ -36,7 +36,9 @@ class range_model(base_model_name):
 
     @staticmethod
     def default_range_kg():
-        return range_model("кг", 1)
+        item = range_model("кг", 1)
+        item.base = range_model.default_range_gr()
+        return item
 
     @staticmethod
     def default_range_gr():
@@ -44,7 +46,9 @@ class range_model(base_model_name):
 
     @staticmethod
     def default_range_l():
-        return range_model("л", 1)
+        item = range_model("л", 1)
+        item.base = range_model.default_range_ml()
+        return item
 
     @staticmethod
     def default_range_ml():
