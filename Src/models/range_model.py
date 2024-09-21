@@ -1,24 +1,28 @@
-from Src.custom_exceptions import custom_exceptions
-from Src.abstract_model import abstract_model
+from Src.Core.base_models import base_model_name
 
 
-class range_model(abstract_model):
-    __basic_unit_measurement = ""
-    __conversion_factor = 0
+class range_model(base_model_name):
+    __base = None
+    __conversion_factor: int = 0
 
-    def __init__(self, basic_unit_measurement_name: str, conversion_factor_value: int):
-        self.basic_unit_measurement = basic_unit_measurement_name
+    def __init__(self, name: str, conversion_factor_value: int):
+        super().__init__()
+        if not isinstance(name, str):
+            raise self._custom_exception.type(type(name), str)
+        if not isinstance(conversion_factor_value, int):
+            raise self._custom_exception.type(type(conversion_factor_value), int)
+        self.name = name
         self.conversion_factor = conversion_factor_value
 
     @property
-    def basic_unit_measurement(self) -> str:
-        return self.__basic_unit_measurement
+    def base(self) -> str:
+        return self.__base
 
-    @basic_unit_measurement.setter
-    def basic_unit_measurement(self, value: str):
-        if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
-        self.__basic_unit_measurement = value
+    @base.setter
+    def base(self, value) -> str:
+        if not isinstance(value, range_model):
+            raise self._custom_exception.type(type(value), range_model)
+        self.__base = value
 
     @property
     def conversion_factor(self) -> int:
@@ -27,14 +31,29 @@ class range_model(abstract_model):
     @conversion_factor.setter
     def conversion_factor(self, value: int):
         if not isinstance(value, int):
-            raise custom_exceptions().type(value, int)
+            raise self._custom_exception.type(type(value), int)
         self.__conversion_factor = value
 
-    def set_compare_mode(self, other, equal: bool = True) -> bool:
-        # если equal = True, то проверяем что значения равны иначе проверяем не равенство
-        if other is None or not isinstance(other, abstract_model):
-            return not equal
+    @staticmethod
+    def default_range_kg():
+        item = range_model("кг", 1)
+        item.base = range_model.default_range_gr()
+        return item
 
-        if equal:
-            return self.name == other.name
-        return self.name != other.name
+    @staticmethod
+    def default_range_gr():
+        return range_model("гр", 1000)
+
+    @staticmethod
+    def default_range_l():
+        item = range_model("л", 1)
+        item.base = range_model.default_range_ml()
+        return item
+
+    @staticmethod
+    def default_range_ml():
+        return range_model("мл", 1000)
+
+    @staticmethod
+    def default_range_pcs():
+        return range_model("шт", 1)

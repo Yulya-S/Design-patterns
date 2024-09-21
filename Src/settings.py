@@ -1,13 +1,15 @@
-from Src.custom_exceptions import custom_exceptions
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 class settings:
-    __inn = ""
-    __account = ""
-    __correspondent_account = ""
-    __bic = ""
-    __organization_name = ""
-    __type_ownership = ""
+    __inn: str = ""
+    __account: str = ""
+    __correspondent_account: str = ""
+    __bic: str = ""
+    __organization_name: str = ""
+    __type_ownership: str = ""
+
+    _custom_exception: custom_exceptions = custom_exceptions()
 
     @property
     def inn(self):
@@ -16,9 +18,9 @@ class settings:
     @inn.setter
     def inn(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self._custom_exception.type(value, str)
         if len(value) != 12:
-            raise custom_exceptions().length(len(value), 12, "!=")
+            raise self._custom_exception.length(len(value), 12, "!=")
         self.__inn = value
 
     @property
@@ -28,9 +30,9 @@ class settings:
     @account.setter
     def account(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self._custom_exception.type(value, str)
         if len(value) != 11:
-            raise custom_exceptions().length(len(value), 11, "!=")
+            raise self._custom_exception.length(len(value), 11, "!=")
         self.__account = value
 
     @property
@@ -40,9 +42,9 @@ class settings:
     @correspondent_account.setter
     def correspondent_account(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self._custom_exception.type(value, str)
         if len(value) != 11:
-            raise custom_exceptions().length(len(value), 11, "!=")
+            raise self._custom_exception.length(len(value), 11, "!=")
         self.__correspondent_account = value
 
     @property
@@ -52,9 +54,9 @@ class settings:
     @bic.setter
     def bic(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self._custom_exception.type(value, str)
         if len(value) != 9:
-            raise custom_exceptions().length(len(value), 9, "!=")
+            raise self._custom_exception.length(len(value), 9, "!=")
         self.__bic = value
 
     @property
@@ -64,7 +66,7 @@ class settings:
     @organization_name.setter
     def organization_name(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self._custom_exception.type(value, str)
         self.__organization_name = value
 
     @property
@@ -74,7 +76,7 @@ class settings:
     @type_ownership.setter
     def type_ownership(self, value: str):
         if not isinstance(value, str):
-            raise custom_exceptions().type(value, str)
+            raise self._custom_exception.type(value, str)
         if len(value) != 5:
-            raise custom_exceptions().length(len(value), 5, "!=")
+            raise self._custom_exception.length(len(value), 5, "!=")
         self.__type_ownership = value
