@@ -14,10 +14,8 @@ class nomenclature_model(base_model_code):
 
     @full_name.setter
     def full_name(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exception.type(type(value), str)
-        if len(value) > 255:
-            raise self._custom_exception.length(len(value), 255, ">")
+        self._custom_exception.type(value, str)
+        self._custom_exception.length_more(value, 255)
         self.__full_name = value
 
     @property
@@ -26,8 +24,7 @@ class nomenclature_model(base_model_code):
 
     @nomenclature_group.setter
     def nomenclature_group(self, value: group_model):
-        if not isinstance(value, group_model):
-            raise self._custom_exception.type(type(value), group_model)
+        self._custom_exception.type(value, group_model)
         self.__group = value
 
     @property
@@ -36,8 +33,7 @@ class nomenclature_model(base_model_code):
 
     @range.setter
     def range(self, value: range_model):
-        if not isinstance(value, range_model):
-            raise self._custom_exception.type(type(value), range_model)
+        self._custom_exception.type(value, range_model)
         self.__range = value
 
     @staticmethod

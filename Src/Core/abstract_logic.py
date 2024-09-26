@@ -16,8 +16,7 @@ class abstract_logic(ABC):
 
     @error_text.setter
     def error_text(self, message: str):
-        if not isinstance(message, str):
-            raise self._custom_exception.type(type(message), str)
+        self._custom_exception.type(message, str)
         self.__error_text = message.strip()
 
     @property

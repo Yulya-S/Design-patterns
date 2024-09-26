@@ -35,6 +35,5 @@ class abstract_report(ABC):
 
     @result.setter
     def result(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exceprions.type(type(value), str)
+        self._custom_exceptions.type(value, str)
         self.__result = value

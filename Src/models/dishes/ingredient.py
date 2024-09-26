@@ -9,12 +9,9 @@ class ingredient_model(base_model_name):
 
     def __init__(self, name: str, nomenclature: nomenclature_model, quantity: int):
         super().__init__()
-        if not isinstance(name, str):
-            raise self._custom_exception.type(type(name), str)
-        if not isinstance(nomenclature, nomenclature_model):
-            raise self._custom_exception.type(type(nomenclature), nomenclature_model)
-        if not isinstance(quantity, int):
-            raise self._custom_exception.type(type(quantity), int)
+        self._custom_exception.type(name, str)
+        self._custom_exception.type(nomenclature, nomenclature_model)
+        self._custom_exception.type(quantity, int)
         self.name = name
         self.__nomenclature = nomenclature
         self.__quantity = quantity

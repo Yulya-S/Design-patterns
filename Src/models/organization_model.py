@@ -26,8 +26,7 @@ class organization_model(base_model_name):
 
     def __init__(self, data: settings):
         super().__init__()
-        if not isinstance(data, settings):
-            raise self._custom_exception.type(type(data), settings)
+        self._custom_exception.type(data, settings)
         self.__inn = data.inn
         self.__bic = data.bic
         self.__account = data.account

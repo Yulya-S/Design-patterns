@@ -18,10 +18,9 @@ class csv_report(abstract_report):
             for key in list(dd.keys()):
                 data.append(dd[key])
 
-        if not isinstance(data, list):
-            raise self._custom_exceptions.type(type(data), list)
+        self._custom_exceptions.type(data, list)
         if len(data) == 0:
-            raise self._custom_exceptions.length(len(data), 1, "=")
+            self._custom_exceptions.other_exception("Набор данных пуст!")
 
         first_model = data[0]
         fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(first_model.__class__, x)),

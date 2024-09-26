@@ -7,10 +7,8 @@ class range_model(base_model_name):
 
     def __init__(self, name: str, conversion_factor_value: int):
         super().__init__()
-        if not isinstance(name, str):
-            raise self._custom_exception.type(type(name), str)
-        if not isinstance(conversion_factor_value, int):
-            raise self._custom_exception.type(type(conversion_factor_value), int)
+        self._custom_exception.type(name, str)
+        self._custom_exception.type(conversion_factor_value, int)
         self.name = name
         self.conversion_factor = conversion_factor_value
 
@@ -20,8 +18,7 @@ class range_model(base_model_name):
 
     @base.setter
     def base(self, value) -> str:
-        if not isinstance(value, range_model):
-            raise self._custom_exception.type(type(value), range_model)
+        self._custom_exception.type(value, range_model)
         self.__base = value
 
     @property
@@ -30,8 +27,7 @@ class range_model(base_model_name):
 
     @conversion_factor.setter
     def conversion_factor(self, value: int):
-        if not isinstance(value, int):
-            raise self._custom_exception.type(type(value), int)
+        self._custom_exception.type(value, int)
         self.__conversion_factor = value
 
     @staticmethod

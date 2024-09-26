@@ -3,6 +3,7 @@ from Src.Core.format_reporting import format_reporting
 from Src.Reports.csv_report import csv_report
 from Src.Reports.markdown_report import markdown_report
 from Src.Core.abstract_report import abstract_report
+from Src.Core.custom_exceptions import custom_exceptions
 
 import Src.Reports as rps
 
@@ -16,10 +17,11 @@ class report_factory(abstract_logic):
         self.__reports[format_reporting.MARCDOWN] = markdown_report
 
     def create(self, format: format_reporting) -> abstract_report:
-        if not isinstance(format, format_reporting):
-            raise self._custom_exception.type(type(format), format_reporting)
+        self._custom_exception.type(format, format_reporting)
+
         if format not in self.__reports.keys():
-            raise self.set_exception(ValueError(f"Указанный вариант формата не реализован!"))
+            self.set_exception(custom_exceptions(f"Указанный вариант формата {format} не реализован!"))
+            return None
 
         report = self.__reports[format]
         return report()
