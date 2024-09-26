@@ -1,6 +1,8 @@
 from Src.Core.abstract_report import abstract_report
 from Src.Core.format_reporting import format_reporting
 
+import os
+
 """
 Отчет формирует набор данных в формате csv
 """
@@ -12,22 +14,10 @@ class csv_report(abstract_report):
         self.__format = format_reporting.CSV
 
     def creat(self, data: list | dict):
-        if isinstance(data, dict):
-            dd = data.copy()
-            data = list()
-            for key in list(dd.keys()):
-                data.append(dd[key])
-
-        self._custom_exceptions.type(data, list)
-        if len(data) == 0:
-            self._custom_exceptions.other_exception("Набор данных пуст!")
-
-        first_model = data[0]
-        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(first_model.__class__, x)),
-                             dir(first_model)))
+        fields, data = self._create_fields(data)
 
         for field in fields:
-            self.result += f"{str(field)}:"
+            self.result += f"{str(field)};"
         self.result += "\n"
 
         for row in data:
@@ -35,3 +25,11 @@ class csv_report(abstract_report):
                 value = getattr(row, field)
                 self.result += f"{str(value)};"
             self.result += "\n"
+
+    def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
+        if not os.path.exists(path):
+            self._custom_exceptions.other_exception(f"Папки {path} не существует")
+        self.creat(data)
+        with open(f"{path}{file_name}.csv", "w") as csv_file:
+            csv_file.write(self.result)
+

@@ -9,6 +9,7 @@ class settings:
     __organization_name: str = ""
     __type_ownership: str = ""
 
+    __report_format = None
     _custom_exception: custom_exceptions = custom_exceptions()
 
     @property
@@ -69,3 +70,11 @@ class settings:
         self._custom_exception.type(value, str)
         self._custom_exception.length_noequal(value, 5)
         self.__type_ownership = value
+
+    @property
+    def report_format(self):
+        return self.__report_format
+
+    @report_format.setter
+    def report_format(self, value):
+        self.__report_format = value

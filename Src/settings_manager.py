@@ -1,5 +1,6 @@
 from Src.settings import settings
 from Src.Core.abstract_logic import abstract_logic
+from Src.Reports.report_factory import report_factory
 
 import json
 import os
@@ -66,6 +67,7 @@ class settings_manager(abstract_logic):
         data.bic = "380008092"
         data.organization_name = "Рога и копыта"
         data.type_ownership = "OOOOO"
+        data.report_format = report_factory.create_default
         return data
 
     def set_exception(self, ex: Exception):
