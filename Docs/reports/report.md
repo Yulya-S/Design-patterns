@@ -1,7 +1,7 @@
 |base|conversion_factor|name|unique_code|
 |---|---|---|---|
-|<Src.models.range_model.range_model object at 0x0000020D7A215E10>|1|ךד|lbNkCj43VxWzg5Q|
-|None|1000|דנ|S0dfE9mzkQWiYnu|
-|<Src.models.range_model.range_model object at 0x0000020D7A215C60>|1|כ|x6npzLeBmFTdcNu|
-|None|1000|לכ|1lOyUZtm6oGELih|
-|None|1|רע|UmqJwoYb4MFReQO|
+|range_model()|1|ךד|WXZ5Ymu1UcAeqbO|
+|None|1000|דנ|JUjxGYNrtDMQLlb|
+|range_model()|1|כ|mfwZeR92SV4vkqL|
+|None|1000|לכ|qz2klZ4X0rAE81D|
+|None|1|רע|NWEyQB52L9qlYhe|

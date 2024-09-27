@@ -25,3 +25,6 @@ class group_model(base_model_name):
         item = group_model()
         item.name = "Заморозка"
         return item
+
+    def __str__(self):
+        return "group_model"

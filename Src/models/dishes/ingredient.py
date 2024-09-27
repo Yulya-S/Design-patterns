@@ -25,3 +25,6 @@ class ingredient_model(base_model_name):
     @property
     def quantity(self):
         return self.__quantity
+
+    def __str__(self):
+        return "ingredient"

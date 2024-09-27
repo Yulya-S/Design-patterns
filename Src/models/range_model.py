@@ -53,3 +53,6 @@ class range_model(base_model_name):
     @staticmethod
     def default_range_pcs():
         return range_model("шт", 1)
+
+    def __str__(self):
+        return "range_model"

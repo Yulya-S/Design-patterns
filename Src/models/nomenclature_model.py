@@ -56,3 +56,6 @@ class nomenclature_model(base_model_code):
         item.range = range_model.default_range_pcs()
         item.nomenclature_group = group_model.default_group_source()
         return item
+
+    def __str__(self):
+        return "nomenclature_model"

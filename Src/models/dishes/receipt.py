@@ -44,3 +44,6 @@ class receipt_model(base_model_name):
         for step in steps_cooking:
             self._custom_exception.type(step, str)
         self.__steps_cooking = steps_cooking
+
+    def __str__(self):
+        return "receipt"

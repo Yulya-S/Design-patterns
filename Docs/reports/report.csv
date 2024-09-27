@@ -1,6 +1,6 @@
 base;conversion_factor;name;unique_code;
-<Src.models.range_model.range_model object at 0x0000020D7A215CC0>;1;ךד;uKWne2hidp8AGoL;
-None;1000;דנ;AjVcFnHE1qkJZDI;
-<Src.models.range_model.range_model object at 0x0000020D7A214A00>;1;כ;Y8sMl5DpSIGJw6z;
-None;1000;לכ;kJEVurAmOwhleLx;
-None;1;רע;o84lAC0z65cT7wY;
+range_model();1;ךד;36zfArPUxGlh8iR;
+None;1000;דנ;vzI2p5CMw718ysr;
+range_model();1;כ;3EMqwCuTfkc9SnX;
+None;1000;לכ;3yONvrl4utGYEam;
+None;1;רע;f0SxMZibhQGmJK9;

@@ -31,3 +31,6 @@ class organization_model(base_model_name):
         self.__bic = data.bic
         self.__account = data.account
         self.__type_ownership = data.type_ownership
+
+    def __str__(self):
+        return "organization_model"
