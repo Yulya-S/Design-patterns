@@ -73,7 +73,7 @@ class test_reporting(unittest.TestCase):
         report = csv_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.nomenclature_key()])
+        report.upload_to_file(reposity.data[data_reposity.nomenclature_key()], file_name = "test_csv_report_upload_to_file")
 
         # Проверки
         assert report.result != ""
@@ -89,7 +89,7 @@ class test_reporting(unittest.TestCase):
         report = markdown_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.range_key()])
+        report.upload_to_file(reposity.data[data_reposity.range_key()], file_name = "test_markdown_report_upload_to_file")
 
         # Проверки
         assert report.result != ""
@@ -105,7 +105,7 @@ class test_reporting(unittest.TestCase):
         report = json_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.receipt_key()])
+        report.upload_to_file(reposity.data[data_reposity.receipt_key()], file_name = "test_json_report_upload_to_file")
 
         # Проверки
         assert report.result != ""
@@ -121,7 +121,7 @@ class test_reporting(unittest.TestCase):
         report = xml_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.receipt_key()])
+        report.upload_to_file(reposity.data[data_reposity.receipt_key()], file_name = "test_xml_report_upload_to_file")
 
         # Проверки
         assert report.result != ""
@@ -137,7 +137,7 @@ class test_reporting(unittest.TestCase):
         report = rtf_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.range_key()])
+        report.upload_to_file(reposity.data[data_reposity.range_key()], file_name = "test_rtf_report_upload_to_file")
 
         # Проверки
         assert report.result != ""
