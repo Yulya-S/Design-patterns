@@ -1,7 +1,8 @@
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.format_reporting import format_reporting
 
 
-class settings:
+class settings_model:
     __inn: str = ""
     __account: str = ""
     __correspondent_account: str = ""
@@ -9,7 +10,8 @@ class settings:
     __organization_name: str = ""
     __type_ownership: str = ""
 
-    __report_format = None
+    __default_report_format: format_reporting = format_reporting.CSV
+    __report_handlers: list = list()
     _custom_exception: custom_exceptions = custom_exceptions()
 
     @property
@@ -72,9 +74,22 @@ class settings:
         self.__type_ownership = value
 
     @property
-    def report_format(self):
-        return self.__report_format
+    def default_report_format(self):
+        return self.__default_report_format
 
-    @report_format.setter
-    def report_format(self, value):
-        self.__report_format = value
+    @default_report_format.setter
+    def default_report_format(self, value: int):
+        self._custom_exception.type(value, int)
+        try:
+            self.__default_report_format = format_reporting(value)
+        except:
+            self._custom_exception.other_exception(f"Ошибка преобразования {value} в format_reporting")
+
+    @property
+    def report_handlers(self):
+        return self.__report_handlers
+
+    @report_handlers.setter
+    def report_handlers(self, value: list):
+        self._custom_exception.type(value, list)
+        self.__report_handlers = value

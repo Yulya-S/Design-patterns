@@ -52,6 +52,7 @@ class abstract_report(ABC):
         first_model = data[0]
         fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(first_model.__class__, x)),
                              dir(first_model)))
+
         return fields, data
 
     @abstractmethod

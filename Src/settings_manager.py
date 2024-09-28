@@ -1,4 +1,4 @@
-from Src.settings import settings
+from Src.settings import settings_model
 from Src.Core.abstract_logic import abstract_logic
 from Src.Reports.report_factory import report_factory
 
@@ -13,7 +13,7 @@ import os
 class settings_manager(abstract_logic):
     __file_name = "settings.json"
     __path = f"{os.curdir}"
-    __settings: settings = None
+    __settings: settings_model = None
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -60,7 +60,7 @@ class settings_manager(abstract_logic):
 
     @property
     def __default_setting(self) -> settings:
-        data = settings()
+        data = settings_model()
         data.inn = "380008092020"
         data.account = "38000809202"
         data.correspondent_account = "38000809202"

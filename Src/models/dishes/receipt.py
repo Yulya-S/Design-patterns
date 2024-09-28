@@ -10,9 +10,18 @@ class receipt_model(base_model_name):
     __number_servings: int = 0
     __cooking_time: str = ""
 
+    def __init__(self):
+        super().__init__()
+        self.__ingredients = dict()
+        self.__steps_cooking = list()
+
     @property
     def ingredients(self):
         return self.__ingredients
+
+    @property
+    def steps_cooking(self):
+        return self.__steps_cooking
 
     # Количество порций получающееся по рецепту
     @property

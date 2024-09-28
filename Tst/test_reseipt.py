@@ -23,4 +23,4 @@ class test_reseipt(unittest.TestCase):
 
         # Проверки
         assert len(reposity.data[data_reposity.receipt_key()]) == 2
-        assert "Соль" in list(reposity.data[data_reposity.receipt_key()][0].ingredients.keys())
+        assert "Соль" in list(reposity.data[data_reposity.receipt_key()][1].ingredients.keys())

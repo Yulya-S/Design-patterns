@@ -56,7 +56,7 @@ class test_reporting(unittest.TestCase):
         start.create()
 
         # Действие
-        report = report_factory().create(format_reporting.CSV)
+        report = report_factory(manager.settings).create(format_reporting.CSV)
 
         # Проверки
         assert report is not None
@@ -73,7 +73,7 @@ class test_reporting(unittest.TestCase):
         report = csv_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.range_key()])
+        report.upload_to_file(reposity.data[data_reposity.nomenclature_key()])
 
         # Проверки
         assert report.result != ""
@@ -105,7 +105,7 @@ class test_reporting(unittest.TestCase):
         report = json_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.range_key()])
+        report.upload_to_file(reposity.data[data_reposity.receipt_key()])
 
         # Проверки
         assert report.result != ""
@@ -121,7 +121,7 @@ class test_reporting(unittest.TestCase):
         report = xml_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.range_key()])
+        report.upload_to_file(reposity.data[data_reposity.receipt_key()])
 
         # Проверки
         assert report.result != ""
@@ -141,3 +141,21 @@ class test_reporting(unittest.TestCase):
 
         # Проверки
         assert report.result != ""
+
+    # создание отчета по стандарту
+    def test_report_factory_create_default(self):
+        # Подготовка
+        reposity = data_reposity()
+        manager = settings_manager()
+        receipt = receipt_book_menager()
+        start = start_service(reposity, manager, receipt)
+        start.create()
+        report = report_factory(manager.settings)
+
+        # Действие
+        result = report.create_default
+
+
+        # Проверки
+        assert result is not None
+        assert isinstance(result, csv_report)

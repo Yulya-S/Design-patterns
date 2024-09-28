@@ -1,38 +1,51 @@
 from Src.Core.abstract_logic import abstract_logic
 from Src.Core.format_reporting import format_reporting
 from Src.Core.abstract_report import abstract_report
-from Src.Core.custom_exceptions import custom_exceptions
+from Src.settings import settings_model
 
-import Src.Reports as rps
+from Src.Reports.csv_report import csv_report
+from Src.Reports.markdown_report import markdown_report
+from Src.Reports.json_report import json_report
+from Src.Reports.rtf_report import rtf_report
+from Src.Reports.xml_report import xml_report
 
 
 class report_factory(abstract_logic):
     __reports: dict = {}
+    __settings: settings_model = None
 
-    def __init__(self) -> None:
+    def __init__(self, settings: settings_model) -> None:
         super().__init__()
-        self.__reports[format_reporting.CSV] = rps.csv_report.csv_report
-        self.__reports[format_reporting.MARCDOWN] = rps.markdown_report.markdown_report
-        self.__reports[format_reporting.JSON] = rps.json_report.json_report
-        self.__reports[format_reporting.XML] = rps.xml_report.xml_report
-        self.__reports[format_reporting.RTF] = rps.rtf_report.rtf_report
+        self._custom_exception.type(settings, settings_model)
+        self.__settings = settings
+        if self.__settings.report_handlers == []:
+            self.__reports[format_reporting.CSV] = csv_report
+            self.__reports[format_reporting.MARCDOWN] = markdown_report
+            self.__reports[format_reporting.JSON] = json_report
+            self.__reports[format_reporting.XML] = xml_report
+            self.__reports[format_reporting.RTF] = rtf_report
+        else:
+            for i in self.__settings.report_handlers:
+                if i.type not in self.__reports.keys():
+                    try:
+                        self.__reports[i.type] = eval(i.handler)
+                    except:
+                        self._custom_exception.other_exception(f"не существует способа форматирования отчета: {i.hangler}")
 
     def create(self, format: format_reporting) -> abstract_report:
         self._custom_exception.type(format, format_reporting)
 
         if format not in self.__reports.keys():
-            self.set_exception(custom_exceptions(f"Указанный вариант формата {format} не реализован!"))
+            self.set_exception(
+                self._custom_exception.other_exception(f"Указанный вариант формата {format} не реализован!"))
             return None
 
         report = self.__reports[format]
         return report()
 
-    @staticmethod
     @property
     def create_default(self):
-        report = self.__reports[format_reporting.CSV]
-        return report()
-
+        return self.create(self.__settings.default_report_format)
 
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)

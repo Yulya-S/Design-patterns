@@ -5,7 +5,7 @@ from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
 from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
-from Src.settings import settings
+from Src.settings import settings_model
 
 """
 Сервис для реализации первого старта приложения
@@ -32,7 +32,7 @@ class start_service(abstract_logic):
     """
 
     @property
-    def settings(self) -> settings:
+    def settings(self) -> settings_model:
         return self.__settings_manager.settings
 
     """

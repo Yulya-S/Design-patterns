@@ -30,6 +30,10 @@ class csv_report(abstract_report):
         if not os.path.exists(path):
             self._custom_exceptions.other_exception(f"Папки {path} не существует")
         self.creat(data)
-        with open(f"{path}{file_name}.csv", "w") as csv_file:
-            csv_file.write(self.result)
 
+        try:
+            with open(f"{path}{file_name}.csv", "w") as csv_file:
+                csv_file.write(self.result)
+            return True
+        except:
+            return False
