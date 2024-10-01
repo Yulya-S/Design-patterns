@@ -105,7 +105,7 @@ class test_reporting(unittest.TestCase):
         report = json_report()
 
         # Действие
-        report.upload_to_file(reposity.data[data_reposity.nomenclature_key()], file_name = "test_json_report_upload_to_file")
+        report.upload_to_file(reposity.data[data_reposity.receipt_key()], file_name = "test_json_report_upload_to_file")
 
         # Проверки
         assert report.result != ""

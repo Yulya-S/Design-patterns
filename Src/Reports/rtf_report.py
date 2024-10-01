@@ -4,7 +4,7 @@ from Src.Core.format_reporting import format_reporting
 import os
 
 """
-Отчет формирует набор данных в формате csv
+Отчет формирует набор данных в формате rtf
 """
 
 
