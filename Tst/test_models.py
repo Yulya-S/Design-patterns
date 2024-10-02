@@ -88,7 +88,7 @@ class test_models(unittest.TestCase):
         item = range_model("кг", 1)
 
         # проверки
-        assert item.basic_unit_measurement == "кг"
+        assert item.name == "кг"
         assert item.conversion_factor == 1
 
     # проверка ошибок при вводе данных (range_model)
@@ -98,7 +98,7 @@ class test_models(unittest.TestCase):
 
         # проверки
         with self.assertRaises(custom_exceptions):
-            item.basic_unit_measurement = None
+            item.name = None
         with self.assertRaises(custom_exceptions):
             item.conversion_factor = None
 

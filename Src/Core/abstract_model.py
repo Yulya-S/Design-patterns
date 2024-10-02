@@ -18,10 +18,8 @@ class abstract_model(ABC):
 
     @name.setter
     def name(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exception.type(type(value), str)
-        if len(value) > 50:
-            raise self._custom_exception.length(len(value), 50, ">")
+        self._custom_exception.type(value, str)
+        self._custom_exception.length_more(value, 50)
         self.__name = value
 
     @property

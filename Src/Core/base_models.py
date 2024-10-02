@@ -6,6 +6,7 @@ from Src.Core.abstract_model import abstract_model
 
 
 class base_model_code(abstract_model):
+
     def set_compare_mode(self, other, equal: bool = True) -> bool:
         return super().set_compare_mode(other, equal)
 
@@ -24,10 +25,8 @@ class base_model_name(abstract_model):
 
     @name.setter
     def name(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exception.type(type(value), str)
-        if len(value) > 255:
-            raise self._custom_exception.length(len(value), 255, ">")
+        self._custom_exception.type(value, str)
+        self._custom_exception.length_more(value, 255)
         self.__name = value
 
     def set_compare_mode(self, other, equal: bool = True) -> bool:

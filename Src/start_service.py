@@ -5,7 +5,7 @@ from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
 from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
-from Src.settings import settings
+from Src.settings import settings_model
 
 """
 Сервис для реализации первого старта приложения
@@ -20,12 +20,9 @@ class start_service(abstract_logic):
     def __init__(self, reposity: data_reposity, manager: settings_manager,
                  recipe_manager: receipt_book_menager) -> None:
         super().__init__()
-        if not isinstance(reposity, data_reposity):
-            self._custom_exception.type(type(reposity), data_reposity)
-        if not isinstance(manager, settings_manager):
-            self._custom_exception.type(type(manager), settings_manager)
-        if not isinstance(recipe_manager, receipt_book_menager):
-            self._custom_exception.type(type(recipe_manager), receipt_book_menager)
+        self._custom_exception.type(reposity, data_reposity)
+        self._custom_exception.type(manager, settings_manager)
+        self._custom_exception.type(recipe_manager, receipt_book_menager)
         self.__reposity = reposity
         self.__settings_manager = manager
         self.__recipe_manager = recipe_manager
@@ -35,7 +32,7 @@ class start_service(abstract_logic):
     """
 
     @property
-    def settings(self) -> settings:
+    def settings(self) -> settings_model:
         return self.__settings_manager.settings
 
     """

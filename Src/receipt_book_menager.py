@@ -17,8 +17,7 @@ class receipt_book_menager(abstract_logic):
 
     # Прочитать рецепты из директории Docs
     def open(self, path: str = ""):
-        if not isinstance(path, str):
-            raise self._custom_exception.type(type(path), str)
+        self._custom_exception.type(path, str)
         if path != "":
             self.__path = path
 
@@ -37,8 +36,7 @@ class receipt_book_menager(abstract_logic):
 
     # Парсинг фала типа Markdown
     def __parsing_Markdown(self, file: str):
-        if not isinstance(file, str):
-            raise self._custom_exception.type(type(file), str)
+        self._custom_exception.type(file, str)
         new_receipt = receipt_model()
         # Название
         new_receipt.name = file.split("#")[1].strip()
