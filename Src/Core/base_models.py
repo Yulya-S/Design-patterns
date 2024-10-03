@@ -1,4 +1,5 @@
 from Src.Core.abstract_model import abstract_model
+from Src.Core.custom_exceptions import custom_exceptions
 
 """
 Базовый класс для наследования с поддержкой сравнения по коду
@@ -25,8 +26,8 @@ class base_model_name(abstract_model):
 
     @name.setter
     def name(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_more(value, 255)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_more(value, 255)
         self.__name = value
 
     def set_compare_mode(self, other, equal: bool = True) -> bool:

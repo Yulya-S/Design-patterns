@@ -1,6 +1,7 @@
 from Src.Core.abstract_logic import abstract_logic
 from Src.Core.format_reporting import format_reporting
 from Src.Core.abstract_report import abstract_report
+from Src.Core.custom_exceptions import custom_exceptions
 from Src.settings import settings_model
 
 from Src.Reports.csv_report import csv_report
@@ -16,7 +17,7 @@ class report_factory(abstract_logic):
 
     def __init__(self, settings: settings_model) -> None:
         super().__init__()
-        self._custom_exception.type(settings, settings_model)
+        custom_exceptions.type(settings, settings_model)
         self.__settings = settings
         if self.__settings.report_handlers == []:
             self.__reports[format_reporting.CSV] = csv_report
@@ -30,14 +31,14 @@ class report_factory(abstract_logic):
                     try:
                         self.__reports[i.type] = eval(i.handler)
                     except:
-                        self._custom_exception.other_exception(f"не существует способа форматирования отчета: {i.hangler}")
+                        custom_exceptions.other_exception(f"не существует способа форматирования отчета: {i.hangler}")
 
     def create(self, format: format_reporting) -> abstract_report:
-        self._custom_exception.type(format, format_reporting)
+        custom_exceptions.type(format, format_reporting)
 
         if format not in self.__reports.keys():
             self.set_exception(
-                self._custom_exception.other_exception(f"Указанный вариант формата {format} не реализован!"))
+                custom_exceptions.other_exception(f"Указанный вариант формата {format} не реализован!"))
             return None
 
         report = self.__reports[format]

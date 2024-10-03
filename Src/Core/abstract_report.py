@@ -7,7 +7,6 @@ from Src.Core.base_models import base_model_name, base_model_code
 class abstract_report(ABC):
     __format: format_reporting == format_reporting.CSV
     __result: str = ""
-    _custom_exceptions: custom_exceptions = custom_exceptions()
 
     """
     Сформировать
@@ -36,7 +35,7 @@ class abstract_report(ABC):
 
     @result.setter
     def result(self, value: str):
-        self._custom_exceptions.type(value, str)
+        custom_exceptions.type(value, str)
         self.__result = value
 
     def _create_fields(self, data: list | dict):
@@ -46,9 +45,9 @@ class abstract_report(ABC):
             for key in list(dd.keys()):
                 data.append(dd[key])
 
-        self._custom_exceptions.type(data, list)
+        custom_exceptions.type(data, list)
         if len(data) == 0:
-            self._custom_exceptions.other_exception("Набор данных пуст!")
+            custom_exceptions.other_exception("Набор данных пуст!")
 
         first_model = data[0]
         fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(first_model.__class__, x)),
