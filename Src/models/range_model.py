@@ -63,9 +63,21 @@ class range_model(base_model_name):
     def parse_JSON(data: dict):
         custom_exceptions.type(data, dict)
 
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(range_model, x)),
+                             dir(range_model)))
+
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+
         new_nomenclature = range_model(data["name"], int(data["conversion_factor"]))
-        if data["base"] is not None:
-            new_nomenclature.base = range_model.parse_JSON(data["base"])
-        new_nomenclature.unique_code = data["unique_code"]
+        for field in fields:
+            if field == "base":
+                if data[field] is None:
+                    continue
+                data[field] = range_model.parse_JSON(data[field])
+            new_nomenclature.__setattr__(field, data[field])
 
         return new_nomenclature

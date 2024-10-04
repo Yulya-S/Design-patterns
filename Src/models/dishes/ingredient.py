@@ -44,8 +44,14 @@ class ingredient_model(base_model_name):
     @staticmethod
     def parse_JSON(data: dict):
         custom_exceptions.type(data, dict)
+
         if len(data) == 0:
             return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(ingredient_model, x)),
+                             dir(ingredient_model)))
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
 
         new_ingredient = ingredient_model(data["name"], nomenclature_model.parse_JSON(data["range_model"]),
                                           data["quantity"])

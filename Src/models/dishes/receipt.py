@@ -68,17 +68,21 @@ class receipt_model(base_model_name):
     def parse_JSON(data: dict):
         custom_exceptions.type(data, dict)
 
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(receipt_model, x)),
+                             dir(receipt_model)))
+
         new_receipt = receipt_model()
 
-        new_receipt.name = data["name"]
-        new_receipt.unique_code = data["unique_code"]
-        new_receipt.steps_cooking = data["steps_cooking"]
-        new_receipt.cooking_time = data["cooking_time"]
-        new_receipt.number_servings = data["number_servings"]
-
-        ingredients = {}
-        for i in list(data["ingredients"].keys()):
-            ingredients[i] = ingredient_model.parse_JSON(data["ingredients"][i])
-        new_receipt.ingredients = ingredients
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+            if field == "ingredients":
+                ingredients = {}
+                for i in list(data[field].keys()):
+                    ingredients[i] = ingredient_model.parse_JSON(data["ingredients"][i])
+                data[field] = ingredients
+            new_receipt.__setattr__(field, data[field])
 
         return new_receipt

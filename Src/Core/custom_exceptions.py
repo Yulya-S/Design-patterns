@@ -15,6 +15,11 @@ class custom_exceptions(Exception):
             raise custom_exceptions(f"Некорректно передан параметр! {type(resulting_type)} != {estimated_type}")
 
     @staticmethod
+    def presence_element_in_dict(data: dict, key_name: str):
+        if key_name not in list(data.keys()):
+            raise custom_exceptions(f"Ключь {key_name} отсутствует в словаре!")
+
+    @staticmethod
     def None_received(parameter):
         if parameter is None:
             raise custom_exceptions(f"Был возвращен None вместо значения переменной!")

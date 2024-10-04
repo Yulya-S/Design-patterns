@@ -79,46 +79,6 @@ class start_service(abstract_logic):
         self.__create_nomenclatures()
         self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open()
 
-    # Чтение JSON файла
-    def __read_JSON(self, json_file: str, path: str = ""):
-        custom_exceptions.type(json_file, str)
-        custom_exceptions.type(path, str)
-
-        try:
-            full_name = f"{path}{os.sep}{json_file}"
-            stream = open(full_name)
-            data = json.load(stream)
-            return data
-        except Exception as ex:
-            self.set_exception(ex)
-            return None
-
-    def group_from_JSON(self, json_file: str, path: str = ""):
-        data_json = self.__read_JSON(json_file, path)
-        self.__reposity.data[self.__reposity.group_key()] = []
-
-        for i in list(data_json.keys()):
-            self.__reposity.data[self.__reposity.group_key()].append(group_model.parse_JSON(data_json[i]))
-
-    def nomenclature_from_JSON(self, json_file: str, path: str = ""):
-        data_json = self.__read_JSON(json_file, path)
-        self.__reposity.data[self.__reposity.nomenclature_key()] = {}
-
-        for i in list(data_json.keys()):
-            value = nomenclature_model.parse_JSON(data_json[i])
-            self.__reposity.data[self.__reposity.nomenclature_key()][value.name] = value
-
-    def range_from_JSON(self, json_file: str, path: str = ""):
-        data_json = self.__read_JSON(json_file, path)
-        self.__reposity.data[self.__reposity.range_key()] = {}
-
-        for i in list(data_json.keys()):
-            value = range_model.parse_JSON(data_json[i])
-            self.__reposity.data[self.__reposity.range_key()][value.name] = value
-
-    def receipts_from_JSON(self, json_file: str, path: str = ""):
-        data_json = self.__read_JSON(json_file, path)
-        self.__reposity.data[self.__reposity.receipt_key()] = receipt_book_menager.parse_JSON(data_json)
 
     """
     Перегрузка абстрактного метода

@@ -36,7 +36,15 @@ class group_model(base_model_name):
         custom_exceptions.type(data, dict)
 
         new_group = group_model()
-        new_group.name = data["name"]
-        new_group.unique_code = data["unique_code"]
+
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(group_model, x)),
+                             dir(group_model)))
+
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+            new_group.__setattr__(field, data[field])
 
         return new_group

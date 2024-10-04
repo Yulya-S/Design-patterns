@@ -41,6 +41,11 @@ class abstract_model(ABC):
             return self.unique_code == other.unique_code
         return self.unique_code != other.unique_code
 
+    @staticmethod
+    @abstractmethod
+    def parse_JSON(data: dict):
+        pass
+
     def __eq__(self, other):
         return self.set_compare_mode(other, True)
 

@@ -31,4 +31,4 @@ class abstract_logic(ABC):
 
     @abstractmethod
     def set_exception(self, ex: Exception):
-        pass
+        self._inner_set_exception(ex)

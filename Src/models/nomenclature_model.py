@@ -66,11 +66,20 @@ class nomenclature_model(base_model_code):
     def parse_JSON(data: dict):
         custom_exceptions.type(data, dict)
 
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(nomenclature_model, x)),
+                             dir(nomenclature_model)))
+
         new_nomenclature = nomenclature_model()
 
-        new_nomenclature.full_name = data["full_name"]
-        new_nomenclature.name = data["name"]
-        new_nomenclature.nomenclature_group = group_model.parse_JSON(data["nomenclature_group"])
-        new_nomenclature.range = range_model.parse_JSON(data["range"])
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+            if field == "nomenclature_group":
+                data[field] = group_model.parse_JSON(data[field])
+            elif field == "range":
+                data[field] = range_model.parse_JSON(data[field])
+            new_nomenclature.__setattr__(field, data[field])
 
         return new_nomenclature
