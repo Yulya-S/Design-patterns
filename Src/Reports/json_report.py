@@ -16,14 +16,14 @@ class json_report(abstract_report):
         super().__init__()
         self.__format = format_reporting.JSON
 
-    def creat(self, data: list | dict):
+    def create(self, data: list | dict):
         self.result = str(self._data_to_dict(data))
 
     def upload_to_file(self, data: list | dict, path: str = "..\\Docs\\reports\\", file_name: str = "report"):
         if not os.path.exists(path):
             custom_exceptions.other_exception(f"Папки {path} не существует")
 
-        self.creat(data)
+        self.create(data)
         result = self._data_to_dict(data)
 
         try:

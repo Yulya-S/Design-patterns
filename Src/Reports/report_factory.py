@@ -20,28 +20,28 @@ class report_factory(abstract_logic):
         custom_exceptions.type(settings, settings_model)
         self.__settings = settings
         if self.__settings.report_handlers == []:
-            self.__reports[format_reporting.CSV] = csv_report
-            self.__reports[format_reporting.MARCDOWN] = markdown_report
-            self.__reports[format_reporting.JSON] = json_report
-            self.__reports[format_reporting.XML] = xml_report
-            self.__reports[format_reporting.RTF] = rtf_report
+            self.__reports[format_reporting.CSV.value] = csv_report
+            self.__reports[format_reporting.MARCDOWN.value] = markdown_report
+            self.__reports[format_reporting.JSON.value] = json_report
+            self.__reports[format_reporting.XML.value] = xml_report
+            self.__reports[format_reporting.RTF.value] = rtf_report
         else:
             for i in self.__settings.report_handlers:
-                if i.type not in self.__reports.keys():
+                if i["type"] not in self.__reports.keys():
                     try:
-                        self.__reports[i.type] = eval(i.handler)
+                        self.__reports[i["type"]] = eval(i["hendler"])
                     except:
-                        custom_exceptions.other_exception(f"не существует способа форматирования отчета: {i.hangler}")
+                        custom_exceptions.other_exception(f"не существует способа форматирования отчета: {i['hengler']}")
 
     def create(self, format: format_reporting) -> abstract_report:
         custom_exceptions.type(format, format_reporting)
 
-        if format not in self.__reports.keys():
+        if format.value not in self.__reports.keys():
             self.set_exception(
                 custom_exceptions.other_exception(f"Указанный вариант формата {format} не реализован!"))
             return None
 
-        report = self.__reports[format]
+        report = self.__reports[format.value]
         return report()
 
     @property

@@ -13,7 +13,7 @@ class abstract_report(ABC):
     """
 
     @abstractmethod
-    def creat(self, data: list):
+    def create(self, data: list):
         pass
 
     """

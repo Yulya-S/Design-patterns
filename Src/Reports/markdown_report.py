@@ -14,7 +14,7 @@ class markdown_report(abstract_report):
         super().__init__()
         self.__format = format_reporting.MARCDOWN
 
-    def creat(self, data: list | dict):
+    def create(self, data: list | dict):
         fields, data = self._create_fields(data)
 
         self.result += "|"
@@ -34,7 +34,7 @@ class markdown_report(abstract_report):
     def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
         if not os.path.exists(path):
             custom_exceptions.other_exception(f"Папки {path} не существует")
-        self.creat(data)
+        self.create(data)
 
         try:
             with open(f"{path}{file_name}.md", "w") as md_file:

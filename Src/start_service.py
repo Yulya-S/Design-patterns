@@ -73,11 +73,14 @@ class start_service(abstract_logic):
     Первый старт
     """
 
-    def create(self):
+    def create(self, path: str = ""):
+        custom_exceptions.type(path, str)
         self.__create_nomenclature_groups()
         self.__create_ranges()
         self.__create_nomenclatures()
-        self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open()
+        if path == ".":
+            path += "\\Docs"
+        self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open(path)
 
 
     """
