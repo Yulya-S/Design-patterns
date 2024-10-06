@@ -1,6 +1,7 @@
 from Src.Core.abstract_logic import abstract_logic
 from Src.models.dishes.receipt import receipt_model
 from Src.data_reposity import data_reposity
+from Src.Core.custom_exceptions import custom_exceptions
 
 import os
 import codecs
@@ -17,7 +18,7 @@ class receipt_book_menager(abstract_logic):
 
     # Прочитать рецепты из директории Docs
     def open(self, path: str = ""):
-        self._custom_exception.type(path, str)
+        custom_exceptions.type(path, str)
         if path != "":
             self.__path = path
 
@@ -36,7 +37,7 @@ class receipt_book_menager(abstract_logic):
 
     # Парсинг фала типа Markdown
     def __parsing_Markdown(self, file: str):
-        self._custom_exception.type(file, str)
+        custom_exceptions.type(file, str)
         new_receipt = receipt_model()
         # Название
         new_receipt.name = file.split("#")[1].strip()
@@ -49,7 +50,7 @@ class receipt_book_menager(abstract_logic):
         steps = file.split("`")[-1].strip().split("\n")
         for i in range(len(steps)):
             steps[i] = steps[i].strip()
-        new_receipt.add_steps_cooking(steps)
+        new_receipt.steps_cooking = steps
 
         # Ингредиенты
         ingredients = file.split("`")[2].split("#")[0].split("|")
@@ -67,3 +68,13 @@ class receipt_book_menager(abstract_logic):
 
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    @staticmethod
+    def parse_JSON(data: dict):
+        custom_exceptions.type(data, dict)
+        receipts = []
+
+        for i in list(data.keys()):
+            receipts.append(receipt_model.parse_JSON(data[i]))
+
+        return receipts

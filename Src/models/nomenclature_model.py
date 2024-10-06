@@ -1,6 +1,7 @@
 from Src.Core.base_models import base_model_code
 from Src.models.group_model import group_model
 from Src.models.range_model import range_model
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 class nomenclature_model(base_model_code):
@@ -14,8 +15,8 @@ class nomenclature_model(base_model_code):
 
     @full_name.setter
     def full_name(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_more(value, 255)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_more(value, 255)
         self.__full_name = value
 
     @property
@@ -24,7 +25,7 @@ class nomenclature_model(base_model_code):
 
     @nomenclature_group.setter
     def nomenclature_group(self, value: group_model):
-        self._custom_exception.type(value, group_model)
+        custom_exceptions.type(value, group_model)
         self.__group = value
 
     @property
@@ -33,7 +34,7 @@ class nomenclature_model(base_model_code):
 
     @range.setter
     def range(self, value: range_model):
-        self._custom_exception.type(value, range_model)
+        custom_exceptions.type(value, range_model)
         self.__range = value
 
     @staticmethod
@@ -59,3 +60,26 @@ class nomenclature_model(base_model_code):
 
     def __str__(self):
         return "nomenclature_model"
+
+    # Парсинг JSON файла
+    @staticmethod
+    def parse_JSON(data: dict):
+        custom_exceptions.type(data, dict)
+
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(nomenclature_model, x)),
+                             dir(nomenclature_model)))
+
+        new_nomenclature = nomenclature_model()
+
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+            if field == "nomenclature_group":
+                data[field] = group_model.parse_JSON(data[field])
+            elif field == "range":
+                data[field] = range_model.parse_JSON(data[field])
+            new_nomenclature.__setattr__(field, data[field])
+
+        return new_nomenclature

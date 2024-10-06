@@ -1,5 +1,6 @@
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.format_reporting import format_reporting
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 class settings_model:
@@ -20,8 +21,8 @@ class settings_model:
 
     @inn.setter
     def inn(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_noequal(value, 12)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_noequal(value, 12)
         self.__inn = value
 
     @property
@@ -30,8 +31,8 @@ class settings_model:
 
     @account.setter
     def account(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_noequal(value, 11)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_noequal(value, 11)
         self.__account = value
 
     @property
@@ -40,8 +41,8 @@ class settings_model:
 
     @correspondent_account.setter
     def correspondent_account(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_noequal(value, 11)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_noequal(value, 11)
         self.__correspondent_account = value
 
     @property
@@ -50,8 +51,8 @@ class settings_model:
 
     @bic.setter
     def bic(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_noequal(value, 9)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_noequal(value, 9)
         self.__bic = value
 
     @property
@@ -60,7 +61,7 @@ class settings_model:
 
     @organization_name.setter
     def organization_name(self, value: str):
-        self._custom_exception.type(value, str)
+        custom_exceptions.type(value, str)
         self.__organization_name = value
 
     @property
@@ -69,8 +70,8 @@ class settings_model:
 
     @type_ownership.setter
     def type_ownership(self, value: str):
-        self._custom_exception.type(value, str)
-        self._custom_exception.length_noequal(value, 5)
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_noequal(value, 5)
         self.__type_ownership = value
 
     @property
@@ -79,7 +80,7 @@ class settings_model:
 
     @default_report_format.setter
     def default_report_format(self, value: int):
-        self._custom_exception.type(value, int)
+        custom_exceptions.type(value, int)
         try:
             self.__default_report_format = format_reporting(value)
         except:
@@ -91,5 +92,5 @@ class settings_model:
 
     @report_handlers.setter
     def report_handlers(self, value: list):
-        self._custom_exception.type(value, list)
+        custom_exceptions.type(value, list)
         self.__report_handlers = value

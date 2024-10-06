@@ -1,6 +1,7 @@
 from Src.settings import settings_model
 from Src.Core.abstract_logic import abstract_logic
 from Src.Reports.report_factory import report_factory
+from Src.Core.custom_exceptions import custom_exceptions
 
 import json
 import os
@@ -29,8 +30,8 @@ class settings_manager(abstract_logic):
         return self.__settings
 
     def open(self, file_name: str = "", path: str = ""):
-        self._custom_exception.type(file_name, str)
-        self._custom_exception.type(path, str)
+        custom_exceptions.type(file_name, str)
+        custom_exceptions.type(path, str)
 
         if file_name != "":
             self.__file_name = file_name

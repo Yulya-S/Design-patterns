@@ -1,5 +1,6 @@
 from Src.Core.abstract_report import abstract_report
 from Src.Core.format_reporting import format_reporting
+from Src.Core.custom_exceptions import custom_exceptions
 
 import os
 
@@ -28,7 +29,7 @@ class rtf_report(abstract_report):
 
     def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
         if not os.path.exists(path):
-            self._custom_exceptions.other_exception(f"Папки {path} не существует")
+            custom_exceptions.other_exception(f"Папки {path} не существует")
         self.creat(data)
 
         try:
