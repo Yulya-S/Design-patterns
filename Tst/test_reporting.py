@@ -9,7 +9,7 @@ from Src.Reports.markdown_report import markdown_report
 from Src.Reports.json_report import json_report
 from Src.Reports.xml_report import xml_report
 from Src.Reports.rtf_report import rtf_report
-from Src.json_deserialization import json_deserialization
+from Src.Json_deserialization import json_deserialization
 
 import unittest
 

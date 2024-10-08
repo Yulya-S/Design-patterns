@@ -15,14 +15,14 @@ class xml_report(abstract_report):
         super().__init__()
         self.__format = format_reporting.XML
 
-    def creat(self, data: list | dict):
+    def create(self, data: list | dict):
         result = self._data_to_dict(data)
         self.result = str(dicttoxml(result))
 
     def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
         if not os.path.exists(path):
             custom_exceptions.other_exception(f"Папки {path} не существует")
-        self.creat(data)
+        self.create(data)
 
         try:
             with open(f"{path}{file_name}.xml", "w") as xml_file:
