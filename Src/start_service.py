@@ -1,11 +1,15 @@
 from Src.Core.abstract_logic import abstract_logic
+from Src.Core.custom_exceptions import custom_exceptions
 from Src.data_reposity import data_reposity
 from Src.models.group_model import group_model
 from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
 from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
-from Src.settings import settings
+from Src.settings import settings_model
+
+import os
+import json
 
 """
 Сервис для реализации первого старта приложения
@@ -20,12 +24,9 @@ class start_service(abstract_logic):
     def __init__(self, reposity: data_reposity, manager: settings_manager,
                  recipe_manager: receipt_book_menager) -> None:
         super().__init__()
-        if not isinstance(reposity, data_reposity):
-            self._custom_exception.type(type(reposity), data_reposity)
-        if not isinstance(manager, settings_manager):
-            self._custom_exception.type(type(manager), settings_manager)
-        if not isinstance(recipe_manager, receipt_book_menager):
-            self._custom_exception.type(type(recipe_manager), receipt_book_menager)
+        custom_exceptions.type(reposity, data_reposity)
+        custom_exceptions.type(manager, settings_manager)
+        custom_exceptions.type(recipe_manager, receipt_book_menager)
         self.__reposity = reposity
         self.__settings_manager = manager
         self.__recipe_manager = recipe_manager
@@ -35,8 +36,12 @@ class start_service(abstract_logic):
     """
 
     @property
-    def settings(self) -> settings:
+    def settings(self) -> settings_model:
         return self.__settings_manager.settings
+
+    @property
+    def reposity(self):
+        return self.__reposity
 
     """
     Сформировать группы номенклатуры
@@ -68,11 +73,15 @@ class start_service(abstract_logic):
     Первый старт
     """
 
-    def create(self):
+    def create(self, path: str = ""):
+        custom_exceptions.type(path, str)
         self.__create_nomenclature_groups()
         self.__create_ranges()
         self.__create_nomenclatures()
-        self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open()
+        if path == ".":
+            path += "\\Docs"
+        self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open(path)
+
 
     """
     Перегрузка абстрактного метода

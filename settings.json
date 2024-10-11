@@ -4,5 +4,13 @@
     "correspondent_account": "22222222222",
     "bic": "222222222",
     "organization_name": "hello",
-    "type_ownership": "OOOOO"
+    "type_ownership": "OOOOO",
+    "default_report_format": 1,
+    "report_handlers": [
+        { "type": 1, "hendler": "csv_report" },
+        { "type": 2, "hendler": "markdown_report" },
+        { "type": 3, "hendler": "json_report" },
+        { "type": 4, "hendler": "xml_report" },
+        { "type": 5, "hendler": "rtf_report" }
+    ]
 }

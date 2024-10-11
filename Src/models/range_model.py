@@ -1,4 +1,5 @@
 from Src.Core.base_models import base_model_name
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 class range_model(base_model_name):
@@ -7,10 +8,8 @@ class range_model(base_model_name):
 
     def __init__(self, name: str, conversion_factor_value: int):
         super().__init__()
-        if not isinstance(name, str):
-            raise self._custom_exception.type(type(name), str)
-        if not isinstance(conversion_factor_value, int):
-            raise self._custom_exception.type(type(conversion_factor_value), int)
+        custom_exceptions.type(name, str)
+        custom_exceptions.type(conversion_factor_value, int)
         self.name = name
         self.conversion_factor = conversion_factor_value
 
@@ -20,8 +19,7 @@ class range_model(base_model_name):
 
     @base.setter
     def base(self, value) -> str:
-        if not isinstance(value, range_model):
-            raise self._custom_exception.type(type(value), range_model)
+        custom_exceptions.type(value, range_model)
         self.__base = value
 
     @property
@@ -30,8 +28,7 @@ class range_model(base_model_name):
 
     @conversion_factor.setter
     def conversion_factor(self, value: int):
-        if not isinstance(value, int):
-            raise self._custom_exception.type(type(value), int)
+        custom_exceptions.type(value, int)
         self.__conversion_factor = value
 
     @staticmethod
@@ -57,3 +54,30 @@ class range_model(base_model_name):
     @staticmethod
     def default_range_pcs():
         return range_model("шт", 1)
+
+    def __str__(self):
+        return "range_model"
+
+    # Парсинг JSON файла
+    @staticmethod
+    def parse_JSON(data: dict):
+        custom_exceptions.type(data, dict)
+
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(range_model, x)),
+                             dir(range_model)))
+
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+
+        new_nomenclature = range_model(data["name"], int(data["conversion_factor"]))
+        for field in fields:
+            if field == "base":
+                if data[field] is None:
+                    continue
+                data[field] = range_model.parse_JSON(data[field])
+            new_nomenclature.__setattr__(field, data[field])
+
+        return new_nomenclature

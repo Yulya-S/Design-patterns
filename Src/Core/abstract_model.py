@@ -7,7 +7,6 @@ from Src.Core.custom_exceptions import custom_exceptions
 class abstract_model(ABC):
     __name: str = ""
     __unique_code: str = ""
-    _custom_exception: custom_exceptions = custom_exceptions()
 
     def __init__(self):
         self.__unique_code = ''.join(random.sample((string.ascii_letters + string.digits), 15))
@@ -18,15 +17,19 @@ class abstract_model(ABC):
 
     @name.setter
     def name(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exception.type(type(value), str)
-        if len(value) > 50:
-            raise self._custom_exception.length(len(value), 50, ">")
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_more(value, 50)
         self.__name = value
 
     @property
     def unique_code(self) -> str:
         return self.__unique_code
+
+    @unique_code.setter
+    def unique_code(self, value: str):
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_noequal(value, 15)
+        self.__unique_code = value
 
     @abstractmethod
     def set_compare_mode(self, other, equal: bool = True) -> bool:
@@ -37,6 +40,11 @@ class abstract_model(ABC):
         if equal:
             return self.unique_code == other.unique_code
         return self.unique_code != other.unique_code
+
+    @staticmethod
+    @abstractmethod
+    def parse_JSON(data: dict):
+        pass
 
     def __eq__(self, other):
         return self.set_compare_mode(other, True)

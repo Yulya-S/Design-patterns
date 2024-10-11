@@ -1,4 +1,5 @@
 from Src.Core.abstract_model import abstract_model
+from Src.Core.custom_exceptions import custom_exceptions
 
 """
 Базовый класс для наследования с поддержкой сравнения по коду
@@ -8,6 +9,10 @@ from Src.Core.abstract_model import abstract_model
 class base_model_code(abstract_model):
     def set_compare_mode(self, other, equal: bool = True) -> bool:
         return super().set_compare_mode(other, equal)
+
+    @staticmethod
+    def parse_JSON(data: dict):
+        super().parse_JSON(data)
 
 
 """
@@ -24,10 +29,8 @@ class base_model_name(abstract_model):
 
     @name.setter
     def name(self, value: str):
-        if not isinstance(value, str):
-            raise self._custom_exception.type(type(value), str)
-        if len(value) > 255:
-            raise self._custom_exception.length(len(value), 255, ">")
+        custom_exceptions.type(value, str)
+        custom_exceptions.length_more(value, 255)
         self.__name = value
 
     def set_compare_mode(self, other, equal: bool = True) -> bool:
@@ -38,3 +41,7 @@ class base_model_name(abstract_model):
         if equal:
             return self.name == other.name
         return self.name != other.name
+
+    @staticmethod
+    def parse_JSON(data: dict):
+        super().parse_JSON(data)

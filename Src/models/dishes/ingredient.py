@@ -1,5 +1,6 @@
 from Src.Core.base_models import base_model_name
 from Src.models.nomenclature_model import nomenclature_model
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 # Класс ингредиента
@@ -9,12 +10,9 @@ class ingredient_model(base_model_name):
 
     def __init__(self, name: str, nomenclature: nomenclature_model, quantity: int):
         super().__init__()
-        if not isinstance(name, str):
-            raise self._custom_exception.type(type(name), str)
-        if not isinstance(nomenclature, nomenclature_model):
-            raise self._custom_exception.type(type(nomenclature), nomenclature_model)
-        if not isinstance(quantity, int):
-            raise self._custom_exception.type(type(quantity), int)
+        custom_exceptions.type(name, str)
+        custom_exceptions.type(nomenclature, nomenclature_model)
+        custom_exceptions.type(quantity, int)
         self.name = name
         self.__nomenclature = nomenclature
         self.__quantity = quantity
@@ -24,7 +22,38 @@ class ingredient_model(base_model_name):
     def range_model(self):
         return self.__nomenclature
 
+    @range_model.setter
+    def range_model(self, value: nomenclature_model):
+        custom_exceptions.type(value, nomenclature_model)
+        self.__nomenclature = value
+
     # Необходимое количество ингредиента
     @property
     def quantity(self):
         return self.__quantity
+
+    @quantity.setter
+    def quantity(self, value: int):
+        custom_exceptions.type(value, int)
+        self.__quantity = value
+
+    def __str__(self):
+        return "ingredient"
+
+    # Парсинг JSON файла
+    @staticmethod
+    def parse_JSON(data: dict):
+        custom_exceptions.type(data, dict)
+
+        if len(data) == 0:
+            return None
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(ingredient_model, x)),
+                             dir(ingredient_model)))
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+
+        new_ingredient = ingredient_model(data["name"], nomenclature_model.parse_JSON(data["range_model"]),
+                                          data["quantity"])
+        return new_ingredient
+
