@@ -1,18 +1,16 @@
-import re
 import connexion
+from flask import request
 
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
 from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
+from Src.Dto.filter import filter_model
 
 from Src.Core.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
 
 from Src.Reports.report_factory import report_factory
-
-# from Src.settings_manager import settings_manager
-# from Src.Reports.report_factory import report_factory
 
 app = connexion.FlaskApp(__name__)
 app.add_api("swagger.yaml")
@@ -22,7 +20,17 @@ manager = settings_manager()
 manager.open("settings.json")
 receipt = receipt_book_menager()
 start = start_service(reposity, manager, receipt)
+
 start.create(".")
+filter = filter_model()
+
+
+@app.route("/filter/", methods=["POST"])
+def filter():
+    filter.name = "" if request.args.get('name') is None else request.args.get('name')
+    filter.id = "" if request.args.get('id') is None else request.args.get('id')
+    return f"filter(name={filter.name}; id={filter.id})"
+
 
 """
 Получить список форматов отчетов
@@ -32,12 +40,6 @@ start.create(".")
 @app.route("/api/reports/formats", methods=['GET'])
 def formats():
     return format_reporting.list()
-
-
-# Запуск
-# @app.route("/")
-# def hello():
-#     return "Api сервер запущен!"
 
 
 # Получить отчет по списоку единиц измерения
