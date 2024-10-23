@@ -7,6 +7,7 @@ from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
 
 
+# Класс складских транзакций
 class warehouse_transaction_model(base_model_name):
     __warehouse: warehouse_model = None
     __nomenclature: nomenclature_model = None
@@ -14,6 +15,16 @@ class warehouse_transaction_model(base_model_name):
     __type: bool = 0  # 0 - расход;   1 - приход;
     __range: range_model = None
     __period: datetime = None
+
+    def __init__(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
+                 quantity: int, type: bool, range: range_model):
+        super().__init__()
+        self.warehouse = warehouse
+        self.nomenclature = nomenclature
+        self.quantity = quantity
+        self.type = type
+        self.range = range
+        self.period = datetime.now()
 
     @property
     def warehouse(self):
@@ -66,7 +77,7 @@ class warehouse_transaction_model(base_model_name):
 
     @period.setter
     def period(self, value: datetime):
-        custom_exceptions.type(value, custom_exceptions)
+        custom_exceptions.type(value, datetime)
         self.__period = value
 
     def __str__(self):
