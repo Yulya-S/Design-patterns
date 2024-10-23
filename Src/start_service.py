@@ -57,11 +57,6 @@ class start_service(abstract_logic):
         dict[range_model.default_range_pcs().name] = range_model.default_range_pcs()
         self.__reposity.data[data_reposity.range_key()] = dict
 
-    def __create_warehouses(self):
-        list = []
-        list.append(warehouse_model.create(""))
-        self.__reposity.data[data_reposity.warehouse_key()] = list
-
     # Первый старт
     def create(self, path: str = ""):
         custom_exceptions.type(path, str)
@@ -77,6 +72,11 @@ class start_service(abstract_logic):
                              quantity: int, type: bool, range: range_model):
         if data_reposity.transaction_key() not in list(self.__reposity.data.keys()):
             self.__reposity.data[data_reposity.transaction_key()] = []
+        if data_reposity.warehouse_key() not in list(self.__reposity.data.keys()):
+            self.__reposity.data[data_reposity.warehouse_key()] = []
+        if warehouse not in self.__reposity.data[data_reposity.warehouse_key()]:
+            self.__reposity.data[data_reposity.warehouse_key()].append(warehouse)
+
         self.__reposity.data[data_reposity.transaction_key()].append(warehouse_transaction_model(
             warehouse, nomenclature, quantity, type, range
         ))

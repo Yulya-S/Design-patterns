@@ -2,7 +2,7 @@ from datetime import datetime
 
 from Src.Core.base_models import base_model_name
 from Src.Core.custom_exceptions import custom_exceptions
-from Src.models.Warehouse import warehouse_model
+from Src.models.Warehouse.warehouse_model import warehouse_model
 from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
 
