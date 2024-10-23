@@ -4,11 +4,8 @@ from Src.Core.custom_exceptions import custom_exceptions
 
 import os
 
-"""
-Отчет формирует набор данных в формате rtf
-"""
 
-
+# Отчет формирует набор данных в формате rtf
 class rtf_report(abstract_report):
     def __init__(self) -> None:
         super().__init__()

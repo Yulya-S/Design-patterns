@@ -3,11 +3,8 @@ from Src.settings_manager import settings_manager
 from Src.data_reposity import data_reposity
 import unittest
 
-"""
-Набор тестов для проверки добавления рецептов
-"""
 
-
+# Набор тестов для проверки добавления рецептов
 class test_reseipt(unittest.TestCase):
     def test_reseipts_append_ingredients(self):
         # Подготовка

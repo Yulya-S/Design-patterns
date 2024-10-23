@@ -4,11 +4,8 @@ from Src.Core.custom_exceptions import custom_exceptions
 
 import os
 
-"""
-Отчет формирует набор данных в формате csv
-"""
 
-
+# Отчет формирует набор данных в формате csv
 class csv_report(abstract_report):
     def __init__(self) -> None:
         super().__init__()

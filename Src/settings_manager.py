@@ -6,11 +6,8 @@ from Src.Core.custom_exceptions import custom_exceptions
 import json
 import os
 
-"""
-Менеджер настроек
-"""
 
-
+# Менеджер настроек
 class settings_manager(abstract_logic):
     __file_name = "settings.json"
     __path = f"{os.curdir}"
