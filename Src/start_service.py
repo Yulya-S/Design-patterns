@@ -21,15 +21,11 @@ class start_service(abstract_logic):
     __settings_manager: settings_manager = None
     __receipt_manager: receipt_book_menager = None
 
-    def __init__(self, reposity: data_reposity, manager: settings_manager,
-                 recipe_manager: receipt_book_menager) -> None:
+    def __init__(self) -> None:
         super().__init__()
-        custom_exceptions.type(reposity, data_reposity)
-        custom_exceptions.type(manager, settings_manager)
-        custom_exceptions.type(recipe_manager, receipt_book_menager)
-        self.__reposity = reposity
-        self.__settings_manager = manager
-        self.__recipe_manager = recipe_manager
+        self.__reposity = data_reposity()
+        self.__settings_manager = settings_manager()
+        self.__recipe_manager = receipt_book_menager()
 
     """
     Текущие настройки

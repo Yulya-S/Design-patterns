@@ -21,7 +21,7 @@ reposity = data_reposity()
 manager = settings_manager()
 manager.open("settings.json")
 receipt = receipt_book_menager()
-start = start_service(reposity, manager, receipt)
+start = start_service()
 
 start.create(".")
 

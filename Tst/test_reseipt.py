@@ -1,5 +1,4 @@
 from Src.start_service import start_service
-from Src.receipt_book_menager import receipt_book_menager
 from Src.settings_manager import settings_manager
 from Src.data_reposity import data_reposity
 import unittest
@@ -15,10 +14,9 @@ class test_reseipt(unittest.TestCase):
         manager = settings_manager()
         manager.open("../settings1.json")
         reposity = data_reposity()
-        receipt_book = receipt_book_menager()
 
         # Действие
-        start = start_service(reposity, manager, receipt_book)
+        start = start_service()
         start.create()
 
         # Проверки

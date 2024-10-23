@@ -1,5 +1,4 @@
 from Src.settings_manager import settings_manager
-from Src.receipt_book_menager import receipt_book_menager
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
 from Src.Reports.report_factory import report_factory
@@ -19,14 +18,12 @@ class test_reporting(unittest.TestCase):
     def test_csv_report_create_range(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = csv_report()
 
         # Действие
-        report.creat(reposity.data[data_reposity.range_key()])
+        report.create(reposity.data[data_reposity.range_key()])
 
         # Проверки
         assert report.result != ""
@@ -35,14 +32,12 @@ class test_reporting(unittest.TestCase):
     def test_csv_report_create_nomenclature(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = csv_report()
 
         # Действие
-        report.creat(reposity.data[data_reposity.nomenclature_key()])
+        report.create(reposity.data[data_reposity.nomenclature_key()])
 
         # Проверки
         assert report.result != ""
@@ -50,10 +45,8 @@ class test_reporting(unittest.TestCase):
     # Проверить работу фабрики для получения инстанса нужного отчета
     def test_report_factory_create_csv_report(self):
         # Подготовка
-        reposity = data_reposity()
         manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
 
         # Действие
@@ -67,9 +60,7 @@ class test_reporting(unittest.TestCase):
     def test_csv_report_upload_to_file(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = csv_report()
 
@@ -84,9 +75,7 @@ class test_reporting(unittest.TestCase):
     def test_markdown_report_upload_to_file(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = markdown_report()
 
@@ -100,9 +89,7 @@ class test_reporting(unittest.TestCase):
     def test_json_report_upload_to_file_group(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = json_report()
 
@@ -116,9 +103,7 @@ class test_reporting(unittest.TestCase):
     def test_json_report_upload_to_file_receipt(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = json_report()
 
@@ -132,9 +117,7 @@ class test_reporting(unittest.TestCase):
     def test_xml_report_upload_to_file(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = xml_report()
 
@@ -148,9 +131,7 @@ class test_reporting(unittest.TestCase):
     def test_rtf_report_upload_to_file(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = rtf_report()
 
@@ -163,10 +144,8 @@ class test_reporting(unittest.TestCase):
     # создание стандартнго шаблона отчета
     def test_report_factory_create_default(self):
         # Подготовка
-        reposity = data_reposity()
         manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = report_factory(manager.settings)
 
@@ -180,9 +159,7 @@ class test_reporting(unittest.TestCase):
     # десериализация из JSON значений group
     def test_report_deserialization_qroup(self):
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = json_report()
         deserialization = json_deserialization()
@@ -199,9 +176,7 @@ class test_reporting(unittest.TestCase):
     # десериализация из JSON значений range
     def test_report_deserialization_range(self):
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = json_report()
         deserialization = json_deserialization()
@@ -221,9 +196,7 @@ class test_reporting(unittest.TestCase):
     def test_report_deserialization_nomenclature(self):
         # Подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = json_report()
         deserialization = json_deserialization()
@@ -244,9 +217,7 @@ class test_reporting(unittest.TestCase):
     # десериализация из JSON значений receipt
     def test_report_deserialization_receipt(self):
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         report = json_report()
         deserialization = json_deserialization()

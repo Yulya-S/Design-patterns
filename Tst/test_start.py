@@ -18,11 +18,9 @@ class test_start(unittest.TestCase):
         # Подготовка
         manager = settings_manager()
         manager.open("../settings1.json")
-        reposity = data_reposity()
-        receipt_book = receipt_book_menager()
 
         # Действие
-        start = start_service(reposity, manager, receipt_book)
+        start = start_service()
 
         # Проверки
         assert start is not None
@@ -31,11 +29,9 @@ class test_start(unittest.TestCase):
         # Подготовка
         manager = settings_manager()
         manager.open("../settings1.json")
-        reposity = data_reposity()
-        receipt_book = receipt_book_menager()
 
         # Действие
-        start = start_service(reposity, manager, receipt_book)
+        start = start_service()
         start.create()
 
         # Проверки
