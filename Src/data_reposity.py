@@ -41,6 +41,12 @@ class data_reposity(abstract_logic):
     def receipt_key() -> str:
         return "receipt"
 
+
+    @staticmethod
+    def keys():
+        return [data_reposity.receipt_key(), data_reposity.nomenclature_key(),
+                data_reposity.group_key(), data_reposity.range_key()]
+
     """
     Перегрузка абстрактного метода
     """
