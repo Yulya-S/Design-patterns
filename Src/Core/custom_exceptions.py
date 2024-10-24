@@ -25,5 +25,11 @@ class custom_exceptions(Exception):
             raise custom_exceptions(f"Был возвращен None вместо значения переменной!")
 
     @staticmethod
+    def elements_not_in_array(elements, array):
+        for i in elements:
+            if i not in array:
+                raise custom_exceptions(f"Элемент {i} отсутствует в списке {array}!")
+
+    @staticmethod
     def other_exception(text: str):
         raise custom_exceptions(f"{text}")

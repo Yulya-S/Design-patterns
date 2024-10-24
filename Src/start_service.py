@@ -57,12 +57,34 @@ class start_service(abstract_logic):
         dict[range_model.default_range_pcs().name] = range_model.default_range_pcs()
         self.__reposity.data[data_reposity.range_key()] = dict
 
+    def __create_warehouse(self):
+        self.__reposity.data[data_reposity.warehouse_key()] = [warehouse_model("Ул. N, дом. 1")]
+
+    def __create_transactions(self):
+        list = []
+        for i in range(3):
+            list.append(self.generate_transaction(self.__reposity.data[data_reposity.warehouse_key()][0],
+                                                  self.__reposity.data[data_reposity.nomenclature_key()][
+                                                      range_model.default_range_gr().name],
+                                                  2 + i, True,
+                                                  self.__reposity.data[data_reposity.range_key()][
+                                                      range_model.default_range_kg().name]))
+        for i in range(3):
+            list.append(self.generate_transaction(self.__reposity.data[data_reposity.warehouse_key()][0],
+                                                  self.__reposity.data[data_reposity.nomenclature_key()][
+                                                      range_model.default_range_gr().name],
+                                                  i, False,
+                                                  self.__reposity.data[data_reposity.range_key()][
+                                                      range_model.default_range_kg().name]))
+
     # Первый старт
     def create(self, path: str = ""):
         custom_exceptions.type(path, str)
         self.__create_nomenclature_groups()
         self.__create_ranges()
         self.__create_nomenclatures()
+        self.__create_warehouse()
+        self.__create_transactions()
         if path == ".":
             path += "\\Docs"
         self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open(path)

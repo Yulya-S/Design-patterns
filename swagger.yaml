@@ -14,6 +14,30 @@ produces:
 basePath: "/api"
 
 paths:
+  /get_transactions:
+    post:
+      summary: Получение транзакции с учетом фильтрации
+      operationId: main.get_transactions
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные для фильтрации
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/two_filters'
+
   /reports/comparison_formats:
     get:
       summary: Получить список форматов
@@ -181,17 +205,26 @@ paths:
 
 
 definitions:
-    filter:
-        type: array
-        example: [
-                    {
-                    "field": "name",
-                    "comparison_format": 2,
-                    "value": "м"
-                    },
-                    {
-                    "field": "name",
-                    "comparison_format": 1,
-                    "value": "мука"
-                    }
-                 ]
+  filter:
+    type: array
+    example: [
+      {
+        "field": "name",
+        "comparison_format": 2,
+        "value": "м"
+      }
+    ]
+  two_filters:
+    type: array
+    example: [
+      {
+        "warehouse": {
+          "comparison_format": 1,
+          "value": None
+        },
+        "nomenclature": {
+          "comparison_format": 1,
+          "value": "гр"
+        }
+      }
+    ]

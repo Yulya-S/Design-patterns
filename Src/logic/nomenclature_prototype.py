@@ -11,13 +11,23 @@ class nomenclature_prototype(abstract_prototype):
         super().create(data, filterDto)
         self.data = self.filter_name(self.data, filterDto, look_inside)
         self.data = self.filter_id(self.data, filterDto, look_inside)
+        self.data = self.filter_warehouse(self.data, filterDto, look_inside)
+        self.data = self.filter_nomenclature(self.data, filterDto, look_inside)
         instance = nomenclature_prototype(self.data)
         return instance
 
     def filter_name(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
-        comparison = prototype_factory.get(filterDto.formats.name)
+        comparison = prototype_factory.get(filterDto.formats.get("name"))
         return comparison(source, "name", filterDto.name, look_inside)
 
     def filter_id(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
-        comparison = prototype_factory.get(filterDto.formats.id)
+        comparison = prototype_factory.get(filterDto.formats.get("id"))
         return comparison(source, "id", filterDto.id, look_inside)
+
+    def filter_warehouse(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
+        comparison = prototype_factory.get(filterDto.formats.get("warehouse"))
+        return comparison(source, "warehouse", filterDto.warehouse, look_inside)
+
+    def filter_nomenclature(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
+        comparison = prototype_factory.get(filterDto.formats.get("nomenclature"))
+        return comparison(source, "nomenclature", filterDto.nomenclature, look_inside)

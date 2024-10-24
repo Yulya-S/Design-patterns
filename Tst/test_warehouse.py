@@ -25,4 +25,4 @@ class test_warehouse(unittest.TestCase):
         )
 
         # Проверки
-        assert len(reposity.data[data_reposity.transaction_key()]) == 1
+        assert len(reposity.data[data_reposity.transaction_key()]) == 7

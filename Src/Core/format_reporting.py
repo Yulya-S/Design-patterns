@@ -1,11 +1,8 @@
 from enum import Enum
 from Src.Core.custom_exceptions import custom_exceptions
 
-"""
-Форматы отчетов
-"""
 
-
+# Форматы отчетов
 class format_reporting(Enum):
     CSV = 1
     MARCDOWN = 2

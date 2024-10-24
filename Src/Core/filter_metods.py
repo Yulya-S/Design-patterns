@@ -3,7 +3,7 @@ from Src.Core.base_models import base_model_name, base_model_code
 
 class filter_metods:
     @staticmethod
-    def equal_in_fragment(source, field: str, text: str):
+    def equal_in_fragment(source, field: str, text: any):
         if type(source) == list:
             for i in source:
                 if filter_metods.equal_in_fragment(i, field, text):
@@ -21,7 +21,7 @@ class filter_metods:
         return False
 
     @staticmethod
-    def equals(source: list, field: str, text: str, look_inside: bool = False):
+    def equals(source: list, field: str, text: any, look_inside: bool = False):
         if text == "" or text == None:
             return source
         result = []
@@ -32,7 +32,7 @@ class filter_metods:
         return result
 
     @staticmethod
-    def like_in_fragment(source, field: str, text: str):
+    def like_in_fragment(source, field: str, text: any):
         if type(source) == list:
             for i in source:
                 if filter_metods.like_in_fragment(i, field, text):
@@ -50,7 +50,7 @@ class filter_metods:
         return False
 
     @staticmethod
-    def like(source: list, field: str, text: str, look_inside: bool = False):
+    def like(source: list, field: str, text: any, look_inside: bool = False):
         if text == "" or text == None:
             return source
         result = []

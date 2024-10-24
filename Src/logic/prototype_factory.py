@@ -2,11 +2,8 @@ from Src.Core.comparison_format import comparison_format
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.filter_metods import filter_metods
 
-"""
-Фабрика для формирования отчетов
-"""
 
-
+# Формирования прототипов
 class prototype_factory:
     __reports = {
         comparison_format.EQUAL: filter_metods.equals,
