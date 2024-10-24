@@ -1,6 +1,7 @@
 from Src.Core.abstract_prototipe import abstract_prototype
 from Src.Dto.filter import filter_model
 from Src.logic.prototype_factory import prototype_factory
+from Src.Core.comparison_format import comparison_format
 
 
 class nomenclature_prototype(abstract_prototype):
@@ -31,3 +32,7 @@ class nomenclature_prototype(abstract_prototype):
     def filter_nomenclature(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
         comparison = prototype_factory.get(filterDto.formats.get("nomenclature"))
         return comparison(source, "nomenclature", filterDto.nomenclature, look_inside)
+
+    def filter_periods(self, source: list, filterDto: filter_model) -> list:
+        comparison = prototype_factory.get(comparison_format.RANGE)
+        return comparison(source, filterDto.periods[0], filterDto.periods[1])

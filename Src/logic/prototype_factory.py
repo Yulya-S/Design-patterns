@@ -7,7 +7,8 @@ from Src.Core.filter_metods import filter_metods
 class prototype_factory:
     __reports = {
         comparison_format.EQUAL: filter_metods.equals,
-        comparison_format.LIKE: filter_metods.like
+        comparison_format.LIKE: filter_metods.like,
+        comparison_format.RANGE: filter_metods.range
     }
 
     @staticmethod

@@ -1,4 +1,5 @@
 from Src.Core.base_models import base_model_name, base_model_code
+from datetime import datetime
 
 
 class filter_metods:
@@ -57,5 +58,16 @@ class filter_metods:
         for item in source:
             if text in item.__getattribute__(field) or (
                     look_inside and filter_metods.like_in_fragment(item, field, text)):
+                result.append(item)
+        return result
+
+    @staticmethod
+    def range(source: list, begin_period: datetime, end_period: datetime):
+        if begin_period == None or end_period == None:
+            return source
+        result = []
+        for item in source:
+            if begin_period <= item.__getattribute__("period") and \
+                    end_period >= item.__getattribute__("period"):
                 result.append(item)
         return result

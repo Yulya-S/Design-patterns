@@ -3,6 +3,8 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.models.Warehouse.warehouse_model import warehouse_model
 from Src.models.nomenclature_model import nomenclature_model
 
+from datetime import datetime
+
 
 class formats:
     __data = {}
@@ -26,6 +28,7 @@ class filter_model:
     __warehouse: warehouse_model = None
     __nomenclature: nomenclature_model = None
     __formats: formats = None
+    __periods: [datetime, datetime] = [None, None]
 
     def __init__(self):
         self.__formats = formats()
@@ -67,6 +70,10 @@ class filter_model:
         self.__nomenclature = value
 
     @property
+    def periods(self):
+        return self.__periods
+
+    @property
     def formats(self):
         return self.__formats
 
@@ -81,3 +88,8 @@ class filter_model:
             custom_exceptions.other_exception("Введенное поле фильтрации несуществует!")
         self.__setattr__(field, value)
         self.__formats.set(field, format)
+
+    def set_periods(self, begin_period: datetime, end_period: datetime):
+        custom_exceptions.type(begin_period, datetime)
+        custom_exceptions.type(end_period, datetime)
+        self.__periods = [begin_period, end_period]
