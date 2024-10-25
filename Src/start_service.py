@@ -76,6 +76,7 @@ class start_service(abstract_logic):
                                                   i, False,
                                                   self.__reposity.data[data_reposity.range_key()][
                                                       range_model.default_range_kg().name]))
+        self.__reposity.data[data_reposity.transaction_key()] = list
 
     # Первый старт
     def create(self, path: str = ""):
@@ -99,9 +100,9 @@ class start_service(abstract_logic):
         if warehouse not in self.__reposity.data[data_reposity.warehouse_key()]:
             self.__reposity.data[data_reposity.warehouse_key()].append(warehouse)
 
-        self.__reposity.data[data_reposity.transaction_key()].append(warehouse_transaction_model(
-            warehouse, nomenclature, quantity, type, range
-        ))
+        transaction = warehouse_transaction_model(warehouse, nomenclature, quantity, type, range)
+        self.__reposity.data[data_reposity.transaction_key()].append(transaction)
+        return transaction
 
     # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):

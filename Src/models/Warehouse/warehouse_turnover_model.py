@@ -10,6 +10,7 @@ from Src.models.Warehouse.warehouse_model import warehouse_model
 
 from datetime import datetime
 
+
 # Класс складского оборота
 class warehouse_turnover_model(base_model_name):
     __data: list = []
@@ -34,10 +35,27 @@ class warehouse_turnover_model(base_model_name):
         result.create(data, filter)
         self.__data = result.data
 
+    @property
+    def data(self):
+        return self.__data
+
+    @property
+    def turnover(self):
+        return self.__turnover
+
+    def update_turnover(self, type: bool, value: int):
+        custom_exceptions.type(type, bool)
+        custom_exceptions.type(value, int)
+        if type:
+            self.__turnover += value
+        else:
+            self.__turnover -= value
+
     def add_period(self, begin_period: datetime, end_period: datetime):
         filter = filter_model()
         filter.update_filter("warehouse", comparison_format.EQUAL, self.__warehouse)
         filter.update_filter("nomenclature", comparison_format.EQUAL, self.__nomenclature)
+        filter.set_periods(begin_period, end_period)
         result = nomenclature_prototype(self.__data)
         result.create(self.__data, filter)
         self.__data = result.data

@@ -1,5 +1,6 @@
 import connexion
 from flask import request
+from datetime import datetime
 
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
@@ -12,6 +13,7 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.comparison_format import comparison_format
 
 from Src.models.Warehouse.warehouse_model import warehouse_model
+from Src.models.Warehouse.turnover_factory import turnover_factory
 from Src.Reports.report_factory import report_factory
 from Src.logic.nomenclature_prototype import nomenclature_prototype
 
@@ -25,6 +27,32 @@ receipt = receipt_book_menager()
 start = start_service()
 
 start.create(".")
+
+@app.route("/app/get_turnover", methods=["POST"])
+def get_turnover():
+    req = request.json
+    custom_exceptions.type(req, dict)
+    req = request.json
+    custom_exceptions.type(req, dict)
+    if "items" not in list(req.keys()):
+        custom_exceptions.other_exception("Были получены некоректные данные!")
+    if len(req["items"]) == 0:
+        custom_exceptions.other_exception("Полученные данные пусты!")
+    req = req["items"][0]
+    custom_exceptions.elements_not_in_array(["nomenclature", "warehouse", "range", "periods"], list(req.keys()))
+    custom_exceptions.type(req["periods"], dict)
+    custom_exceptions.elements_not_in_array(["begin", "end"], list(req["periods"].keys()))
+
+    req["nomenclature"] = reposity.data[data_reposity.nomenclature_key()][req["nomenclature"]]
+    req["range"] = reposity.data[data_reposity.range_key()][req["range"]]
+    warehouse = warehouse_model(req["warehouse"])
+    for l in reposity.data[data_reposity.warehouse_key()]:
+        if l == warehouse:
+            req["warehouse"] = l
+    periods = [datetime.strptime(req["periods"]["begin"], "%d-%m-%Y"),
+               datetime.strptime(req["periods"]["end"], "%d-%m-%Y")]
+    turnover = turnover_factory.create_turnover(req["warehouse"], req["nomenclature"], req["range"], periods)
+    return f"{turnover.turnover}"
 
 
 @app.route("/app/get_transactions", methods=["POST"])
@@ -53,6 +81,8 @@ def get_transactions():
                 for l in reposity.data[data_reposity.warehouse_key()]:
                     if l == wh:
                         req[i]["value"] = l
+                if type(req[i]["value"]) == str:
+                    return f"[]"
         filter.update_filter(i, comparison_format(req[i]["comparison_format"]), req[i]["value"])
     prototype = nomenclature_prototype(data)
     result = prototype.create(data, filter)
