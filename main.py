@@ -12,9 +12,10 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.formats_and_methods.comparison_format import comparison_format
 
 from Src.models.Warehouse.turnover_creater import turnover_creater
-from Src.models.Warehouse.warehouse_model import warehouse_model
 from Src.Reports.report_factory import report_factory
 from Src.logic.nomenclature_prototype import nomenclature_prototype
+
+from Src.Dto.filter_JSON_deserialization import filter_json_deserialization
 
 app = connexion.FlaskApp(__name__)
 app.add_api("swagger.yaml")
@@ -54,26 +55,12 @@ def get_transactions():
     if len(req["items"]) == 0:
         custom_exceptions.other_exception("Полученные данные пусты!")
     req = req["items"][0]
-    custom_exceptions.elements_not_in_array(["nomenclature", "warehouse"], list(req.keys()))
-    for i in list(req.keys()):
-        custom_exceptions.elements_not_in_array(["comparison_format", "value"], list(req[i].keys()))
 
+    filter = filter_json_deserialization()
+    filter.read_data(req)
     data = reposity.data[data_reposity.transaction_key()]
-    filter = filter_model()
-    for i in list(req.keys()):
-        if i != "" and i != None:
-            if i == "nomenclature":
-                req[i]["value"] = reposity.data[data_reposity.nomenclature_key()][req[i]["value"]]
-            elif i == "warehouse":
-                wh = warehouse_model(req[i]["value"])
-                for l in reposity.data[data_reposity.warehouse_key()]:
-                    if l == wh:
-                        req[i]["value"] = l
-                if type(req[i]["value"]) == str:
-                    return f"[]"
-        filter.update_filter(i, comparison_format(req[i]["comparison_format"]), req[i]["value"])
     prototype = nomenclature_prototype(data)
-    result = prototype.create(data, filter)
+    result = prototype.create(data, filter.result)
     return f"{result.data}"
 
 

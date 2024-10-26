@@ -30,6 +30,7 @@ class test_warehouse(unittest.TestCase):
         # Проверки
         assert len(reposity.data[data_reposity.transaction_key()]) == 7
 
+    # Проверка расчетов оборота
     def test_turnover_factory(self):
         # Подготовка
         reposity = data_reposity()
