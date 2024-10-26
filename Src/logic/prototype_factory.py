@@ -1,6 +1,6 @@
-from Src.Core.comparison_format import comparison_format
+from Src.Core.formats_and_methods.comparison_format import comparison_format
 from Src.Core.custom_exceptions import custom_exceptions
-from Src.Core.filter_metods import filter_metods
+from Src.Core.formats_and_methods.filter_metods import filter_metods
 
 
 # Формирования прототипов

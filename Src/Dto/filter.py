@@ -1,4 +1,4 @@
-from Src.Core.comparison_format import comparison_format
+from Src.Core.formats_and_methods.comparison_format import comparison_format
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.models.Warehouse.warehouse_model import warehouse_model
 from Src.models.nomenclature_model import nomenclature_model
@@ -92,4 +92,6 @@ class filter_model:
     def set_periods(self, begin_period: datetime, end_period: datetime):
         custom_exceptions.type(begin_period, datetime)
         custom_exceptions.type(end_period, datetime)
+        if begin_period >= end_period:
+            custom_exceptions.other_exception("Начало периода не может быть позже чем его окончание!")
         self.__periods = [begin_period, end_period]

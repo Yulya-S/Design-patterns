@@ -1,4 +1,4 @@
-from Src.Core.abstract_model import abstract_model
+from Src.Core.Abstract_classes.abstract_model import abstract_model
 from Src.Core.custom_exceptions import custom_exceptions
 
 """

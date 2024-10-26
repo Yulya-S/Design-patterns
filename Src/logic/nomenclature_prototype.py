@@ -1,7 +1,7 @@
-from Src.Core.abstract_prototipe import abstract_prototype
+from Src.Core.Abstract_classes.abstract_prototipe import abstract_prototype
 from Src.Dto.filter import filter_model
 from Src.logic.prototype_factory import prototype_factory
-from Src.Core.comparison_format import comparison_format
+from Src.Core.formats_and_methods.comparison_format import comparison_format
 
 
 class nomenclature_prototype(abstract_prototype):

@@ -2,7 +2,7 @@ from Src.settings_manager import settings_manager
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
 from Src.Reports.report_factory import report_factory
-from Src.Core.format_reporting import format_reporting
+from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Reports.csv_report import csv_report
 from Src.Reports.markdown_report import markdown_report
 from Src.Reports.json_report import json_report

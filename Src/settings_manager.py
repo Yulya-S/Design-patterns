@@ -1,5 +1,5 @@
 from Src.settings import settings_model
-from Src.Core.abstract_logic import abstract_logic
+from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Reports.report_factory import report_factory
 from Src.Core.custom_exceptions import custom_exceptions
 

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from Src.Core.format_reporting import format_reporting
+from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
-from Src.Core.base_models import base_model_name, base_model_code
+from Src.Core.Abstract_classes.base_models import base_model_name, base_model_code
 
 
 class abstract_report(ABC):

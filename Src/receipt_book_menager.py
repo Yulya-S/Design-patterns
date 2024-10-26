@@ -1,4 +1,4 @@
-from Src.Core.abstract_logic import abstract_logic
+from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.models.dishes.receipt import receipt_model
 from Src.data_reposity import data_reposity
 from Src.Core.custom_exceptions import custom_exceptions

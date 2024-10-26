@@ -2,7 +2,7 @@ from Src.logic.nomenclature_prototype import nomenclature_prototype
 from Src.Dto.filter import filter_model
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
-from Src.Core.comparison_format import comparison_format
+from Src.Core.formats_and_methods.comparison_format import comparison_format
 
 import unittest
 

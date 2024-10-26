@@ -1,7 +1,7 @@
 import json
 
-from Src.Core.abstract_report import abstract_report
-from Src.Core.format_reporting import format_reporting
+from Src.Core.Abstract_classes.abstract_report import abstract_report
+from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
 
 import os

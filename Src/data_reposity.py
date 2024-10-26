@@ -1,4 +1,4 @@
-from Src.Core.abstract_logic import abstract_logic
+from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 
 
 # Репозиторий данных

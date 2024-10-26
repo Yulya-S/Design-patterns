@@ -1,4 +1,4 @@
-from Src.Core.base_models import base_model_name, base_model_code
+from Src.Core.Abstract_classes.base_models import base_model_name, base_model_code
 from datetime import datetime
 
 

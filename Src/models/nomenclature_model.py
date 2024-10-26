@@ -1,4 +1,4 @@
-from Src.Core.base_models import base_model_code
+from Src.Core.Abstract_classes.base_models import base_model_code
 from Src.models.group_model import group_model
 from Src.models.range_model import range_model
 from Src.Core.custom_exceptions import custom_exceptions
