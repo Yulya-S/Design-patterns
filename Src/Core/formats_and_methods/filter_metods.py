@@ -2,6 +2,7 @@ from Src.Core.Abstract_classes.base_models import base_model_name, base_model_co
 from datetime import datetime
 
 
+# Методы фильтрации
 class filter_metods:
     @staticmethod
     def equal_in_fragment(source, field: str, text: any):

@@ -9,6 +9,7 @@ from Src.models.Warehouse.warehouse_model import warehouse_model
 from datetime import datetime
 
 
+# Заполнение фильтра из Json
 class filter_json_deserialization(abstract_logic):
     __filter: filter_model = None
     __reposity: data_reposity = None
@@ -17,7 +18,6 @@ class filter_json_deserialization(abstract_logic):
     def result(self):
         return self.__filter
 
-    # Чтение JSON файла
     def read_data(self, data: dict):
         custom_exceptions.type(data, dict)
         self.__filter = filter_model()

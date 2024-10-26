@@ -9,6 +9,7 @@ from Src.logic.nomenclature_prototype import nomenclature_prototype
 from datetime import datetime
 
 
+# Обработка фильтров для оборотов
 class turnover_filter_data:
     __data: list = []
 

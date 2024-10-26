@@ -1,6 +1,6 @@
 from Src.Core.custom_exceptions import custom_exceptions
 
-
+# методы расчетов оборотов
 class turnover_methods:
     @staticmethod
     def summ(data: list):

@@ -9,8 +9,8 @@ import unittest
 
 # Набор тестов для фильтрации из Json файла
 class test_filters_from_json(unittest.TestCase):
-    # Проверить создание транзакции
-    def test_warehouse_transaction_generation(self):
+    # Проверить создание фильтра из Json файла
+    def test_filter_json_deserialization(self):
         # Подготовка
         reposity = data_reposity()
         manager = settings_manager()

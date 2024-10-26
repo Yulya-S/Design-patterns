@@ -13,6 +13,7 @@ from Src.Core.formats_and_methods.turnover_format import turnover_format
 from datetime import datetime
 
 
+# Создание оборотов из данных о транзакциях
 class turnover_creater(abstract_logic):
     __reposity: data_reposity = None
 

@@ -2,7 +2,7 @@ from enum import Enum
 from Src.Core.custom_exceptions import custom_exceptions
 
 
-# Форматы отчетов
+# Форматы расчетов оборотов
 class turnover_format(Enum):
     SUMM = 1
 
