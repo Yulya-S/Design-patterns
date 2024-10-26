@@ -1,0 +1,16 @@
+from Src.Core.custom_exceptions import custom_exceptions
+
+
+class turnover_methods:
+    @staticmethod
+    def summ(data: list):
+        custom_exceptions.type(data, list)
+
+        summ = 0
+        for i in data:
+            if i.type:
+                summ += i.quantity
+            else:
+                summ -= i.quantity
+
+        return summ

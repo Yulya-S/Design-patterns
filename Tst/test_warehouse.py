@@ -4,9 +4,10 @@ from Src.data_reposity import data_reposity
 
 from Src.models.Warehouse.warehouse_model import warehouse_model
 from Src.models.Warehouse.warehouse_turnover_model import warehouse_turnover_model
-from Src.models.Warehouse.turnover_factory import turnover_factory
+from Src.models.Warehouse.turnover_creater import turnover_creater
 
 import unittest
+from datetime import datetime, timedelta
 
 
 # Набор тестов для склада
@@ -36,11 +37,13 @@ class test_warehouse(unittest.TestCase):
         manager.open("../settings1.json")
         start = start_service()
         start.create()
+        creater = turnover_creater()
 
         # Действие
-        result = turnover_factory.create_turnover(reposity.data[data_reposity.warehouse_key()][0],
-                                                  reposity.data[data_reposity.nomenclature_key()]["гр"],
-                                                  reposity.data[data_reposity.range_key()]["гр"])
+        result = creater.create_turnover(reposity.data[data_reposity.warehouse_key()][0],
+                                         reposity.data[data_reposity.nomenclature_key()]["гр"],
+                                         reposity.data[data_reposity.range_key()]["гр"],
+                                         [datetime.now() + timedelta(days=-1), datetime.now() + timedelta(days=1)])
 
         # Проверки
         assert type(result) == warehouse_turnover_model

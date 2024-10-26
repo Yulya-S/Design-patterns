@@ -1,22 +1,16 @@
-from Src.models.Warehouse.warehouse_turnover_model import warehouse_turnover_model
-from Src.models.Warehouse.warehouse_model import warehouse_model
-from Src.models.nomenclature_model import nomenclature_model
-from Src.models.range_model import range_model
-from Src.data_reposity import data_reposity
-from datetime import datetime
+from Src.Core.formats_and_methods.turnover_format import turnover_format
+from Src.Core.formats_and_methods.turnover_methods import turnover_methods
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 class turnover_factory:
+    __methods = {
+        turnover_format.SUMM: turnover_methods.summ
+    }
+
     @staticmethod
-    def create_turnover(warehouse: warehouse_model, nomenclature: nomenclature_model, range: range_model,
-                        periods: [datetime, datetime] = [None, None]):
-        reposity = data_reposity()
-        turnover = warehouse_turnover_model(reposity.data[data_reposity.transaction_key()], warehouse,
-                                            nomenclature, range)
-        if None not in periods:
-            turnover.add_period(periods[0], periods[1])
-
-        for i in turnover.data:
-            turnover.update_turnover(i.type, i.quantity)
-
-        return turnover
+    def get(format: turnover_format):
+        custom_exceptions.type(format, turnover_format)
+        if format not in turnover_format:
+            raise Exception("Формат не был определен!")
+        return turnover_factory.__methods[format]
