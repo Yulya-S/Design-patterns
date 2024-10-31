@@ -22,7 +22,7 @@ class test_settings(unittest.TestCase):
         manager = settings_manager()
 
         # действие
-        result = manager.open("../settings.json")
+        result = manager.open("", "..")
 
         # проверки
         assert result is True
@@ -34,7 +34,7 @@ class test_settings(unittest.TestCase):
         manager2 = settings_manager()
 
         # действие
-        result = manager1.open("../settings.json")
+        result = manager1.open("", "..")
 
         # проверки
         assert manager1 == manager2

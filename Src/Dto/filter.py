@@ -95,3 +95,4 @@ class filter_model:
         if begin_period >= end_period:
             custom_exceptions.other_exception("Начало периода не может быть позже чем его окончание!")
         self.__periods = [begin_period, end_period]
+        self.__formats.set("periods", comparison_format.RANGE)

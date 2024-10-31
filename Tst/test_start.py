@@ -9,7 +9,7 @@ class test_start(unittest.TestCase):
     def test_create_start_service(self):
         # Подготовка
         manager = settings_manager()
-        manager.open("../settings1.json")
+        manager.open("", "..")
 
         # Действие
         start = start_service()
@@ -20,7 +20,7 @@ class test_start(unittest.TestCase):
     def test_data_reposity_append_data(self):
         # Подготовка
         manager = settings_manager()
-        manager.open("../settings1.json")
+        manager.open("", "..")
 
         # Действие
         start = start_service()

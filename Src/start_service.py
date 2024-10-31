@@ -12,6 +12,9 @@ from Src.receipt_book_menager import receipt_book_menager
 from Src.settings import settings_model
 from Src.data_reposity import data_reposity
 
+from random import randrange
+from datetime import datetime, timedelta
+
 
 # Сервис для реализации первого старта приложения
 class start_service(abstract_logic):
@@ -92,7 +95,9 @@ class start_service(abstract_logic):
 
     # Генерация транзакции
     def generate_transaction(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
-                             quantity: int, type: bool, range: range_model):
+                             quantity: int, type: bool, range: range_model, date: datetime = datetime.now()):
+        custom_exceptions.type(date, datetime)
+
         if data_reposity.transaction_key() not in list(self.__reposity.data.keys()):
             self.__reposity.data[data_reposity.transaction_key()] = []
         if data_reposity.warehouse_key() not in list(self.__reposity.data.keys()):
@@ -100,9 +105,25 @@ class start_service(abstract_logic):
         if warehouse not in self.__reposity.data[data_reposity.warehouse_key()]:
             self.__reposity.data[data_reposity.warehouse_key()].append(warehouse)
 
-        transaction = warehouse_transaction_model(warehouse, nomenclature, quantity, type, range)
+        transaction = warehouse_transaction_model(warehouse, nomenclature, quantity, type, range, date)
         self.__reposity.data[data_reposity.transaction_key()].append(transaction)
         return transaction
+
+    # генерация введенного количества транзакций
+    def generate_n_transactions(self, transaction_count: int, last_date: datetime = datetime.now()):
+        custom_exceptions.type(transaction_count, int)
+        custom_exceptions.type(last_date, datetime)
+
+        list = []
+        warehouse = self.__reposity.data[data_reposity.warehouse_key()][0]
+        nomenclature = self.__reposity.data[data_reposity.nomenclature_key()][range_model.default_range_gr().name]
+        r = self.__reposity.data[data_reposity.range_key()][range_model.default_range_kg().name]
+        for i in range(transaction_count):
+            value = int(randrange(2, 100))
+            operation = bool(randrange(2))
+            date = last_date - timedelta(days=i)
+            list.append(self.generate_transaction(warehouse, nomenclature, value, operation, r, date))
+        self.__reposity.data[data_reposity.transaction_key()] = list
 
     # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):

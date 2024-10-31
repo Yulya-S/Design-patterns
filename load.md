@@ -1,0 +1,12 @@
+transaction_count = 1000, block_date = 01-01-2024, time=0.002148866653442383
+transaction_count = 1000, block_date = 01-01-2023, time=0.003010988235473633
+transaction_count = 1000, block_date = 01-01-2022, time=0.0020003318786621094
+transaction_count = 2000, block_date = 01-01-2024, time=0.003988742828369141
+transaction_count = 2000, block_date = 01-01-2023, time=0.005011081695556641
+transaction_count = 2000, block_date = 01-01-2022, time=0.003999948501586914
+transaction_count = 3000, block_date = 01-01-2024, time=0.006999492645263672
+transaction_count = 3000, block_date = 01-01-2023, time=0.0070002079010009766
+transaction_count = 3000, block_date = 01-01-2022, time=0.005987644195556641
+transaction_count = 4000, block_date = 01-01-2024, time=0.008994817733764648
+transaction_count = 4000, block_date = 01-01-2023, time=0.008994817733764648
+transaction_count = 4000, block_date = 01-01-2022, time=0.009011268615722656
