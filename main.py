@@ -1,5 +1,6 @@
 import connexion
 from flask import request
+from datetime import datetime
 
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
@@ -28,6 +29,21 @@ start = start_service()
 
 start.create(".")
 
+# Получение даты блокировки
+@app.route("/api/block_period", methods=['GET'])
+def get_block_period():
+    return f"{manager.settings.block_period.date()}"
+
+# Установка даты блокировки
+@app.route("/app/block_period/<data>", methods=["POST"])
+def set_block_period(data: str):
+    custom_exceptions.type(data, str)
+    try:
+        d = datetime.strptime(data, "%d-%m-%Y")
+        manager.settings.block_period = d
+        return True
+    except:
+        return False
 
 @app.route("/app/get_turnover", methods=["POST"])
 def get_turnover():
