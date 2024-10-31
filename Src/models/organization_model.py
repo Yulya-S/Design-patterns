@@ -1,4 +1,4 @@
-from Src.Core.base_models import base_model_name
+from Src.Core.Abstract_classes.base_models import base_model_name
 from Src.settings import settings_model
 from Src.Core.custom_exceptions import custom_exceptions
 

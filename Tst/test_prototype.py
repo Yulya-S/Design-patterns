@@ -1,10 +1,8 @@
 from Src.logic.nomenclature_prototype import nomenclature_prototype
 from Src.Dto.filter import filter_model
 from Src.data_reposity import data_reposity
-from Src.settings_manager import settings_manager
-from Src.receipt_book_menager import receipt_book_menager
 from Src.start_service import start_service
-from Src.Core.comparison_format import comparison_format
+from Src.Core.formats_and_methods.comparison_format import comparison_format
 
 import unittest
 
@@ -14,9 +12,7 @@ class test_prototype(unittest.TestCase):
     def test_prototype_receipt(self):
         # подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         if len(reposity.data[data_reposity.receipt_key()]) == 0:
             raise Exception("Нет данных")
@@ -44,9 +40,7 @@ class test_prototype(unittest.TestCase):
     def test_prototype_nomenclature_comparation_format_like(self):
         # подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         if len(reposity.data[data_reposity.receipt_key()]) == 0:
             raise Exception("Нет данных")
@@ -76,9 +70,7 @@ class test_prototype(unittest.TestCase):
     def test_prototype_nomenclature_comparation_look_inside_is_true(self):
         # подготовка
         reposity = data_reposity()
-        manager = settings_manager()
-        receipt = receipt_book_menager()
-        start = start_service(reposity, manager, receipt)
+        start = start_service()
         start.create()
         if len(reposity.data[data_reposity.receipt_key()]) == 0:
             raise Exception("Нет данных")

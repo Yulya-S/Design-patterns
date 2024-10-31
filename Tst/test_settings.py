@@ -2,11 +2,8 @@ import unittest
 from Src.settings_manager import settings_manager
 from Src.Core.custom_exceptions import custom_exceptions
 
-"""
-Набор тестов для проверки работы с настройками
-"""
 
-
+# Набор тестов для проверки работы с настройками
 class test_settings(unittest.TestCase):
     # проверить открытие и загрузку настроек с ошибкой
     def test_settings_manager_open_fail(self):

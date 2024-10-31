@@ -14,10 +14,58 @@ produces:
 basePath: "/api"
 
 paths:
-  /filter/:
+  /get_turnover:
     post:
-      summary: Изменить значения для фильтрации
-      operationId: main.filter
+      summary: Получение складского оборота
+      operationId: main.get_turnover
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные для фильтрации
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/turnover_filters'
+
+  /get_transactions:
+    post:
+      summary: Получение транзакции с учетом фильтрации
+      operationId: main.get_transactions
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные для фильтрации
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/two_filters'
+
+  /reports/comparison_formats:
+    get:
+      summary: Получить список форматов
+      operationId: main.c_formats
       produces:
         - application/json
       responses:
@@ -29,17 +77,51 @@ paths:
           description: Ошибка на сервере
         default:
           description: Неизвестная ошибка
+
+  /reports/model_names:
+    get:
+      summary: Получить наименования моделей данных
+      operationId: main.model_names
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+
+  /reports/{entity}:
+    post:
+      summary: Получение отчета с учетом фильтрации
+      operationId: main.filter_with_filter
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
       parameters:
-        - name: name
-          in: query
-          description: Значение фильтрации по name
-          required: false
+        - name: entity
+          in: path
+          description: Уникальное наименование модели данных
+          required: true
           type: string
-        - name: id
-          in: query
-          description: Значение фильтрации по id
-          required: false
-          type: string
+        - name: data
+          in: body
+          description: Структура для выполнения фильтрации данных
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/filter'
 
   /reports/formats:
     get:
@@ -144,3 +226,42 @@ paths:
         description: Уникальный код формата
         required: true
         type: integer
+
+
+definitions:
+  filter:
+    type: array
+    example: [
+      {
+        "field": "name",
+        "comparison_format": 2,
+        "value": "м"
+      }
+    ]
+  two_filters:
+    type: array
+    example: [
+      {
+        "warehouse": {
+          "comparison_format": 1,
+          "value": None
+        },
+        "nomenclature": {
+          "comparison_format": 1,
+          "value": "гр"
+        }
+      }
+    ]
+  turnover_filters:
+    type: array
+    example: [
+      {
+        "warehouse": "Ул. N, дом. 1",
+        "nomenclature": "гр",
+        "range": "гр",
+        "periods": {
+          "begin": "24-10-2024",
+          "end": "26-10-2024"
+        }
+      }
+    ]

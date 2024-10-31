@@ -7,10 +7,15 @@ from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
 from Src.Dto.filter import filter_model
 
-from Src.Core.format_reporting import format_reporting
+from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.formats_and_methods.comparison_format import comparison_format
 
+from Src.models.Warehouse.turnover_creater import turnover_creater
 from Src.Reports.report_factory import report_factory
+from Src.logic.nomenclature_prototype import nomenclature_prototype
+
+from Src.Dto.filter_JSON_deserialization import filter_json_deserialization
 
 app = connexion.FlaskApp(__name__)
 app.add_api("swagger.yaml")
@@ -19,17 +24,92 @@ reposity = data_reposity()
 manager = settings_manager()
 manager.open("settings.json")
 receipt = receipt_book_menager()
-start = start_service(reposity, manager, receipt)
+start = start_service()
 
 start.create(".")
-filter = filter_model()
 
 
-@app.route("/filter/", methods=["POST"])
-def filter():
-    filter.name = "" if request.args.get('name') is None else request.args.get('name')
-    filter.id = "" if request.args.get('id') is None else request.args.get('id')
-    return f"filter(name={filter.name}; id={filter.id})"
+@app.route("/app/get_turnover", methods=["POST"])
+def get_turnover():
+    req = request.json
+    custom_exceptions.type(req, dict)
+    if "items" not in list(req.keys()):
+        custom_exceptions.other_exception("Были получены некоректные данные!")
+    if len(req["items"]) == 0:
+        custom_exceptions.other_exception("Полученные данные пусты!")
+    req = req["items"][0]
+
+    creater = turnover_creater()
+    result = creater.create_turnover_with_JSON(req)
+    return f"{result.turnover}"
+
+
+@app.route("/app/get_transactions", methods=["POST"])
+def get_transactions():
+    req = request.json
+    custom_exceptions.type(req, dict)
+    req = request.json
+    custom_exceptions.type(req, dict)
+    if "items" not in list(req.keys()):
+        custom_exceptions.other_exception("Были получены некоректные данные!")
+    if len(req["items"]) == 0:
+        custom_exceptions.other_exception("Полученные данные пусты!")
+    req = req["items"][0]
+
+    filter = filter_json_deserialization()
+    filter.read_data(req)
+    data = reposity.data[data_reposity.transaction_key()]
+    prototype = nomenclature_prototype(data)
+    result = prototype.create(data, filter.result)
+    return f"{result.data}"
+
+
+@app.route("/api/reports/comparison_formats", methods=['GET'])
+def c_formats():
+    return comparison_format.list()
+
+
+@app.route("/api/reports/model_names", methods=['GET'])
+def model_names():
+    return data_reposity.keys()
+
+
+@app.route("/app/reports/<entity>", methods=["POST"])
+def filter_with_filter(entity: str):
+    custom_exceptions.type(entity, str)
+    if entity not in data_reposity.keys():
+        custom_exceptions.other_exception("Некорректно указан тип данных! См метод /api/report/entities")
+
+    req = request.json
+    custom_exceptions.type(req, dict)
+    if "items" not in list(req.keys()):
+        custom_exceptions.other_exception("Были получены некоректные данные!")
+    if len(req["items"]) == 0:
+        custom_exceptions.other_exception("Полученные данные пусты!")
+    req = req["items"][0]
+    custom_exceptions.elements_not_in_array(["field", "comparison_format", "value"], list(req.keys()))
+
+    filter = filter_model()
+    filter.update_filter(req['field'], comparison_format(req["comparison_format"]), req["value"])
+
+    data = reposity.data[entity]
+    if type(data) == dict:
+        dd = list()
+        for i in list(data.keys()):
+            dd.append(data[i])
+        data = dd
+
+    prototype = nomenclature_prototype(data)
+    result = prototype.create(data, filter)
+
+    factory = report_factory(manager.settings)
+    report = factory.create_default
+    report.create(result.data)
+    if report is None:
+        raise custom_exceptions.other_exception("Невозможно подобрать корректный отчет согласно параметрам!")
+
+    report.create(result.data)
+    return report.result
 
 
 """

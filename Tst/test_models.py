@@ -7,11 +7,8 @@ from Src.models.nomenclature_model import nomenclature_model
 from Src.models.group_model import group_model
 from Src.models.organization_model import organization_model
 
-"""
-Набор тестов для проверки работы моделей
-"""
 
-
+# Набор тестов для проверки работы моделей
 class test_models(unittest.TestCase):
     # проверка ввода данных (nomenclature_model)
     def test_nomenclature_model_data(self):

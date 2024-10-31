@@ -1,6 +1,6 @@
 from Src.models.dishes.ingredient import ingredient_model
 from Src.models.nomenclature_model import nomenclature_model
-from Src.Core.base_models import base_model_name
+from Src.Core.Abstract_classes.base_models import base_model_name
 from Src.Core.custom_exceptions import custom_exceptions
 
 

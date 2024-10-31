@@ -1,40 +1,31 @@
-from Src.Core.abstract_logic import abstract_logic
+from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.custom_exceptions import custom_exceptions
-from Src.data_reposity import data_reposity
+
 from Src.models.group_model import group_model
 from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
+from Src.models.Warehouse.warehouse_model import warehouse_model
+from Src.models.Warehouse.warehouse_transaction_model import warehouse_transaction_model
+
 from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
 from Src.settings import settings_model
-
-import os
-import json
-
-"""
-Сервис для реализации первого старта приложения
-"""
+from Src.data_reposity import data_reposity
 
 
+# Сервис для реализации первого старта приложения
 class start_service(abstract_logic):
     __reposity: data_reposity = None
     __settings_manager: settings_manager = None
     __receipt_manager: receipt_book_menager = None
 
-    def __init__(self, reposity: data_reposity, manager: settings_manager,
-                 recipe_manager: receipt_book_menager) -> None:
+    def __init__(self) -> None:
         super().__init__()
-        custom_exceptions.type(reposity, data_reposity)
-        custom_exceptions.type(manager, settings_manager)
-        custom_exceptions.type(recipe_manager, receipt_book_menager)
-        self.__reposity = reposity
-        self.__settings_manager = manager
-        self.__recipe_manager = recipe_manager
+        self.__reposity = data_reposity()
+        self.__settings_manager = settings_manager()
+        self.__recipe_manager = receipt_book_menager()
 
-    """
-    Текущие настройки
-    """
-
+    # Текущие настройки
     @property
     def settings(self) -> settings_model:
         return self.__settings_manager.settings
@@ -43,10 +34,7 @@ class start_service(abstract_logic):
     def reposity(self):
         return self.__reposity
 
-    """
-    Сформировать группы номенклатуры
-    """
-
+    # Формирование данных
     def __create_nomenclature_groups(self):
         list = []
         list.append(group_model.default_group_cold())
@@ -69,23 +57,53 @@ class start_service(abstract_logic):
         dict[range_model.default_range_pcs().name] = range_model.default_range_pcs()
         self.__reposity.data[data_reposity.range_key()] = dict
 
-    """
-    Первый старт
-    """
+    def __create_warehouse(self):
+        self.__reposity.data[data_reposity.warehouse_key()] = [warehouse_model("Ул. N, дом. 1")]
 
+    def __create_transactions(self):
+        list = []
+        for i in range(3):
+            list.append(self.generate_transaction(self.__reposity.data[data_reposity.warehouse_key()][0],
+                                                  self.__reposity.data[data_reposity.nomenclature_key()][
+                                                      range_model.default_range_gr().name],
+                                                  2 + i, True,
+                                                  self.__reposity.data[data_reposity.range_key()][
+                                                      range_model.default_range_kg().name]))
+        for i in range(3):
+            list.append(self.generate_transaction(self.__reposity.data[data_reposity.warehouse_key()][0],
+                                                  self.__reposity.data[data_reposity.nomenclature_key()][
+                                                      range_model.default_range_gr().name],
+                                                  i, False,
+                                                  self.__reposity.data[data_reposity.range_key()][
+                                                      range_model.default_range_kg().name]))
+        self.__reposity.data[data_reposity.transaction_key()] = list
+
+    # Первый старт
     def create(self, path: str = ""):
         custom_exceptions.type(path, str)
         self.__create_nomenclature_groups()
         self.__create_ranges()
         self.__create_nomenclatures()
+        self.__create_warehouse()
+        self.__create_transactions()
         if path == ".":
             path += "\\Docs"
         self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open(path)
 
+    # Генерация транзакции
+    def generate_transaction(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
+                             quantity: int, type: bool, range: range_model):
+        if data_reposity.transaction_key() not in list(self.__reposity.data.keys()):
+            self.__reposity.data[data_reposity.transaction_key()] = []
+        if data_reposity.warehouse_key() not in list(self.__reposity.data.keys()):
+            self.__reposity.data[data_reposity.warehouse_key()] = []
+        if warehouse not in self.__reposity.data[data_reposity.warehouse_key()]:
+            self.__reposity.data[data_reposity.warehouse_key()].append(warehouse)
 
-    """
-    Перегрузка абстрактного метода
-    """
+        transaction = warehouse_transaction_model(warehouse, nomenclature, quantity, type, range)
+        self.__reposity.data[data_reposity.transaction_key()].append(transaction)
+        return transaction
 
+    # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)

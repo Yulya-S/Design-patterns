@@ -1,10 +1,7 @@
-from Src.Core.abstract_logic import abstract_logic
-
-"""
-Репозиторий данных
-"""
+from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 
 
+# Репозиторий данных
 class data_reposity(abstract_logic):
     __data = {}
 
@@ -13,18 +10,12 @@ class data_reposity(abstract_logic):
             cls.instance = super(data_reposity, cls).__new__(cls)
         return cls.instance
 
-    """
-    Набор данных
-    """
-
+    # Набор данных
     @property
     def data(self):
         return self.__data
 
-    """
-    Ключ для хранения групп номенклатуры
-    """
-
+    # Ключи для хранения данных
     @staticmethod
     def group_key() -> str:
         return "group"
@@ -41,9 +32,19 @@ class data_reposity(abstract_logic):
     def receipt_key() -> str:
         return "receipt"
 
-    """
-    Перегрузка абстрактного метода
-    """
+    @staticmethod
+    def warehouse_key() -> str:
+        return "warehouse"
 
+    @staticmethod
+    def transaction_key() -> str:
+        return "transaction"
+
+    @staticmethod
+    def keys():
+        return [data_reposity.receipt_key(), data_reposity.nomenclature_key(), data_reposity.group_key(),
+                data_reposity.range_key(), data_reposity.warehouse_key(), data_reposity.transaction_key()]
+
+    # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)

@@ -1,26 +1,17 @@
-from Src.Core.base_models import base_model_name
+from Src.Core.Abstract_classes.base_models import base_model_name
 from Src.Core.custom_exceptions import custom_exceptions
 
-"""
-Модель группы номенклатуры
-"""
 
-
+# Модель группы номенклатуры
 class group_model(base_model_name):
-    """
-    Default группа - сырье (фабричный метод)
-    """
-
+    # Default группа - сырье (фабричный метод)
     @staticmethod
     def default_group_source():
         item = group_model()
         item.name = "Сырье"
         return item
 
-    """
-    Default группа - замарозка (фабричный метод)
-    """
-
+    # Default группа - замарозка (фабричный метод)
     @staticmethod
     def default_group_cold():
         item = group_model()
