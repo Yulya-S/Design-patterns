@@ -55,15 +55,14 @@ class test_warehouse(unittest.TestCase):
         start = start_service()
         start.create()
         start.generate_n_transactions(1000, datetime.strptime("09-01-2024", "%d-%m-%Y"))
-        creater = turnover_creater()
         warehouse = reposity.data[data_reposity.warehouse_key()][0]
         nomenclature = reposity.data[data_reposity.nomenclature_key()]["гр"]
         range = reposity.data[data_reposity.range_key()]["гр"]
 
         # Действие
-        result1 = creater.create_turnover_with_block_period(warehouse, nomenclature, range)
+        result1 = turnover_creater.create_with_block_period(warehouse, nomenclature, range)
         start.settings.block_period = datetime.strptime("01-01-2022", "%d-%m-%Y")
-        result2 = creater.create_turnover_with_block_period(warehouse, nomenclature, range)
+        result2 = turnover_creater.create_with_block_period(warehouse, nomenclature, range)
 
         # Проверки
         assert len(result1.data) != len(result2.data)
@@ -79,7 +78,7 @@ class test_warehouse(unittest.TestCase):
         creater = turnover_creater()
 
         # Действие
-        result = creater.create_turnover(reposity.data[data_reposity.warehouse_key()][0],
+        result = turnover_creater.create(reposity.data[data_reposity.warehouse_key()][0],
                                          reposity.data[data_reposity.nomenclature_key()]["гр"],
                                          reposity.data[data_reposity.range_key()]["гр"],
                                          [datetime.now() + timedelta(days=-1), datetime.now() + timedelta(days=1)])
@@ -95,7 +94,6 @@ class test_warehouse(unittest.TestCase):
         manager.open("", "..")
         start = start_service()
         start.create()
-        creater = turnover_creater()
         warehouse = reposity.data[data_reposity.warehouse_key()][0]
         nomenclature = reposity.data[data_reposity.nomenclature_key()]["гр"]
         range = reposity.data[data_reposity.range_key()]["гр"]
@@ -107,6 +105,6 @@ class test_warehouse(unittest.TestCase):
                 for l in ["01-01-2024", "01-01-2023", "01-01-2022"]:
                     start_time = time()
                     start.settings.block_period = datetime.strptime(l, "%d-%m-%Y")
-                    result = creater.create_turnover_with_block_period(warehouse, nomenclature, range)
+                    result = turnover_creater.create_with_block_period(warehouse, nomenclature, range)
                     end_time = time()
                     file.write(f"transaction_count = {i}, block_date = {l}, time={end_time - start_time}\n")

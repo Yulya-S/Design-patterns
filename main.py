@@ -1,4 +1,7 @@
+import os
+import json
 import connexion
+
 from flask import request
 from datetime import datetime
 
@@ -12,7 +15,7 @@ from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.formats_and_methods.comparison_format import comparison_format
 
-from Src.models.Warehouse.turnover_creater import turnover_creater
+from Src.models.Warehouse.turnover_creater_manager import turnover_creater_manager
 from Src.Reports.report_factory import report_factory
 from Src.logic.nomenclature_prototype import nomenclature_prototype
 
@@ -41,9 +44,17 @@ def set_block_period(data: str):
     try:
         d = datetime.strptime(data, "%d-%m-%Y")
         manager.settings.block_period = d
-        return True
+
+        stream = open(f".{os.sep}settings.json", "r")
+        j = json.load(stream)
+        j["block_period"] = data
+        stream.close()
+        json_file = open(f".{os.sep}settings.json", "w")
+        json_file.write(json.dumps(dict(j)))
+        json_file.close()
+        return f"{True}"
     except:
-        return False
+        return f"{False}"
 
 @app.route("/app/get_turnover", methods=["POST"])
 def get_turnover():
@@ -55,8 +66,7 @@ def get_turnover():
         custom_exceptions.other_exception("Полученные данные пусты!")
     req = req["items"][0]
 
-    creater = turnover_creater()
-    result = creater.create_turnover_with_JSON(req)
+    result = turnover_creater_manager.create_turnover_with_JSON(req)
     return f"{result.turnover}"
 
 

@@ -13,20 +13,10 @@ from datetime import datetime
 
 # Класс складского оборота
 class warehouse_turnover_model(base_model_name):
-    __data: list = []
     __warehouse: warehouse_model = None
     __turnover: int = 0
     __nomenclature: nomenclature_model = None
     __range: range_model = None
-
-    @property
-    def data(self):
-        return self.__data
-
-    @data.setter
-    def data(self, value: list):
-        custom_exceptions.type(value, list)
-        self.__data = value
 
     @property
     def warehouse(self):
