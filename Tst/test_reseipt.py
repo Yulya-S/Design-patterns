@@ -9,7 +9,7 @@ class test_reseipt(unittest.TestCase):
     def test_reseipts_append_ingredients(self):
         # Подготовка
         manager = settings_manager()
-        manager.open("../settings1.json")
+        manager.open("", "..")
         reposity = data_reposity()
 
         # Действие

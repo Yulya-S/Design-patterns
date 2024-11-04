@@ -14,7 +14,7 @@ class test_filters_from_json(unittest.TestCase):
         # Подготовка
         reposity = data_reposity()
         manager = settings_manager()
-        manager.open("../settings1.json")
+        manager.open("", "..")
         start = start_service()
         start.create()
         filter = filter_json_deserialization()

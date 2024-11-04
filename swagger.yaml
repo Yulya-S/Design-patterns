@@ -14,6 +14,44 @@ produces:
 basePath: "/api"
 
 paths:
+  /block_period/{data}:
+    post:
+      summary: Установка даты блокировки
+      operationId: main.set_block_period
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: path
+          description: Новая дата блокировки
+          required: true
+          type: string
+
+  /block_period:
+    post:
+      summary: Получение даты блокировки
+      operationId: main.get_block_period
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+
   /get_turnover:
     post:
       summary: Получение складского оборота

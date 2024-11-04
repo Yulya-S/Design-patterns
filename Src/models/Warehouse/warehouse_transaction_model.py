@@ -14,17 +14,17 @@ class warehouse_transaction_model(base_model_name):
     __quantity: int = 0
     __type: bool = 0  # 0 - расход;   1 - приход;
     __range: range_model = None
-    __period: datetime = None
+    __date: datetime = None
 
     def __init__(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
-                 quantity: int, type: bool, range: range_model):
+                 quantity: int, type: bool, range: range_model, date: datetime = datetime.now()):
         super().__init__()
         self.warehouse = warehouse
         self.nomenclature = nomenclature
         self.quantity = quantity
         self.type = type
         self.range = range
-        self.period = datetime.now()
+        self.period = date
 
     @property
     def warehouse(self):
@@ -72,13 +72,13 @@ class warehouse_transaction_model(base_model_name):
         self.__range = value
 
     @property
-    def period(self):
-        return self.__period
+    def date(self):
+        return self.__date
 
-    @period.setter
-    def period(self, value: datetime):
+    @date.setter
+    def date(self, value: datetime):
         custom_exceptions.type(value, datetime)
-        self.__period = value
+        self.__dateperiod = value
 
     def __str__(self):
         return "warehouse_transaction_model"

@@ -14,6 +14,7 @@ class nomenclature_prototype(abstract_prototype):
         self.data = self.filter_id(self.data, filterDto, look_inside)
         self.data = self.filter_warehouse(self.data, filterDto, look_inside)
         self.data = self.filter_nomenclature(self.data, filterDto, look_inside)
+        self.data = self.filter_periods(self.data, filterDto)
         instance = nomenclature_prototype(self.data)
         return instance
 

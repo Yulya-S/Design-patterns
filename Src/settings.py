@@ -1,8 +1,11 @@
 from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
 
+from datetime import datetime
+
 
 class settings_model:
+    # настройки компании
     __inn: str = ""
     __account: str = ""
     __correspondent_account: str = ""
@@ -10,9 +13,11 @@ class settings_model:
     __organization_name: str = ""
     __type_ownership: str = ""
 
+    # настройки отчетов
     __default_report_format: format_reporting = format_reporting.CSV
     __report_handlers: list = list()
-    _custom_exception: custom_exceptions = custom_exceptions()
+
+    __block_period: datetime = datetime.now()
 
     @property
     def inn(self):
@@ -83,7 +88,7 @@ class settings_model:
         try:
             self.__default_report_format = format_reporting(value)
         except:
-            self._custom_exception.other_exception(f"Ошибка преобразования {value} в format_reporting")
+            custom_exceptions.other_exception(f"Ошибка преобразования {value} в format_reporting")
 
     @property
     def report_handlers(self):
@@ -93,3 +98,17 @@ class settings_model:
     def report_handlers(self, value: list):
         custom_exceptions.type(value, list)
         self.__report_handlers = value
+
+    @property
+    def block_period(self):
+        return self.__block_period
+
+    @block_period.setter
+    def block_period(self, value: datetime | str):
+        if type(value) not in [datetime, str]:
+            custom_exceptions.other_exception(f"Некорректно передан параметр! {type(value)} not in [datetime, str]")
+        if isinstance(value, str):
+            self.__block_period = datetime.strptime(value, "%d-%m-%Y")
+        else:
+            self.__block_period = value
+
