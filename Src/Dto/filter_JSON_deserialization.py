@@ -32,9 +32,9 @@ class filter_json_deserialization(abstract_logic):
         custom_exceptions.elements_not_in_array(["comparison_format", "value"], data)
         self.__filter.update_filter("name", comparison_format(data["comparison_format"]), data["value"])
 
-    def __id(self, data: dict):
+    def __unique_code(self, data: dict):
         custom_exceptions.elements_not_in_array(["comparison_format", "value"], data)
-        self.__filter.update_filter("id", comparison_format(data["comparison_format"]), data["value"])
+        self.__filter.update_filter("unique_code", comparison_format(data["comparison_format"]), data["value"])
 
     def __warehouse(self, data: dict):
         custom_exceptions.elements_not_in_array(["comparison_format", "value"], data)

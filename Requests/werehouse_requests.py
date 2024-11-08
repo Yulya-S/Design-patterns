@@ -58,8 +58,6 @@ def get_turnover():
 def get_transactions():
     req = request.json
     custom_exceptions.type(req, dict)
-    req = request.json
-    custom_exceptions.type(req, dict)
     if "items" not in list(req.keys()):
         custom_exceptions.other_exception("Были получены некоректные данные!")
     if len(req["items"]) == 0:

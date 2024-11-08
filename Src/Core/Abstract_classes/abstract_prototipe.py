@@ -18,7 +18,7 @@ class abstract_prototype(ABC):
         custom_exceptions.type(source, list)
         self.__data = source
 
-    # Создание фильтра
+    # Создание прототипа
     @abstractmethod
     def create(self, data: list, filter):
         custom_exceptions.type(data, list)

@@ -26,7 +26,7 @@ class formats:
 # хранилище значений для фильтрации
 class filter_model:
     __name: str = ""
-    __id: str = ""
+    __unique_code: str = ""
     __warehouse: warehouse_model = None
     __nomenclature: nomenclature_model = None
     __formats: formats = None
@@ -45,13 +45,13 @@ class filter_model:
         self.__name = value
 
     @property
-    def id(self):
-        return self.__id
+    def unique_code(self):
+        return self.__unique_code
 
-    @id.setter
-    def id(self, value: str):
+    @unique_code.setter
+    def unique_code(self, value: str):
         custom_exceptions.type(value, str)
-        self.__id = value
+        self.__unique_code = value
 
     @property
     def warehouse(self):

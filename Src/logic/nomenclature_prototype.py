@@ -13,7 +13,7 @@ class nomenclature_prototype(abstract_prototype):
     def create(self, data: list, filterDto: filter_model, look_inside: bool = False):
         super().create(data, filterDto)
         self.data = self.filter_name(self.data, filterDto, look_inside)
-        self.data = self.filter_id(self.data, filterDto, look_inside)
+        self.data = self.filter_unique_code(self.data, filterDto, look_inside)
         self.data = self.filter_warehouse(self.data, filterDto, look_inside)
         self.data = self.filter_nomenclature(self.data, filterDto, look_inside)
         self.data = self.filter_periods(self.data, filterDto)
@@ -24,9 +24,9 @@ class nomenclature_prototype(abstract_prototype):
         comparison = prototype_factory.get(filterDto.formats.get("name"))
         return comparison(source, "name", filterDto.name, look_inside)
 
-    def filter_id(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
-        comparison = prototype_factory.get(filterDto.formats.get("id"))
-        return comparison(source, "id", filterDto.id, look_inside)
+    def filter_unique_code(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
+        comparison = prototype_factory.get(filterDto.formats.get("unique_code"))
+        return comparison(source, "unique_code", filterDto.unique_code, look_inside)
 
     def filter_warehouse(self, source: list, filterDto: filter_model, look_inside: bool = False) -> list:
         comparison = prototype_factory.get(filterDto.formats.get("warehouse"))
