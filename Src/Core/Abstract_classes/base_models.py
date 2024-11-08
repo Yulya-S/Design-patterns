@@ -1,11 +1,8 @@
 from Src.Core.Abstract_classes.abstract_model import abstract_model
 from Src.Core.custom_exceptions import custom_exceptions
 
-"""
-Базовый класс для наследования с поддержкой сравнения по коду
-"""
 
-
+# Базовый класс для наследования с поддержкой сравнения по коду
 class base_model_code(abstract_model):
     def set_compare_mode(self, other, equal: bool = True) -> bool:
         return super().set_compare_mode(other, equal)
@@ -15,11 +12,7 @@ class base_model_code(abstract_model):
         super().parse_JSON(data)
 
 
-"""
-Базовый класс для наследования с поддержкой сравнения по наименованию
-"""
-
-
+# Базовый класс для наследования с поддержкой сравнения по наименованию
 class base_model_name(abstract_model):
     __name: str = ""
 

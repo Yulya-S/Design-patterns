@@ -1,5 +1,6 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
 
 from Src.models.group_model import group_model
 from Src.models.nomenclature_model import nomenclature_model
@@ -64,3 +65,6 @@ class json_deserialization(abstract_logic):
 
     def set_exception(self, ex: Exception):
         super().set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)

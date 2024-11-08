@@ -1,7 +1,11 @@
-from Src.settings import settings_model
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
-from Src.Reports.report_factory import report_factory
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
+
+from Src.settings import settings_model
+from Src.Reports.report_factory import report_factory
+
+from Src.logic.Observe_service import observe_service
 
 from datetime import datetime
 import json
@@ -22,6 +26,7 @@ class settings_manager(abstract_logic):
     def __init__(self) -> None:
         if self.__settings is None:
             self.__settings = self.__default_setting
+        observe_service.append(self)
 
     @property
     def settings(self):
@@ -72,3 +77,8 @@ class settings_manager(abstract_logic):
 
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)
+        if type == event_type.CHANGE_BLOCK_PERIOD:
+            self.save(self.__file_name)

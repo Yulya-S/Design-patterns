@@ -1,5 +1,6 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
 
 from Src.Dto.filter import filter_model
 from Src.data_reposity import data_reposity
@@ -66,3 +67,6 @@ class filter_json_deserialization(abstract_logic):
 
     def set_exception(self, ex: Exception):
         super().set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)

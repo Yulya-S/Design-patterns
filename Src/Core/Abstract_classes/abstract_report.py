@@ -8,27 +8,17 @@ class abstract_report(ABC):
     __format: format_reporting == format_reporting.CSV
     __result: str = ""
 
-    """
-    Сформировать
-    """
-
+    # Сформировать
     @abstractmethod
     def create(self, data: list):
         pass
 
-    """
-    Тип формата
-    """
-
-    # @abstractmethod
+    # Тип формата
     @property
     def format(self) -> format_reporting:
         return self.__format
 
-    """
-    Результат формирования отчета
-    """
-
+    # Результат формирования отчета
     @property
     def result(self) -> str:
         return self.__result

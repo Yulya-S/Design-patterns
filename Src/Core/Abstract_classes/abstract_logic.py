@@ -1,11 +1,9 @@
 from abc import ABC, abstractmethod
 from Src.Core.custom_exceptions import custom_exceptions
-
-"""
-Абстрактный класс для обработки логики
-"""
+from Src.Core.event_type import event_type
 
 
+# Абстрактный класс для обработки логики
 class abstract_logic(ABC):
     __error_text: str = ""
 
@@ -25,10 +23,12 @@ class abstract_logic(ABC):
     def _inner_set_exception(self, ex: Exception):
         self.__error_text = f"Ошибка! Исключение {ex}"
 
-    """
-    Абстрактный метод для загрузки и обработки исключений
-    """
-
+    # Абстрактный метод для загрузки и обработки исключений
     @abstractmethod
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    # Обработка
+    @abstractmethod
+    def handle_event(self, type: event_type, params):
+        custom_exceptions.type(type, event_type)

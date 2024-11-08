@@ -1,4 +1,5 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
+from Src.Core.event_type import event_type
 
 
 # Репозиторий данных
@@ -48,3 +49,6 @@ class data_reposity(abstract_logic):
     # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)
