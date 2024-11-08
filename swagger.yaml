@@ -14,7 +14,7 @@ produces:
 basePath: "/api"
 
 paths:
-  /block_period/{data}:
+  /warehouse/block_period/{data}:
     post:
       summary: Установка даты блокировки
       operationId: main.set_block_period
@@ -36,7 +36,7 @@ paths:
           required: true
           type: string
 
-  /block_period:
+  /warehouse/block_period:
     post:
       summary: Получение даты блокировки
       operationId: main.get_block_period
@@ -52,7 +52,7 @@ paths:
         default:
           description: Неизвестная ошибка
 
-  /get_turnover:
+  /warehouse/get_turnover:
     post:
       summary: Получение складского оборота
       operationId: main.get_turnover
@@ -76,7 +76,7 @@ paths:
               items:
                 $ref: '#/definitions/turnover_filters'
 
-  /get_transactions:
+  /warehouse/get_transactions:
     post:
       summary: Получение транзакции с учетом фильтрации
       operationId: main.get_transactions
