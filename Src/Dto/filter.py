@@ -6,22 +6,24 @@ from Src.models.nomenclature_model import nomenclature_model
 from datetime import datetime
 
 
+# Хранилище значений формата сравнения
 class formats:
     __data = {}
-    __name: comparison_format = comparison_format.EQUAL
-    __id: comparison_format = comparison_format.EQUAL
 
+    # получение формата
     def get(self, field: str):
         custom_exceptions.type(field, str)
         if field not in self.__data:
             return comparison_format.EQUAL
         return self.__data[field]
 
+    # установка формата для поля
     def set(self, field: str, format: comparison_format = comparison_format.EQUAL):
         custom_exceptions.type(field, str)
         self.__data[field] = format
 
 
+# хранилище значений для фильтрации
 class filter_model:
     __name: str = ""
     __id: str = ""
@@ -77,6 +79,7 @@ class filter_model:
     def formats(self):
         return self.__formats
 
+    # Быстрое изменение значения для поля фильтрации
     def update_filter(self, field: str, format: comparison_format, value: any):
         custom_exceptions.type(field, str)
         custom_exceptions.type(format, comparison_format)
@@ -89,6 +92,7 @@ class filter_model:
         self.__setattr__(field, value)
         self.__formats.set(field, format)
 
+    # Быстрая установка значения периодов фильтрации
     def set_periods(self, begin_period: datetime, end_period: datetime):
         custom_exceptions.type(begin_period, datetime)
         custom_exceptions.type(end_period, datetime)

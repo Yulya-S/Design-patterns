@@ -41,12 +41,12 @@ class data_reposity(abstract_logic):
     def transaction_key() -> str:
         return "transaction"
 
+    # список существующих в репозитории ключей
     @staticmethod
     def keys():
         return [data_reposity.receipt_key(), data_reposity.nomenclature_key(), data_reposity.group_key(),
                 data_reposity.range_key(), data_reposity.warehouse_key(), data_reposity.transaction_key()]
 
-    # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
 

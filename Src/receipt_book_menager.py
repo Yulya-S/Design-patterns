@@ -68,18 +68,17 @@ class receipt_book_menager(abstract_logic):
 
         return new_receipt
 
+    # создание рецептов из JSON
+    @staticmethod
+    def parse_JSON(data: dict):
+        custom_exceptions.type(data, dict)
+        receipts = []
+        for i in list(data.keys()):
+            receipts.append(receipt_model.parse_JSON(data[i]))
+        return receipts
+
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
 
     def handle_event(self, type: event_type, params):
         super().handle_event(type, params)
-
-    @staticmethod
-    def parse_JSON(data: dict):
-        custom_exceptions.type(data, dict)
-        receipts = []
-
-        for i in list(data.keys()):
-            receipts.append(receipt_model.parse_JSON(data[i]))
-
-        return receipts

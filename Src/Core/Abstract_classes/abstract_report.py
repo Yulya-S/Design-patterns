@@ -4,21 +4,15 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.Abstract_classes.base_models import base_model_name, base_model_code
 
 
+# абстрактный класс отчетов
 class abstract_report(ABC):
     __format: format_reporting == format_reporting.CSV
     __result: str = ""
 
-    # Сформировать
-    @abstractmethod
-    def create(self, data: list):
-        pass
-
-    # Тип формата
     @property
     def format(self) -> format_reporting:
         return self.__format
 
-    # Результат формирования отчета
     @property
     def result(self) -> str:
         return self.__result
@@ -28,6 +22,12 @@ class abstract_report(ABC):
         custom_exceptions.type(value, str)
         self.__result = value
 
+    # формирование отчета
+    @abstractmethod
+    def create(self, data: list):
+        pass
+
+    # Получение полей элементов
     def _create_fields(self, data: list | dict):
         if isinstance(data, dict):
             dd = data.copy()
@@ -45,10 +45,12 @@ class abstract_report(ABC):
 
         return fields, data
 
+    # Загрузка в  файл
     @abstractmethod
     def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
         pass
 
+    # перевод данных в алфавит
     def _data_to_dict(self, data):
         if isinstance(data, list):
             fields, data = self._create_fields(data)

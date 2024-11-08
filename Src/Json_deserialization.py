@@ -11,6 +11,7 @@ import os
 import json
 
 
+# класс десереализации JSON
 class json_deserialization(abstract_logic):
     __result: dict | list = None
 

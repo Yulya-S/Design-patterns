@@ -4,6 +4,7 @@ from Src.Core.custom_exceptions import custom_exceptions
 from datetime import datetime
 
 
+# Модель настроек
 class settings_model:
     # настройки компании
     __inn: str = ""

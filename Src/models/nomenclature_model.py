@@ -4,6 +4,7 @@ from Src.models.range_model import range_model
 from Src.Core.custom_exceptions import custom_exceptions
 
 
+# класс номенклатуры
 class nomenclature_model(base_model_code):
     __full_name: str = ""
     __group: group_model = None
@@ -37,6 +38,7 @@ class nomenclature_model(base_model_code):
         custom_exceptions.type(value, range_model)
         self.__range = value
 
+    # стандартные значения
     @staticmethod
     def default_source_gr():
         item = nomenclature_model()

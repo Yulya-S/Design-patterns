@@ -126,7 +126,6 @@ class start_service(abstract_logic):
             list.append(self.generate_transaction(warehouse, nomenclature, value, operation, r, date))
         self.__reposity.data[data_reposity.transaction_key()] = list
 
-    # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
 

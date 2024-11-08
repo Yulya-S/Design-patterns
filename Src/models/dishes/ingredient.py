@@ -17,7 +17,6 @@ class ingredient_model(base_model_name):
         self.__nomenclature = nomenclature
         self.__quantity = quantity
 
-    # Единица измерения
     @property
     def range_model(self):
         return self.__nomenclature
@@ -27,7 +26,6 @@ class ingredient_model(base_model_name):
         custom_exceptions.type(value, nomenclature_model)
         self.__nomenclature = value
 
-    # Необходимое количество ингредиента
     @property
     def quantity(self):
         return self.__quantity

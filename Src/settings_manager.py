@@ -32,6 +32,7 @@ class settings_manager(abstract_logic):
     def settings(self):
         return self.__settings
 
+    # чтение настроек из файла
     def open(self, file_name: str = "", path: str = ""):
         custom_exceptions.type(file_name, str)
         custom_exceptions.type(path, str)
@@ -52,6 +53,7 @@ class settings_manager(abstract_logic):
             self.set_exception(ex)
             return False
 
+    # применение значений
     def convert(self, data: {}):
         fields = dir(self.__settings)
         for key in data.keys():
@@ -62,6 +64,7 @@ class settings_manager(abstract_logic):
     def current_settings(self) -> settings:
         return self.__settings
 
+    # стандартные настройки
     @property
     def __default_setting(self) -> settings:
         data = settings_model()

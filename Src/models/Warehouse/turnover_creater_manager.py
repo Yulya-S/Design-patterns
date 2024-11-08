@@ -11,6 +11,7 @@ from datetime import datetime
 
 # Создание оборотов из данных о транзакциях
 class turnover_creater_manager(turnover_creater):
+    # создание оборота с помощью фильтра из json файла
     @staticmethod
     def create_turnover_with_JSON(filter_data: dict) -> warehouse_turnover_model:
         reposity = data_reposity()

@@ -19,6 +19,7 @@ class filter_json_deserialization(abstract_logic):
     def result(self):
         return self.__filter
 
+    # Заполнение данных фильтрации из словаря
     def read_data(self, data: dict):
         custom_exceptions.type(data, dict)
         self.__filter = filter_model()

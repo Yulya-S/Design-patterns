@@ -19,6 +19,7 @@ from datetime import datetime
 
 # Создание оборотов из данных о транзакциях
 class turnover_creater(abstract_logic):
+    # создание оборота
     @staticmethod
     def create(warehouse: warehouse_model, nomenclature: nomenclature_model, range: range_model,
                periods: [datetime, datetime], data: list = [], format: turnover_format = turnover_format.SUMM):
@@ -39,6 +40,7 @@ class turnover_creater(abstract_logic):
         turnover.turnover = method(data.data)
         return turnover
 
+    # создание оборота с использованием периода блокировки
     @staticmethod
     def create_with_block_period(warehouse: warehouse_model, nomenclature: nomenclature_model, range: range_model,
                                  turnover_data: list = [], turnover_format=turnover_format.SUMM):

@@ -11,6 +11,7 @@ from Src.Reports.rtf_report import rtf_report
 from Src.Reports.xml_report import xml_report
 
 
+# фабрика формата отчета
 class report_factory(abstract_logic):
     __reports: dict = {}
     __settings: settings_model = None
@@ -33,6 +34,7 @@ class report_factory(abstract_logic):
                     except:
                         custom_exceptions.other_exception(f"не существует способа форматирования отчета: {i['hengler']}")
 
+    # создание класса отчета нужного формата
     def create(self, format: format_reporting) -> abstract_report:
         custom_exceptions.type(format, format_reporting)
 
@@ -44,6 +46,7 @@ class report_factory(abstract_logic):
         report = self.__reports[format.value]
         return report()
 
+    # создание класса отчета с форматом по умолчанию
     @property
     def create_default(self):
         return self.create(self.__settings.default_report_format)

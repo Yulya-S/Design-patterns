@@ -4,10 +4,12 @@ from Src.logic.prototype_factory import prototype_factory
 from Src.Core.formats_and_methods.comparison_format import comparison_format
 
 
+# фильтрация данных
 class nomenclature_prototype(abstract_prototype):
     def __init__(self, source: list) -> None:
         super().__init__(source)
 
+    # Применение фильтра
     def create(self, data: list, filterDto: filter_model, look_inside: bool = False):
         super().create(data, filterDto)
         self.data = self.filter_name(self.data, filterDto, look_inside)
