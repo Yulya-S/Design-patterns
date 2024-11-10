@@ -1,10 +1,16 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.event_type import event_type
 
+from Src.logic.observe_service import observe_service
+
 
 # Репозиторий данных
 class data_reposity(abstract_logic):
     __data = {}
+
+    def __init__(self):
+        super().__init__()
+        observe_service.append(self)
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -52,3 +58,5 @@ class data_reposity(abstract_logic):
 
     def handle_event(self, type: event_type, params):
         super().handle_event(type, params)
+        if type == event_type.CHANGE_NOMENCLATURE:
+            pass

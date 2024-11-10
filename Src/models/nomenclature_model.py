@@ -1,7 +1,8 @@
 from Src.Core.Abstract_classes.base_models import base_model_code
+from Src.Core.custom_exceptions import custom_exceptions
 from Src.models.group_model import group_model
 from Src.models.range_model import range_model
-from Src.Core.custom_exceptions import custom_exceptions
+from Src.data_reposity import data_reposity
 
 
 # класс номенклатуры
@@ -61,7 +62,29 @@ class nomenclature_model(base_model_code):
         return item
 
     def __str__(self):
-        return "nomenclature_model"
+        return f"nomenclature_model(unique_code={self.unique_code}, name={self.name}," + \
+               f" range_unique_code={self.__range.unique_code}, groupe_unique_code={self.__group.unique_code})"
+
+    # парсинг номенклатуры из строки
+    @staticmethod
+    def parse_from_str(text: str):
+        custom_exceptions.type(text, str)
+
+        reposity = data_reposity()
+        nomenclature = nomenclature_model()
+
+        text = text.split("(")[1].split(")")[0]
+        text = text.split(", ")
+        nomenclature.unique_code = text[0]
+        nomenclature.name = text[1]
+
+        range = get_from_repository_by_code(reposity.data[data_reposity.range_key()], text[2])
+        group = get_from_repository_by_code(reposity.data[data_reposity.group_key()], text[3])
+        if range is None or group is None:
+            return None
+        nomenclature.range = range
+        nomenclature.nomenclature_group = group
+        return nomenclature
 
     # Парсинг JSON файла
     @staticmethod
@@ -85,3 +108,10 @@ class nomenclature_model(base_model_code):
             new_nomenclature.__setattr__(field, data[field])
 
         return new_nomenclature
+
+
+def get_from_repository_by_code(repository, unique_code: str):
+    custom_exceptions.type(unique_code, str)
+    for i in list(repository.keys()):
+        if repository[i].unique_code == unique_code:
+            return repository[i]

@@ -44,6 +44,11 @@ class abstract_model(ABC):
             return self.unique_code == other.unique_code
         return self.unique_code != other.unique_code
 
+    # Замена параметра при соответствии типа и уникального кода
+    @abstractmethod
+    def change_value_if_equal(self, value: any):
+        pass
+
     @staticmethod
     @abstractmethod
     def parse_JSON(data: dict):

@@ -19,12 +19,6 @@ class nomenclature_service:
         for i in data_reposity.keys():
             if i != data_reposity.nomenclature_key():
                 data = self.__reposity.data[i]
-                if type(data) == dict:
-                    ll = []
-                    for l in list(self.__reposity.data[i].keys()):
-                        ll.append(self.__reposity.data[i][l])
-                    data = ll
-
                 prototype = nomenclature_prototype(data)
                 result = prototype.create(data, filter, True)
                 if len(result.data) > 0:

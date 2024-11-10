@@ -2,15 +2,27 @@ from Src.Core.Abstract_classes.abstract_prototipe import abstract_prototype
 from Src.Dto.filter import filter_model
 from Src.logic.prototype_factory import prototype_factory
 from Src.Core.formats_and_methods.comparison_format import comparison_format
+from Src.Core.custom_exceptions import custom_exceptions
 
 
 # фильтрация данных
 class nomenclature_prototype(abstract_prototype):
     def __init__(self, source: list) -> None:
+        source = self.__convert_dict_to_list(source)
         super().__init__(source)
 
+    def __convert_dict_to_list(self, data: dict):
+        if type(data) == dict:
+            custom_exceptions.type(data, dict)
+            new_list = []
+            for key in list(data.keys()):
+                new_list.append(data[key])
+            return new_list
+        return data
+
     # Применение фильтра
-    def create(self, data: list, filterDto: filter_model, look_inside: bool = False):
+    def create(self, data, filterDto: filter_model, look_inside: bool = False):
+        data = self.__convert_dict_to_list(data)
         super().create(data, filterDto)
         self.data = self.filter_name(self.data, filterDto, look_inside)
         self.data = self.filter_unique_code(self.data, filterDto, look_inside)

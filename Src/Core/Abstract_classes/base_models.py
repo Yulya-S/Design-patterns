@@ -11,6 +11,17 @@ class base_model_code(abstract_model):
     def parse_JSON(data: dict):
         super().parse_JSON(data)
 
+    def change_value_if_equal(self, value: any):
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self, x)),
+                             dir(self)))
+
+        for field in fields:
+            if type(self.__getattribute__(field)) == type(value) and self.__getattribute__(
+                    field).unique_code == value.unique_code:
+                self.__setattr__(field, value)
+            elif issubclass(type(field), base_model_name) or issubclass(type(field), base_model_code):
+                self.__getattribute__(field).change_value_if_equal(value)
+
 
 # Базовый класс для наследования с поддержкой сравнения по наименованию
 class base_model_name(abstract_model):
@@ -38,3 +49,14 @@ class base_model_name(abstract_model):
     @staticmethod
     def parse_JSON(data: dict):
         super().parse_JSON(data)
+
+    def change_value_if_equal(self, value: any):
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self, x)),
+                             dir(self)))
+
+        for field in fields:
+            if type(self.__getattribute__(field)) == type(value) and self.__getattribute__(
+                    field).unique_code == value.unique_code:
+                self.__setattr__(field, value)
+            elif issubclass(type(field), base_model_name) or issubclass(type(field), base_model_code):
+                self.__getattribute__(field).change_value_if_equal(value)
