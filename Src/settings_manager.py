@@ -82,5 +82,3 @@ class settings_manager(abstract_logic):
 
     def handle_event(self, type: event_type, params):
         super().handle_event(type, params)
-        if type == event_type.CHANGE_BLOCK_PERIOD:
-            self.save(self.__file_name)

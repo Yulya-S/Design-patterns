@@ -12,6 +12,7 @@ from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
 from Src.settings import settings_model
 from Src.data_reposity import data_reposity
+from Src.data_reposity_menager import data_reposity_menager
 
 from random import randrange
 from datetime import datetime, timedelta
@@ -131,3 +132,5 @@ class start_service(abstract_logic):
 
     def handle_event(self, type: event_type, params):
         super().handle_event(type, params)
+        if type == event_type.CHANGE_NOMENCLATURE:
+            data_reposity_menager.change_nomenclature(nomenclature_model.parse_from_str(params))

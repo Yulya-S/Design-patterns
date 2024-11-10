@@ -14,6 +14,22 @@ produces:
 basePath: "/api"
 
 paths:
+  /nomenclature/get:
+    get:
+      summary: Получить ключи номенклатуры
+      operationId: main.get_nomenclatures_keys
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+
   /nomenclature/get/{name}:
     get:
       summary: Получить номенклатуру по имени
@@ -36,7 +52,7 @@ paths:
           required: true
           type: string
 
-  /nomenclature/delete/{name}:
+  /nomenclature/delete/{text}:
     delete:
       summary: Удаление номенклатуры
       operationId: main.delete_nomenclature
@@ -52,13 +68,13 @@ paths:
         default:
           description: Неизвестная ошибка
       parameters:
-        - name: name
+        - name: text
           in: path
-          description: Имя номенклатуры
+          description: Номенклатура
           required: true
           type: string
 
-  /nomenclature/put/{name}:
+  /nomenclature/put/{text}:
     put:
       summary: Создание номенклатуры
       operationId: main.put_nomenclature
@@ -74,20 +90,13 @@ paths:
         default:
           description: Неизвестная ошибка
       parameters:
-        - name: name
+        - name: text
           in: path
-          description: Имя номенклатуры
+          description: Номенклатура
           required: true
           type: string
-        - name: data
-          in: body
-          description: Данные для создания
-          schema:
-            properties:
-              items:
-                $ref: '#/definitions/nomenclature'
 
-  /nomenclature/patch/{name}:
+  /nomenclature/patch/{text}:
     patch:
       summary: Изменение номенклатуры
       operationId: main.patch_nomenclature
@@ -103,18 +112,11 @@ paths:
         default:
           description: Неизвестная ошибка
       parameters:
-        - name: name
+        - name: text
           in: path
-          description: Имя номенклатуры
+          description: Номенклатура
           required: true
           type: string
-        - name: data
-          in: body
-          description: Данные для изменения
-          schema:
-            properties:
-              items:
-                $ref: '#/definitions/nomenclature'
 
   /warehouse/block_period/{data}:
     post:
@@ -403,13 +405,5 @@ definitions:
           "begin": "24-10-2024",
           "end": "26-10-2024"
         }
-      }
-    ]
-  nomenclature:
-    type: array
-    example: [
-      {
-        "group_name": "Сырье",
-        "range_name": "гр"
       }
     ]
