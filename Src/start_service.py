@@ -13,6 +13,7 @@ from Src.receipt_book_menager import receipt_book_menager
 from Src.settings import settings_model
 from Src.data_reposity import data_reposity
 from Src.data_reposity_menager import data_reposity_menager
+from Src.logic.observe_service import observe_service
 
 from random import randrange
 from datetime import datetime, timedelta
@@ -29,6 +30,7 @@ class start_service(abstract_logic):
         self.__reposity = data_reposity()
         self.__settings_manager = settings_manager()
         self.__recipe_manager = receipt_book_menager()
+        observe_service.append(self)
 
     # Текущие настройки
     @property

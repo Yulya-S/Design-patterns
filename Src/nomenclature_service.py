@@ -2,7 +2,7 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.models.nomenclature_model import nomenclature_model
 from Src.data_reposity import data_reposity
 from Src.data_reposity_menager import data_reposity_menager
-from Src.start_service import start_service
+from Src.logic.observe_service import observe_service
 from Src.Core.event_type import event_type
 
 
@@ -41,5 +41,4 @@ class nomenclature_service:
     def patch(self, nomenclature: str):
         custom_exceptions.type(nomenclature, str)
         nomenclature = nomenclature_model.parse_from_str(nomenclature)
-        service = start_service()
-        service.handle_event(event_type.CHANGE_NOMENCLATURE, nomenclature)
+        observe_service.raise_event(event_type.CHANGE_NOMENCLATURE, nomenclature)

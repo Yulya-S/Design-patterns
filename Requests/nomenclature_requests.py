@@ -1,5 +1,4 @@
 from Requests.start_flask import *
-from flask import request
 
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.data_reposity import data_reposity

@@ -1,8 +1,5 @@
 from Requests.start_flask import *
 
-import os
-import json
-
 from flask import request
 from datetime import datetime
 
@@ -10,6 +7,7 @@ from Src.data_reposity import data_reposity
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.models.Warehouse.turnover_creater_manager import turnover_creater_manager
 from Src.logic.nomenclature_prototype import nomenclature_prototype
+from Src.logic.observe_service import observe_service
 from Src.Dto.filter_JSON_deserialization import filter_json_deserialization
 from Src.Core.event_type import event_type
 
@@ -25,7 +23,7 @@ def get_block_period():
 def set_block_period(data: str):
     custom_exceptions.type(data, str)
     d = datetime.strptime(data, "%d-%m-%Y")
-    manager.handle_event(event_type.CHANGE_BLOCK_PERIOD, ["block_period", d])
+    observe_service.raise_event(event_type.CHANGE_BLOCK_PERIOD, ["block_period", d])
 
 
 # получение оборотов
