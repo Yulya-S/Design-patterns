@@ -11,6 +11,7 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.models.Warehouse.turnover_creater_manager import turnover_creater_manager
 from Src.logic.nomenclature_prototype import nomenclature_prototype
 from Src.Dto.filter_JSON_deserialization import filter_json_deserialization
+from Src.Core.event_type import event_type
 
 
 # Получение даты блокировки
@@ -23,19 +24,8 @@ def get_block_period():
 @app.route("/app/warehouse/block_period/<data>", methods=["POST"])
 def set_block_period(data: str):
     custom_exceptions.type(data, str)
-    try:
-        d = datetime.strptime(data, "%d-%m-%Y")
-        manager.settings.block_period = d
-        stream = open(f".{os.sep}settings.json", "r")
-        j = json.load(stream)
-        j["block_period"] = data
-        stream.close()
-        json_file = open(f".{os.sep}settings.json", "w")
-        json_file.write(json.dumps(dict(j)))
-        json_file.close()
-        return f"{True}"
-    except:
-        return f"{False}"
+    d = datetime.strptime(data, "%d-%m-%Y")
+    manager.handle_event(event_type.CHANGE_BLOCK_PERIOD, ["block_period", d])
 
 
 # получение оборотов

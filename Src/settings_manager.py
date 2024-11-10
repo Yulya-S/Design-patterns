@@ -52,6 +52,32 @@ class settings_manager(abstract_logic):
             self.set_exception(ex)
             return False
 
+    # изменение настроек
+    def save(self, value: list):
+        custom_exceptions.type(value, list)
+        custom_exceptions.length_noequal(value, 2)
+        custom_exceptions.type(value[0], str)
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(settings_manager, x)),
+                             dir(settings_manager)))
+
+        if value[0] in fields and type(self.__getattribute__(value[0])) == type(value[1]):
+            self.__setattr__(value[0], value[1])
+            if value[0] == "block_period":
+                value[1] = str(value[1].date())
+
+        try:
+            stream = open(f".{os.sep}settings.json", "r")
+            j = json.load(stream)
+            j[value[0]] = value[1]
+            stream.close()
+            json_file = open(f".{os.sep}settings.json", "w")
+            json_file.write(json.dumps(dict(j)))
+            json_file.close()
+            return f"{True}"
+        except:
+            return f"{False}"
+
     # применение значений
     def convert(self, data: {}):
         fields = dir(self.__settings)
@@ -82,3 +108,5 @@ class settings_manager(abstract_logic):
 
     def handle_event(self, type: event_type, params):
         super().handle_event(type, params)
+        if type == event_type.CHANGE_BLOCK_PERIOD:
+            self.save(params)
