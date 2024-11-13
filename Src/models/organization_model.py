@@ -3,6 +3,7 @@ from Src.settings import settings_model
 from Src.Core.custom_exceptions import custom_exceptions
 
 
+# содель организации
 class organization_model(base_model_name):
     __inn: str = ""
     __account: str = ""

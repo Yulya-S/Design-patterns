@@ -4,11 +4,13 @@ from abc import ABC, abstractmethod
 from Src.Core.custom_exceptions import custom_exceptions
 
 
+# Класс абстрактной модели
 class abstract_model(ABC):
     __name: str = ""
     __unique_code: str = ""
 
     def __init__(self):
+        # генерация уникального кода
         self.__unique_code = ''.join(random.sample((string.ascii_letters + string.digits), 15))
 
     @property
@@ -31,6 +33,7 @@ class abstract_model(ABC):
         custom_exceptions.length_noequal(value, 15)
         self.__unique_code = value
 
+    # изменение способа сравнения модели
     @abstractmethod
     def set_compare_mode(self, other, equal: bool = True) -> bool:
         # если equal = True, то проверяем что значения равны иначе проверяем не равенство
@@ -41,11 +44,17 @@ class abstract_model(ABC):
             return self.unique_code == other.unique_code
         return self.unique_code != other.unique_code
 
+    # Замена параметра при соответствии типа и уникального кода
+    @abstractmethod
+    def change_value_if_equal(self, value: any):
+        pass
+
     @staticmethod
     @abstractmethod
     def parse_JSON(data: dict):
         pass
 
+    # перегрузка методов сравнения
     def __eq__(self, other):
         return self.set_compare_mode(other, True)
 

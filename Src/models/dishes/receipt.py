@@ -36,7 +36,6 @@ class receipt_model(base_model_name):
             custom_exceptions.type(step, str)
         self.__steps_cooking = value
 
-    # Количество порций получающееся по рецепту
     @property
     def number_servings(self):
         return self.__number_servings
@@ -46,7 +45,6 @@ class receipt_model(base_model_name):
         custom_exceptions.type(value, int)
         self.__number_servings = value
 
-    # Время приготовления в минутах
     @property
     def cooking_time(self):
         return self.__cooking_time

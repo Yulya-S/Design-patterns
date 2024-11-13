@@ -3,7 +3,7 @@ from Src.Core.formats_and_methods.turnover_methods import turnover_methods
 from Src.Core.custom_exceptions import custom_exceptions
 
 
-# Фабрика функция для расчета оборотов
+# Фабрика функций для расчета оборотов
 class turnover_factory:
     __methods = {
         turnover_format.SUMM: turnover_methods.summ

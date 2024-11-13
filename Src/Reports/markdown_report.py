@@ -5,12 +5,13 @@ from Src.Core.custom_exceptions import custom_exceptions
 import os
 
 
-# Отчет формирует набор данных в формате markdown
+# markdown отчет
 class markdown_report(abstract_report):
     def __init__(self) -> None:
         super().__init__()
         self.__format = format_reporting.MARCDOWN
 
+    # создание отчета
     def create(self, data: list | dict):
         fields, data = self._create_fields(data)
 
@@ -28,6 +29,7 @@ class markdown_report(abstract_report):
                 self.result += f"{str(value)}|"
             self.result += "\n"
 
+    # сохранение результата в файл
     def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
         if not os.path.exists(path):
             custom_exceptions.other_exception(f"Папки {path} не существует")

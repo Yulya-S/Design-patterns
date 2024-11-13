@@ -2,6 +2,7 @@ from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.Abstract_classes.abstract_report import abstract_report
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
 from Src.settings import settings_model
 
 from Src.Reports.csv_report import csv_report
@@ -11,6 +12,7 @@ from Src.Reports.rtf_report import rtf_report
 from Src.Reports.xml_report import xml_report
 
 
+# фабрика формата отчета
 class report_factory(abstract_logic):
     __reports: dict = {}
     __settings: settings_model = None
@@ -33,6 +35,7 @@ class report_factory(abstract_logic):
                     except:
                         custom_exceptions.other_exception(f"не существует способа форматирования отчета: {i['hengler']}")
 
+    # создание класса отчета нужного формата
     def create(self, format: format_reporting) -> abstract_report:
         custom_exceptions.type(format, format_reporting)
 
@@ -44,9 +47,13 @@ class report_factory(abstract_logic):
         report = self.__reports[format.value]
         return report()
 
+    # создание класса отчета с форматом по умолчанию
     @property
     def create_default(self):
         return self.create(self.__settings.default_report_format)
 
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)

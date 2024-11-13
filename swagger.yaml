@@ -14,7 +14,111 @@ produces:
 basePath: "/api"
 
 paths:
-  /block_period/{data}:
+  /nomenclature/get:
+    get:
+      summary: Получить ключи номенклатуры
+      operationId: main.get_nomenclatures_keys
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+
+  /nomenclature/get/{name}:
+    get:
+      summary: Получить номенклатуру по имени
+      operationId: main.get_nomenclature
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: name
+          in: path
+          description: Имя номенклатуры
+          required: true
+          type: string
+
+  /nomenclature/delete/{text}:
+    delete:
+      summary: Удаление номенклатуры
+      operationId: main.delete_nomenclature
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: text
+          in: path
+          description: Номенклатура
+          required: true
+          type: string
+
+  /nomenclature/put/{text}:
+    put:
+      summary: Создание номенклатуры
+      operationId: main.put_nomenclature
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: text
+          in: path
+          description: Номенклатура
+          required: true
+          type: string
+
+  /nomenclature/patch/{text}:
+    patch:
+      summary: Изменение номенклатуры
+      operationId: main.patch_nomenclature
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: text
+          in: path
+          description: Номенклатура
+          required: true
+          type: string
+
+  /warehouse/block_period/{data}:
     post:
       summary: Установка даты блокировки
       operationId: main.set_block_period
@@ -36,7 +140,7 @@ paths:
           required: true
           type: string
 
-  /block_period:
+  /warehouse/block_period:
     post:
       summary: Получение даты блокировки
       operationId: main.get_block_period
@@ -52,7 +156,7 @@ paths:
         default:
           description: Неизвестная ошибка
 
-  /get_turnover:
+  /warehouse/get_turnover:
     post:
       summary: Получение складского оборота
       operationId: main.get_turnover
@@ -76,7 +180,7 @@ paths:
               items:
                 $ref: '#/definitions/turnover_filters'
 
-  /get_transactions:
+  /warehouse/get_transactions:
     post:
       summary: Получение транзакции с учетом фильтрации
       operationId: main.get_transactions

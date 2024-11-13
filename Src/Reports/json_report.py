@@ -7,15 +7,17 @@ from Src.Core.custom_exceptions import custom_exceptions
 import os
 
 
-# Отчет формирует набор данных в формате json
+# json отчет
 class json_report(abstract_report):
     def __init__(self) -> None:
         super().__init__()
         self.__format = format_reporting.JSON
 
+    # создание отчета
     def create(self, data: list | dict):
         self.result = str(self._data_to_dict(data))
 
+    # сохранение результата в файл
     def upload_to_file(self, data: list | dict, path: str = "..\\Docs\\reports\\", file_name: str = "report"):
         if not os.path.exists(path):
             custom_exceptions.other_exception(f"Папки {path} не существует")

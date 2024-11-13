@@ -21,6 +21,7 @@ class turnover_filter_data:
     def data(self):
         return self.__data
 
+    # подготовка данных
     def preparation_data(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
                          periods: [datetime, datetime]):
         filter = self.__create_filter(warehouse, nomenclature, periods)
@@ -28,6 +29,7 @@ class turnover_filter_data:
         result = prototype.create(self.__data, filter)
         self.__data = result.data
 
+    #  создание фильтра
     def __create_filter(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
                         periods: [datetime, datetime]) -> filter_model:
         filter = filter_model()

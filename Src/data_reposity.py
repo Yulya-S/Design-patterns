@@ -1,9 +1,16 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
+from Src.Core.event_type import event_type
+
+from Src.logic.observe_service import observe_service
 
 
 # Репозиторий данных
 class data_reposity(abstract_logic):
     __data = {}
+
+    def __init__(self):
+        super().__init__()
+        observe_service.append(self)
 
     def __new__(cls):
         if not hasattr(cls, 'instance'):
@@ -40,11 +47,16 @@ class data_reposity(abstract_logic):
     def transaction_key() -> str:
         return "transaction"
 
+    # список существующих в репозитории ключей
     @staticmethod
     def keys():
         return [data_reposity.receipt_key(), data_reposity.nomenclature_key(), data_reposity.group_key(),
                 data_reposity.range_key(), data_reposity.warehouse_key(), data_reposity.transaction_key()]
 
-    # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)
+        if type == event_type.CHANGE_NOMENCLATURE:
+            pass

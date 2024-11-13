@@ -2,6 +2,7 @@ from Src.Core.Abstract_classes.base_models import base_model_name
 from Src.Core.custom_exceptions import custom_exceptions
 
 
+# класс единицы измерения
 class range_model(base_model_name):
     __base = None
     __conversion_factor: int = 0
@@ -31,6 +32,7 @@ class range_model(base_model_name):
         custom_exceptions.type(value, int)
         self.__conversion_factor = value
 
+    # стандартные значения
     @staticmethod
     def default_range_kg():
         item = range_model("кг", 1)

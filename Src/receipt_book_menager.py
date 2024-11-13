@@ -1,7 +1,9 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
+from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
+
 from Src.models.dishes.receipt import receipt_model
 from Src.data_reposity import data_reposity
-from Src.Core.custom_exceptions import custom_exceptions
 
 import os
 import codecs
@@ -66,15 +68,17 @@ class receipt_book_menager(abstract_logic):
 
         return new_receipt
 
-    def set_exception(self, ex: Exception):
-        self._inner_set_exception(ex)
-
+    # создание рецептов из JSON
     @staticmethod
     def parse_JSON(data: dict):
         custom_exceptions.type(data, dict)
         receipts = []
-
         for i in list(data.keys()):
             receipts.append(receipt_model.parse_JSON(data[i]))
-
         return receipts
+
+    def set_exception(self, ex: Exception):
+        self._inner_set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)

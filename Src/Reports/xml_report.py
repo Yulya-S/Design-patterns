@@ -6,16 +6,18 @@ from dicttoxml import dicttoxml
 import os
 
 
-# Отчет формирует набор данных в формате xml
+# xml отчет
 class xml_report(abstract_report):
     def __init__(self) -> None:
         super().__init__()
         self.__format = format_reporting.XML
 
+    # создание отчета
     def create(self, data: list | dict):
         result = self._data_to_dict(data)
         self.result = str(dicttoxml(result))
 
+    # сохранение результата в файл
     def upload_to_file(self, data: list | dict, path: str = "../Docs/reports/", file_name: str = "report"):
         if not os.path.exists(path):
             custom_exceptions.other_exception(f"Папки {path} не существует")

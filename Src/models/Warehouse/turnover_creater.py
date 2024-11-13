@@ -1,6 +1,7 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.formats_and_methods.turnover_format import turnover_format
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
 
 from Src.data_reposity import data_reposity
 from Src.settings_manager import settings_manager
@@ -18,6 +19,7 @@ from datetime import datetime
 
 # Создание оборотов из данных о транзакциях
 class turnover_creater(abstract_logic):
+    # создание оборота
     @staticmethod
     def create(warehouse: warehouse_model, nomenclature: nomenclature_model, range: range_model,
                periods: [datetime, datetime], data: list = [], format: turnover_format = turnover_format.SUMM):
@@ -38,6 +40,7 @@ class turnover_creater(abstract_logic):
         turnover.turnover = method(data.data)
         return turnover
 
+    # создание оборота с использованием периода блокировки
     @staticmethod
     def create_with_block_period(warehouse: warehouse_model, nomenclature: nomenclature_model, range: range_model,
                                  turnover_data: list = [], turnover_format=turnover_format.SUMM):
@@ -49,3 +52,6 @@ class turnover_creater(abstract_logic):
 
     def set_exception(self, ex: Exception):
         super().set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)

@@ -1,5 +1,6 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.event_type import event_type
 
 from Src.models.group_model import group_model
 from Src.models.nomenclature_model import nomenclature_model
@@ -11,6 +12,8 @@ from Src.settings_manager import settings_manager
 from Src.receipt_book_menager import receipt_book_menager
 from Src.settings import settings_model
 from Src.data_reposity import data_reposity
+from Src.data_reposity_menager import data_reposity_menager
+from Src.logic.observe_service import observe_service
 
 from random import randrange
 from datetime import datetime, timedelta
@@ -27,6 +30,7 @@ class start_service(abstract_logic):
         self.__reposity = data_reposity()
         self.__settings_manager = settings_manager()
         self.__recipe_manager = receipt_book_menager()
+        observe_service.append(self)
 
     # Текущие настройки
     @property
@@ -125,6 +129,10 @@ class start_service(abstract_logic):
             list.append(self.generate_transaction(warehouse, nomenclature, value, operation, r, date))
         self.__reposity.data[data_reposity.transaction_key()] = list
 
-    # Перегрузка абстрактного метода
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
+
+    def handle_event(self, type: event_type, params):
+        super().handle_event(type, params)
+        if type == event_type.CHANGE_NOMENCLATURE:
+            data_reposity_menager.change_nomenclature(nomenclature_model.parse_from_str(params))

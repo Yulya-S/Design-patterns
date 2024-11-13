@@ -3,7 +3,7 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.formats_and_methods.filter_metods import filter_metods
 
 
-# Формирования прототипов
+# фабрика форматов фильтрации
 class prototype_factory:
     __reports = {
         comparison_format.EQUAL: filter_metods.equals,

@@ -4,6 +4,7 @@ from datetime import datetime
 
 # Методы фильтрации
 class filter_metods:
+    # равентсво фрагмента
     @staticmethod
     def equal_in_fragment(source, field: str, text: any):
         if type(source) == list:
@@ -22,6 +23,7 @@ class filter_metods:
                 return source.__getattribute__(field) == text
         return False
 
+    # равенство
     @staticmethod
     def equals(source: list, field: str, text: any, look_inside: bool = False):
         if text == "" or text == None:
@@ -33,6 +35,7 @@ class filter_metods:
                 result.append(item)
         return result
 
+    # содержание в фрагменте
     @staticmethod
     def like_in_fragment(source, field: str, text: any):
         if type(source) == list:
@@ -51,6 +54,7 @@ class filter_metods:
                 return text in source.__getattribute__(field)
         return False
 
+    # содержание
     @staticmethod
     def like(source: list, field: str, text: any, look_inside: bool = False):
         if text == "" or text == None:
@@ -62,6 +66,7 @@ class filter_metods:
                 result.append(item)
         return result
 
+    # Диаппазон
     @staticmethod
     def range(source: list, begin_period: datetime, end_period: datetime):
         if begin_period == None or end_period == None:
