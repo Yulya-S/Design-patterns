@@ -72,12 +72,5 @@ class abstract_report(ABC):
                 result[field] = self._data_to_dict(data[field])
             data = result
         elif issubclass(type(data), base_model_name) or issubclass(type(data), base_model_code):
-            fields, data = self._create_fields([data])
-            result = {}
-            if len(fields) == 0:
-                return data
-            for row in data:
-                for i in range(len(fields)):
-                    result[fields[i]] = self._data_to_dict(getattr(row, fields[i]))
-            data = result
+            data = data.create_JSON()
         return data
