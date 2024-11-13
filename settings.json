@@ -13,5 +13,6 @@
         { "type": 4, "hendler": "xml_report" },
         { "type": 5, "hendler": "rtf_report" }
     ],
-    "block_period": "10-01-2024"
+    "block_period": "10-01-2024",
+    "generate_data": true
 }
