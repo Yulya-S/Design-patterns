@@ -32,10 +32,18 @@ class custom_exceptions(Exception):
 
     # Какой-либо из элементов отсутствует в списке
     @staticmethod
-    def elements_not_in_array(elements, array):
+    def elements_not_in_array(elements: list, array):
+        custom_exceptions.type(elements, list)
         for i in elements:
             if i not in array:
                 raise custom_exceptions(f"Элемент {i} отсутствует в списке {array}!")
+
+    # Проверка соответствия типов элементов списка
+    @staticmethod
+    def elements_is_type(elements: list, type):
+        custom_exceptions.type(elements, list)
+        for i in elements:
+            custom_exceptions.type(i, type)
 
     # Какая либо другая ошибка
     @staticmethod
