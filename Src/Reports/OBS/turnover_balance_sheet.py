@@ -37,7 +37,7 @@ class turnover_balance_sheet:
 
     @property
     def result(self):
-        return [self.__kredit_result, self.__kredit_result]
+        return [self.__debet_result, self.__kredit_result]
 
     @result.setter
     def result(self, value: list):

@@ -35,7 +35,7 @@ def get_tbs():
     custom_exceptions.None_received(warehouse)
     tbs = tbs_calculation([datetime.strptime(req["begin"], "%d-%m-%Y"),
                            datetime.strptime(req["end"], "%d-%m-%Y")], warehouse)
-    return tbs.result
+    return f"{tbs.result}"
 
 
 # получение списка форматов для фильтрации
