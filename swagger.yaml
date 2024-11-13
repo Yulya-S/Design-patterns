@@ -14,6 +14,54 @@ produces:
 basePath: "/api"
 
 paths:
+  /dataset/load:
+    post:
+      summary: Востановление данных из файла
+      operationId: main.data_load
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные файла
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/file'
+
+  /dataset/save:
+    post:
+      summary: Сохранение данных в файл
+      operationId: main.data_save
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные файла
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/file'
+
   /nomenclature/get:
     get:
       summary: Получить ключи номенклатуры
@@ -454,5 +502,12 @@ definitions:
         "warehouse_code": "",
         "begin": "24-10-2024",
         "end": "26-10-2024"
+      }
+    ]
+  file:
+    type: array
+    example: [
+      {
+        "file_name": "data.json"
       }
     ]

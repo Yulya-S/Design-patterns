@@ -80,7 +80,7 @@ class data_reposity_menager:
         custom_exceptions.type(path, str)
         custom_exceptions.type(file_name, str)
         if path == "":
-            path = "..\\.."
+            path = "..\\Datasets"
         if file_name == "":
             file_name = "data.json"
 
