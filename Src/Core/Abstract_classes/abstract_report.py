@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.Abstract_classes.base_models import base_model_name, base_model_code
@@ -60,9 +61,9 @@ class abstract_report(ABC):
             if len(fields) == 0:
                 return data
             for row in data:
-                result[getattr(row, fields[-1])] = {}
+                result[getattr(row, "unique_code")] = {}
                 for i in range(len(fields)):
-                    result[getattr(row, fields[-1])][fields[i]] = self._data_to_dict(getattr(row, fields[i]))
+                    result[getattr(row, "unique_code")][fields[i]] = self._data_to_dict(getattr(row, fields[i]))
             data = result
         elif isinstance(data, dict):
             if len(list(data.keys())) == 0:
@@ -73,4 +74,6 @@ class abstract_report(ABC):
             data = result
         elif issubclass(type(data), base_model_name) or issubclass(type(data), base_model_code):
             data = data.create_JSON()
+        elif isinstance(data, datetime):
+            data = data.date().strftime("%d-%m-%Y")
         return data

@@ -57,23 +57,23 @@ class data_reposity_menager:
         custom_exceptions.type(path, str)
         custom_exceptions.type(file_name, str)
         if path == "":
-            path = "..\\.."
+            path = "..\\Datasets"
         if file_name == "":
             file_name = "data.json"
-        dict = {}
+        d = {}
         report = json_report()
         reposity = data_reposity()
 
         for i in data_reposity().keys():
-            dict[i] = report.create(reposity.data[i])
-
+            d[i] = report.dict_result(reposity.data[i])
         try:
             json_file = open(f"{path}{os.sep}{file_name}", "w")
-            json_file.write(json.dumps(dict))
+            json_file.write(json.dumps(d))
             json_file.close()
+            return True
         except:
             pass
-        return f"{dict}"
+        return f"{d}"
 
     @staticmethod
     def load(path: str = "", file_name: str = ""):
@@ -89,6 +89,7 @@ class data_reposity_menager:
             full_name = f"{path}{os.sep}{file_name}"
             stream = open(full_name)
             data = json.load(stream)
+            stream.close()
         except:
             pass
 
@@ -96,4 +97,4 @@ class data_reposity_menager:
         reposity = data_reposity()
         for i in reposity.keys():
             if i in list(data.keys()):
-                reposity.data[i] = deserialization
+                reposity.data[i] = deserialization.__getattribute__(i)(data[i])

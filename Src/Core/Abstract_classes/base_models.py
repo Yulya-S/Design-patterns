@@ -9,7 +9,7 @@ class base_model_code(abstract_model):
 
     @staticmethod
     def parse_JSON(data: dict):
-        super().parse_JSON(data)
+        pass
 
     def create_JSON(self):
         dict = {}
@@ -59,7 +59,7 @@ class base_model_name(abstract_model):
 
     @staticmethod
     def parse_JSON(data: dict):
-        super().parse_JSON(data)
+        pass
 
     def create_JSON(self):
         dict = {}
