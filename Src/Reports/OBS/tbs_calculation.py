@@ -6,7 +6,10 @@ from Src.Reports.OBS.turnover_balance_sheet import turnover_balance_sheet
 from Src.models.Warehouse.warehouse_model import warehouse_model
 from Src.Dto.filter import filter_model
 from Src.data_reposity import data_reposity
+
 from datetime import datetime
+import os
+import json
 
 
 class tbs_calculation:
@@ -53,5 +56,21 @@ class tbs_calculation:
         return self.__tbs
 
     @property
-    def result(self):
-        return self.__tbs.result
+    def result(self) -> dict:
+        result = {}
+        fields = list(
+            filter(lambda x: not x.startswith("_") and not callable(getattr(turnover_balance_sheet.__class__, x)),
+                   dir(turnover_balance_sheet)))
+        for i in fields:
+            result[i] = self.__tbs.__getattribute__(i)
+        return result
+
+    def save(self, path: str = "..\\..\\Docs\\reports\\", file_name: str = "tbs"):
+        if not os.path.exists(path):
+            custom_exceptions.other_exception(f"Папки {path} не существует")
+        try:
+            with open(f"{path}{file_name}.json", "w") as json_file:
+                json_file.write(json.dumps(self.result))
+            return True
+        except:
+            return False
