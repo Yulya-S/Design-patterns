@@ -5,6 +5,8 @@ from Src.Core.event_type import event_type
 from Src.models.group_model import group_model
 from Src.models.nomenclature_model import nomenclature_model
 from Src.models.range_model import range_model
+from Src.models.Warehouse.warehouse_model import warehouse_model
+from Src.models.Warehouse.warehouse_transaction_model import warehouse_transaction_model
 from Src.receipt_book_menager import receipt_book_menager
 
 import os
@@ -35,33 +37,68 @@ class json_deserialization(abstract_logic):
 
     def group_from_JSON(self, json_file: str, path: str = ""):
         data_json = self.__read_JSON(json_file, path)
-        self.__result = []
+        return self.group(data_json)
 
-        for i in list(data_json.keys()):
-            self.__result.append(group_model.parse_JSON(data_json[i]))
+    def group(self, data: dict):
+        custom_exceptions.type(data, dict)
+        self.__result = []
+        for i in list(data.keys()):
+            self.__result.append(group_model.parse_JSON(data[i]))
         return self.__result
 
     def nomenclature_from_JSON(self, json_file: str, path: str = ""):
         data_json = self.__read_JSON(json_file, path)
-        self.__result = {}
+        return self.nomenclature(data_json)
 
-        for i in list(data_json.keys()):
-            value = nomenclature_model.parse_JSON(data_json[i])
+    def nomenclature(self, data: dict):
+        custom_exceptions.type(data, dict)
+        self.__result = {}
+        for i in list(data.keys()):
+            value = nomenclature_model.parse_JSON(data[i])
             self.__result[i] = value
         return self.__result
 
     def range_from_JSON(self, json_file: str, path: str = ""):
         data_json = self.__read_JSON(json_file, path)
-        self.__result = {}
+        return self.range(data_json)
 
-        for i in list(data_json.keys()):
-            value = range_model.parse_JSON(data_json[i])
+    def range(self, data: dict):
+        custom_exceptions.type(data, dict)
+        self.__result = {}
+        for i in list(data.keys()):
+            value = range_model.parse_JSON(data[i])
             self.__result[value.name] = value
+        return self.__result
+
+    def warehouse_from_JSON(self, json_file: str, path: str = ""):
+        data_json = self.__read_JSON(json_file, path)
+        return self.warehouse(data_json)
+
+    def warehouse(self, data: dict):
+        custom_exceptions.type(data, dict)
+        self.__result = []
+        for i in list(data.keys()):
+            self.__result.append(warehouse_model.parse_JSON(data[i]))
+        return self.__result
+
+    def transaction_from_JSON(self, json_file: str, path: str = ""):
+        data_json = self.__read_JSON(json_file, path)
+        return self.transaction(data_json)
+
+    def transaction(self, data: dict):
+        custom_exceptions.type(data, dict)
+        self.__result = []
+        for i in list(data.keys()):
+            self.__result.append(warehouse_transaction_model.parse_JSON(data[i]))
         return self.__result
 
     def receipts_from_JSON(self, json_file: str, path: str = ""):
         data_json = self.__read_JSON(json_file, path)
-        self.__result = receipt_book_menager.parse_JSON(data_json)
+        return self.receipt(data_json)
+
+    def receipt(self, data: dict):
+        custom_exceptions.type(data, dict)
+        self.__result = receipt_book_menager.parse_JSON(data)
         return self.__result
 
     def set_exception(self, ex: Exception):

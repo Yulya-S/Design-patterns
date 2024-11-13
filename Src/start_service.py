@@ -34,6 +34,8 @@ class start_service(abstract_logic):
         observe_service.append(self)
         if self.__settings_manager.settings.generate_data:
             self.create()
+        else:
+            data_reposity_menager.load()
 
     # Текущие настройки
     @property

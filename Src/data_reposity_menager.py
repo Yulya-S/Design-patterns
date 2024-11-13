@@ -1,9 +1,15 @@
 from Src.data_reposity import data_reposity
 from Src.models.nomenclature_model import nomenclature_model
-from Src.Core.custom_exceptions import custom_exceptions
 from Src.Dto.filter import filter_model
-from Src.Core.formats_and_methods.comparison_format import comparison_format
 from Src.logic.nomenclature_prototype import nomenclature_prototype
+from Src.Reports.json_report import json_report
+from Src.Json_deserialization import json_deserialization
+
+from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.formats_and_methods.comparison_format import comparison_format
+
+import os
+import json
 
 
 # Обрработчик изменений в репозитории данных
@@ -44,3 +50,50 @@ class data_reposity_menager:
                 if len(result.data) > 0:
                     return False
         return True
+
+    # сохранение данных из data_reposity  в json файл
+    @staticmethod
+    def save(path: str = "", file_name: str = ""):
+        custom_exceptions.type(path, str)
+        custom_exceptions.type(file_name, str)
+        if path == "":
+            path = "..\\.."
+        if file_name == "":
+            file_name = "data.json"
+        dict = {}
+        report = json_report()
+        reposity = data_reposity()
+
+        for i in data_reposity().keys():
+            dict[i] = report.create(reposity.data[i])
+
+        try:
+            json_file = open(f"{path}{os.sep}{file_name}", "w")
+            json_file.write(json.dumps(dict))
+            json_file.close()
+        except:
+            pass
+        return f"{dict}"
+
+    @staticmethod
+    def load(path: str = "", file_name: str = ""):
+        custom_exceptions.type(path, str)
+        custom_exceptions.type(file_name, str)
+        if path == "":
+            path = "..\\.."
+        if file_name == "":
+            file_name = "data.json"
+
+        data = None
+        try:
+            full_name = f"{path}{os.sep}{file_name}"
+            stream = open(full_name)
+            data = json.load(stream)
+        except:
+            pass
+
+        deserialization = json_deserialization()
+        reposity = data_reposity()
+        for i in reposity.keys():
+            if i in list(data.keys()):
+                reposity.data[i] = deserialization
