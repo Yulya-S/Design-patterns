@@ -9,6 +9,7 @@ class format_reporting(Enum):
     JSON = 3
     XML = 4
     RTF = 5
+    TBS = 6
 
     @staticmethod
     def list():

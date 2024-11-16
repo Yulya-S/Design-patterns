@@ -18,64 +18,46 @@ class tbs_calculation:
     def __init__(self, period: [datetime, datetime], warehouse: warehouse_model):
         custom_exceptions.elements_is_type(period, datetime)
         self.__tbs.period = period
-        transactions = data_reposity()
-        if warehouse not in transactions.data[data_reposity.warehouse_key()]:
+        reposity = data_reposity()
+        if warehouse not in reposity.data[data_reposity.warehouse_key()]:
             return
         self.__tbs.warehouse = warehouse
-        transactions = transactions.data[data_reposity.transaction_key()]
-
-        current_filter = filter_model()
-        current_filter.update_filter("warehouse", comparison_format.EQUAL, warehouse)
-        current_filter.set_periods(period[0], period[1])
-        prototype = nomenclature_prototype(transactions)
-        result = prototype.create(transactions, current_filter)
-
-        data = [0, 0]
-        # данные за периода
-        for i in result.data:
-            data[int(not i.type)] += i.quantity
-        self.__tbs.current = data
-
-        start_filter = filter_model()
-        start_filter.update_filter("warehouse", comparison_format.EQUAL, warehouse)
-        start_filter.set_periods(datetime.strptime("01-01-1900", "%d-%m-%Y"), period[0])
-        prototype = nomenclature_prototype(transactions)
-        result = prototype.create(transactions, start_filter)
-
-        data = [0, 0]
-        # данные до периода
-        for i in result.data:
-            data[int(not i.type)] += i.quantity
-        self.__tbs.start = data
-        self.__calculation()
-
-    # расчет результатов
-    def __calculation(self):
-        result = self.__tbs.start[0] - self.__tbs.start[1]
-        result += self.__tbs.current[0] - self.__tbs.current[1]
-        data = [0, 0]
-        data[int(result < 0)] = result
-        self.__tbs.result = data
 
     @property
     def tbs(self):
         return self.__tbs
 
-    @property
-    def result(self) -> dict:
-        result = {}
-        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self.tbs.__class__, x)),
-                             dir(self.tbs)))
-        for i in fields:
-            result[i] = self.__tbs.__getattribute__(i)
-        return result
+    def create(self):
+        reposity = data_reposity()
+        all_transactions = reposity.data[data_reposity.transaction_key()]
+        nomenclatures = reposity.data[data_reposity.nomenclature_key()]
 
-    def save(self, path: str = "..\\..\\Docs\\reports\\", file_name: str = "tbs"):
-        if not os.path.exists(path):
-            custom_exceptions.other_exception(f"Папки {path} не существует")
-        try:
-            with open(f"{path}{file_name}.json", "w") as json_file:
-                json_file.write(json.dumps(self.return_result))
-            return True
-        except:
-            return False
+        for i in list(nomenclatures.keys()):
+            current_filter = filter_model()
+            current_filter.update_filter("warehouse", comparison_format.EQUAL, self.__tbs.warehouse)
+            current_filter.update_filter("nomenclature", comparison_format.EQUAL, nomenclatures[i])
+            current_filter.set_periods(self.__tbs.period[0], self.__tbs.period[1])
+            prototype = nomenclature_prototype(all_transactions)
+            result = prototype.create(all_transactions, current_filter)
+
+            data = [0, 0]
+            # данные за периода
+            for i in result.data:
+                data[int(not i.type)] += i.quantity
+            data = data[0] - data[1]
+            self.__tbs.current = data
+
+            start_filter = filter_model()
+            start_filter.update_filter("warehouse", comparison_format.EQUAL, self.__tbs.warehouse)
+            current_filter.update_filter("nomenclature", comparison_format.EQUAL, nomenclatures[i])
+            start_filter.set_periods(datetime.strptime("01-01-1900", "%d-%m-%Y"), self.__tbs.period[0])
+            prototype = nomenclature_prototype(all_transactions)
+            result = prototype.create(all_transactions, start_filter)
+
+            data = [0, 0]
+            # данные до периода
+            for i in result.data:
+                data[int(not i.type)] += i.quantity
+            data = data[0] - data[1]
+            self.__tbs.start = data
+            self.__tbs.result = self.__tbs.start[-1] + self.__tbs.current[-1]
