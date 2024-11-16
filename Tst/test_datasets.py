@@ -1,9 +1,9 @@
 from Src.data_reposity import data_reposity
 from Src.data_reposity_menager import data_reposity_menager
 from Src.start_service import start_service
-from Src.Reports.OBS.tbs_calculation import tbs_calculation
 
 import unittest
+
 
 class test_reporting(unittest.TestCase):
     # проверка сохранения данных в файл

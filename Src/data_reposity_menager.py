@@ -2,18 +2,14 @@ from Src.data_reposity import data_reposity
 from Src.models.nomenclature_model import nomenclature_model
 from Src.Dto.filter import filter_model
 from Src.logic.nomenclature_prototype import nomenclature_prototype
-from Src.Reports.json_report import json_report
-from Src.Json_deserialization import json_deserialization
 
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.formats_and_methods.comparison_format import comparison_format
-
-import os
-import json
+from Src.Core.Abstract_classes.abstract_manager import abstract_manager
 
 
 # Обрработчик изменений в репозитории данных
-class data_reposity_menager:
+class data_reposity_menager(abstract_manager):
     # изменение номенклатуры
     @staticmethod
     def change_nomenclature(object: nomenclature_model):
@@ -54,47 +50,9 @@ class data_reposity_menager:
     # сохранение данных из data_reposity  в json файл
     @staticmethod
     def save(path: str = "", file_name: str = ""):
-        custom_exceptions.type(path, str)
-        custom_exceptions.type(file_name, str)
-        if path == "":
-            path = "..\\Datasets"
-        if file_name == "":
-            file_name = "data.json"
-        d = {}
-        report = json_report()
-        reposity = data_reposity()
+        super(data_reposity_menager, data_reposity_menager()).save(path, file_name)
 
-        for i in data_reposity().keys():
-            d[i] = report.dict_result(reposity.data[i])
-        try:
-            json_file = open(f"{path}{os.sep}{file_name}", "w")
-            json_file.write(json.dumps(d))
-            json_file.close()
-            return True
-        except:
-            pass
-        return f"{d}"
-
+    # загрузка данных из json файла
     @staticmethod
     def load(path: str = "", file_name: str = ""):
-        custom_exceptions.type(path, str)
-        custom_exceptions.type(file_name, str)
-        if path == "":
-            path = "..\\Datasets"
-        if file_name == "":
-            file_name = "data.json"
-
-        data = None
-        try:
-            full_name = f"{path}{os.sep}{file_name}"
-            stream = open(full_name)
-            data = json.load(stream)
-            stream.close()
-        except:
-            pass
-
-        deserialization = json_deserialization()
-        reposity = data_reposity()
-        for i in reposity.keys():
-            if i in list(data.keys()):
-                reposity.data[i] = deserialization.__getattribute__(i)(data[i])
+        super(data_reposity_menager, data_reposity_menager()).load(path, file_name)

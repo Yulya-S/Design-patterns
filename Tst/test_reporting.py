@@ -26,9 +26,10 @@ class test_reporting(unittest.TestCase):
         now = datetime.today()
         yesterday = now - timedelta(days=1)
         tommorow = now + timedelta(days=1)
+        result = tbs_calculation([yesterday, tommorow], reposity.data[data_reposity.warehouse_key()][0])
 
         # Действие
-        result = tbs_calculation([yesterday, tommorow], reposity.data[data_reposity.warehouse_key()][0])
+        result.create()
 
         # Проверки
         assert result.tbs.result[0] == 6
