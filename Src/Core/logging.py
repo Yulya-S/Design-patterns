@@ -6,6 +6,7 @@ from Src.settings_manager import settings_manager
 from Src.logic.observe_service import observe_service
 
 from datetime import datetime
+import os
 
 
 class logging(abstract_logic):
@@ -21,20 +22,20 @@ class logging(abstract_logic):
 
     # Логи типа DEBUG
     def __DEBUG(self, details):
-        with open("log.txt", "a") as f:
-            text = f"[DEBUG]\t{datetime.now()}\t{details}"
+        with open(f"{os.curdir}{os.sep}log.txt", "a") as f:
+            text = f"[DEBUG]\t{datetime.now()}\t{details}\n"
             f.write(text)
 
     # Логи типа INFO
     def __INFO(self, details):
-        with open("log.txt", "a") as f:
-            text = f"[INFO]\t{datetime.now()}\t{details}"
+        with open(f"{os.curdir}{os.sep}log.txt", "a") as f:
+            text = f"[INFO]\t{datetime.now()}\t{details}\n"
             f.write(text)
 
     # Логи типа ERROR
     def __ERROR(self, details):
-        with open("log.txt", "a") as f:
-            text = f"[ERROR]\t{datetime.now()}\t{details}"
+        with open(f"{os.curdir}{os.sep}log.txt", "a") as f:
+            text = f"[ERROR]\t{datetime.now()}\t{details}\n"
             f.write(text)
 
     def set_exception(self, ex: Exception):
@@ -42,9 +43,9 @@ class logging(abstract_logic):
 
     def handle_event(self, type: event_type, params):
         super().handle_event(type, params)
-        if type == event_type.DEBUG_LOG and self.__settings.settings.log_level <= log_level.DEBUG.value:
+        if type == event_type.DEBUG_LOG and self.__settings.settings.log_level.value <= log_level.DEBUG.value:
             self.__DEBUG(params)
-        if type == event_type.INFO_LOG and self.__settings.settings.log_level <= log_level.INFO.value:
+        if type == event_type.INFO_LOG and self.__settings.settings.log_level.value <= log_level.INFO.value:
             self.__INFO(params)
-        if type == event_type.ERROR_LOG and self.__settings.settings.log_level <= log_level.ERROR.value:
+        if type == event_type.ERROR_LOG and self.__settings.settings.log_level.value <= log_level.ERROR.value:
             self.__DEBUG(params)

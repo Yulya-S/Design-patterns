@@ -76,6 +76,7 @@ class settings_manager(abstract_logic):
             json_file = open(f".{os.sep}settings.json", "w")
             json_file.write(json.dumps(dict(j)))
             json_file.close()
+            observe_service.raise_event(event_type.DEBUG_LOG, "save settings")
             return f"{True}"
         except:
             return f"{False}"

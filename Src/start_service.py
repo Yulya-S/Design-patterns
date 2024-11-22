@@ -104,6 +104,7 @@ class start_service(abstract_logic):
         if path == ".":
             path += "\\Docs"
         self.__reposity.data[data_reposity.receipt_key()] = self.__recipe_manager.open(path)
+        observe_service.raise_event(event_type.DEBUG_LOG, "start_service generate data")
 
     # Генерация транзакции
     def generate_transaction(self, warehouse: warehouse_model, nomenclature: nomenclature_model,
@@ -119,6 +120,7 @@ class start_service(abstract_logic):
 
         transaction = warehouse_transaction_model(warehouse, nomenclature, quantity, type, range, date)
         self.__reposity.data[data_reposity.transaction_key()].append(transaction)
+        observe_service.raise_event(event_type.DEBUG_LOG, "create transaction")
         return transaction
 
     # генерация введенного количества транзакций
@@ -136,6 +138,7 @@ class start_service(abstract_logic):
             date = last_date - timedelta(days=i)
             list.append(self.generate_transaction(warehouse, nomenclature, value, operation, r, date))
         self.__reposity.data[data_reposity.transaction_key()] = list
+        observe_service.raise_event(event_type.DEBUG_LOG, f"generate {transaction_count} transactions")
 
     def set_exception(self, ex: Exception):
         self._inner_set_exception(ex)
