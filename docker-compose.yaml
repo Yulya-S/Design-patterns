@@ -1,0 +1,17 @@
+services:
+  design_1:
+    container_name: design_1
+    image: design
+    ports:
+      - 8000:8080
+    volumes:
+      - ./settings.json:/settings.json
+  design_2:
+    container_name: design_2
+    image: design
+    ports:
+      - 8001:8080
+    volumes:
+      - ./settings.json:/settings.json
+networks:
+  default:
