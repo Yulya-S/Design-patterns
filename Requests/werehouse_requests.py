@@ -11,6 +11,12 @@ from Src.logic.observe_service import observe_service
 from Src.Dto.filter_JSON_deserialization import filter_json_deserialization
 from Src.Core.event_type import event_type
 
+# получение всех складов
+@app.route("/api/warehouse", methods=['GET'])
+def get_warehouses():
+    reposity = data_reposity()
+    return f"{[i.__str__() for i in reposity.data[data_reposity.warehouse_key()]]}"
+
 
 # Получение даты блокировки
 @app.route("/api/warehouse/block_period", methods=['GET'])

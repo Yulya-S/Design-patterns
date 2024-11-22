@@ -1,19 +1,40 @@
 from Src.settings_manager import settings_manager
 from Src.data_reposity import data_reposity
 from Src.start_service import start_service
-from Src.Reports.report_factory import report_factory
+from Src.Json_deserialization import json_deserialization
 from Src.Core.formats_and_methods.format_reporting import format_reporting
+
+from Src.Reports.report_factory import report_factory
 from Src.Reports.csv_report import csv_report
 from Src.Reports.markdown_report import markdown_report
 from Src.Reports.json_report import json_report
 from Src.Reports.xml_report import xml_report
 from Src.Reports.rtf_report import rtf_report
-from Src.Json_deserialization import json_deserialization
+from Src.Reports.OBS.tbs_calculation import tbs_calculation
 
 import unittest
+from datetime import datetime, timedelta
 
 
 class test_reporting(unittest.TestCase):
+    # проверка правильности расчетов оборотно-сальдовой ведомости
+    def test_tbs_create(self):
+        # Подготовка
+        reposity = data_reposity()
+        start = start_service()
+        start.create()
+        now = datetime.today()
+        yesterday = now - timedelta(days=1)
+        tommorow = now + timedelta(days=1)
+        result = tbs_calculation([yesterday, tommorow], reposity.data[data_reposity.warehouse_key()][0])
+
+        # Действие
+        result.create()
+
+        # Проверки
+        assert result.tbs.result[0] == 6
+        assert result.tbs.result[1] == 0
+
     # Проверка работы отчета CSV
     def test_csv_report_create_range(self):
         # Подготовка

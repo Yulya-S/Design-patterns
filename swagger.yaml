@@ -14,6 +14,54 @@ produces:
 basePath: "/api"
 
 paths:
+  /dataset/load:
+    post:
+      summary: Востановление данных из файла
+      operationId: main.data_load
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные файла
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/file'
+
+  /dataset/save:
+    post:
+      summary: Сохранение данных в файл
+      operationId: main.data_save
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Данные файла
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/file'
+
   /nomenclature/get:
     get:
       summary: Получить ключи номенклатуры
@@ -118,6 +166,22 @@ paths:
           required: true
           type: string
 
+  /warehouse:
+    get:
+      summary: Получение списка складов
+      operationId: main.get_warehouses
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+
   /warehouse/block_period/{data}:
     post:
       summary: Установка даты блокировки
@@ -203,6 +267,30 @@ paths:
             properties:
               items:
                 $ref: '#/definitions/two_filters'
+
+  /reports/tbs:
+    post:
+      summary: Сформировать оборотно-сальдовую ведомость
+      operationId: main.get_tbs
+      produces:
+        - application/text
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+        500:
+          description: Ошибка на сервере
+        default:
+          description: Неизвестная ошибка
+      parameters:
+        - name: data
+          in: body
+          description: Структура данных
+          schema:
+            properties:
+              items:
+                $ref: '#/definitions/tbs'
 
   /reports/comparison_formats:
     get:
@@ -405,5 +493,21 @@ definitions:
           "begin": "24-10-2024",
           "end": "26-10-2024"
         }
+      }
+    ]
+  tbs:
+    type: array
+    example: [
+      {
+        "warehouse_code": "",
+        "begin": "24-10-2024",
+        "end": "26-10-2024"
+      }
+    ]
+  file:
+    type: array
+    example: [
+      {
+        "file_name": "data.json"
       }
     ]

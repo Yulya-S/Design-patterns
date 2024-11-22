@@ -10,6 +10,7 @@ from Src.Reports.markdown_report import markdown_report
 from Src.Reports.json_report import json_report
 from Src.Reports.rtf_report import rtf_report
 from Src.Reports.xml_report import xml_report
+from Src.Reports.OBS.tbs_json_report import tbs_json_report
 
 
 # фабрика формата отчета
@@ -27,6 +28,7 @@ class report_factory(abstract_logic):
             self.__reports[format_reporting.JSON.value] = json_report
             self.__reports[format_reporting.XML.value] = xml_report
             self.__reports[format_reporting.RTF.value] = rtf_report
+            self.__reports[format_reporting.TBS.value] = tbs_json_report
         else:
             for i in self.__settings.report_handlers:
                 if i["type"] not in self.__reports.keys():

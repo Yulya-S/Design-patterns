@@ -17,6 +17,9 @@ class json_report(abstract_report):
     def create(self, data: list | dict):
         self.result = str(self._data_to_dict(data))
 
+    def dict_result(self, data: list | dict):
+        return self._data_to_dict(data)
+
     # сохранение результата в файл
     def upload_to_file(self, data: list | dict, path: str = "..\\Docs\\reports\\", file_name: str = "report"):
         if not os.path.exists(path):

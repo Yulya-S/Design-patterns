@@ -49,9 +49,15 @@ class abstract_model(ABC):
     def change_value_if_equal(self, value: any):
         pass
 
+    # из json в объект
     @staticmethod
     @abstractmethod
     def parse_JSON(data: dict):
+        pass
+
+    # из объекта в json
+    @abstractmethod
+    def create_JSON(self):
         pass
 
     # перегрузка методов сравнения

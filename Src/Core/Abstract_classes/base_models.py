@@ -9,7 +9,18 @@ class base_model_code(abstract_model):
 
     @staticmethod
     def parse_JSON(data: dict):
-        super().parse_JSON(data)
+        pass
+
+    def create_JSON(self):
+        dict = {}
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self.__class__, x)),
+                             dir(self)))
+        for i in fields:
+            value = self.__getattribute__(i)
+            if issubclass(type(value), base_model_name) or issubclass(type(value), base_model_code):
+                value = value.create_JSON()
+            dict[i] = value
+        return dict
 
     def change_value_if_equal(self, value: any):
         fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self, x)),
@@ -48,7 +59,18 @@ class base_model_name(abstract_model):
 
     @staticmethod
     def parse_JSON(data: dict):
-        super().parse_JSON(data)
+        pass
+
+    def create_JSON(self):
+        dict = {}
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self.__class__, x)),
+                             dir(self)))
+        for i in fields:
+            value = self.__getattribute__(i)
+            if issubclass(type(value), base_model_name) or issubclass(type(value), base_model_code):
+                value = value.create_JSON()
+            dict[i] = value
+        return dict
 
     def change_value_if_equal(self, value: any):
         fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(self, x)),

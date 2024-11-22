@@ -1,6 +1,7 @@
 from Requests.start_flask import *
 
 from flask import request
+from datetime import datetime
 
 from Src.data_reposity import data_reposity
 from Src.Dto.filter import filter_model
@@ -10,7 +11,31 @@ from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.formats_and_methods.comparison_format import comparison_format
 
 from Src.Reports.report_factory import report_factory
+from Src.Reports.OBS.tbs_calculation import tbs_calculation
+
 from Src.logic.nomenclature_prototype import nomenclature_prototype
+
+
+# получение оборотно-сальдовая ведомость
+@app.route("/api/reports/tbs", methods=['GET'])
+def get_tbs():
+    req = request.json
+    if "items" not in list(req.keys()):
+        custom_exceptions.other_exception("Были получены некоректные данные!")
+    if len(req["items"]) == 0:
+        custom_exceptions.other_exception("Полученные данные пусты!")
+    req = req["items"][0]
+    custom_exceptions.elements_not_in_array(["begin", "end", "warehouse_code"], req)
+
+    warehouse = None
+    for i in reposity.data[data_reposity.warehouse_key()]:
+        if i.unique_code == req["warehouse_code"]:
+            warehouse = i
+            break
+    custom_exceptions.None_received(warehouse)
+    tbs = tbs_calculation([datetime.strptime(req["begin"], "%d-%m-%Y"),
+                           datetime.strptime(req["end"], "%d-%m-%Y")], warehouse)
+    return f"{tbs.result}"
 
 
 # получение списка форматов для фильтрации

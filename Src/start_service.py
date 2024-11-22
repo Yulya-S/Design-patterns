@@ -25,12 +25,17 @@ class start_service(abstract_logic):
     __settings_manager: settings_manager = None
     __receipt_manager: receipt_book_menager = None
 
-    def __init__(self) -> None:
+    def __init__(self, path: str = "", file_name: str = "") -> None:
         super().__init__()
         self.__reposity = data_reposity()
         self.__settings_manager = settings_manager()
+        self.__settings_manager.open(path, file_name)
         self.__recipe_manager = receipt_book_menager()
         observe_service.append(self)
+        if self.__settings_manager.settings.generate_data:
+            self.create()
+        else:
+            data_reposity_menager.load()
 
     # Текущие настройки
     @property

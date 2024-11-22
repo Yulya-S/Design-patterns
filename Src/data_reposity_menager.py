@@ -1,13 +1,15 @@
 from Src.data_reposity import data_reposity
 from Src.models.nomenclature_model import nomenclature_model
-from Src.Core.custom_exceptions import custom_exceptions
 from Src.Dto.filter import filter_model
-from Src.Core.formats_and_methods.comparison_format import comparison_format
 from Src.logic.nomenclature_prototype import nomenclature_prototype
+
+from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.formats_and_methods.comparison_format import comparison_format
+from Src.Core.Abstract_classes.abstract_manager import abstract_manager
 
 
 # Обрработчик изменений в репозитории данных
-class data_reposity_menager:
+class data_reposity_menager(abstract_manager):
     # изменение номенклатуры
     @staticmethod
     def change_nomenclature(object: nomenclature_model):
@@ -44,3 +46,13 @@ class data_reposity_menager:
                 if len(result.data) > 0:
                     return False
         return True
+
+    # сохранение данных из data_reposity  в json файл
+    @staticmethod
+    def save(path: str = "", file_name: str = ""):
+        super(data_reposity_menager, data_reposity_menager()).save(path, file_name)
+
+    # загрузка данных из json файла
+    @staticmethod
+    def load(path: str = "", file_name: str = ""):
+        super(data_reposity_menager, data_reposity_menager()).load(path, file_name)

@@ -72,13 +72,35 @@ class warehouse_transaction_model(base_model_name):
         self.__range = value
 
     @property
-    def date(self):
+    def period(self):
         return self.__date
 
-    @date.setter
-    def date(self, value: datetime):
+    @period.setter
+    def period(self, value: datetime):
         custom_exceptions.type(value, datetime)
-        self.__dateperiod = value
+        self.__date = value
+
+    @staticmethod
+    def parse_JSON(data: dict):
+        custom_exceptions.type(data, dict)
+        if len(data) == 0:
+            return None
+
+        warehouse = warehouse_model.parse_JSON(data["warehouse"])
+        nomenclature = nomenclature_model.parse_JSON(data["nomenclature"])
+        range = range_model.parse_JSON(data["range"])
+        new_transaction = warehouse_transaction_model(warehouse, nomenclature, data["quantity"], data["type"], range,
+                                                      datetime.strptime(data["period"], "%d-%m-%Y"))
+
+        fields = list(filter(lambda x: not x.startswith("_") and not callable(getattr(warehouse_transaction_model, x)),
+                             dir(warehouse_transaction_model)))
+
+        for field in fields:
+            custom_exceptions.presence_element_in_dict(data, field)
+            if field in ["range", "warehouse", "nomenclature", "period"]:
+                continue
+            new_transaction.__setattr__(field, data[field])
+        return new_transaction
 
     def __str__(self):
         return "warehouse_transaction_model"

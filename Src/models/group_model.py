@@ -25,9 +25,7 @@ class group_model(base_model_name):
     @staticmethod
     def parse_JSON(data: dict):
         custom_exceptions.type(data, dict)
-
         new_group = group_model()
-
         if len(data) == 0:
             return None
 
@@ -37,5 +35,4 @@ class group_model(base_model_name):
         for field in fields:
             custom_exceptions.presence_element_in_dict(data, field)
             new_group.__setattr__(field, data[field])
-
         return new_group

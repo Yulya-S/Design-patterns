@@ -13,6 +13,7 @@ class settings_model:
     __bic: str = ""
     __organization_name: str = ""
     __type_ownership: str = ""
+    __generate_data: bool = True
 
     # настройки отчетов
     __default_report_format: format_reporting = format_reporting.CSV
@@ -80,6 +81,15 @@ class settings_model:
         self.__type_ownership = value
 
     @property
+    def generate_data(self):
+        return self.__generate_data
+
+    @generate_data.setter
+    def generate_data(self, value: bool):
+        custom_exceptions.type(value, bool)
+        self.__generate_data = value
+
+    @property
     def default_report_format(self):
         return self.__default_report_format
 
@@ -112,4 +122,3 @@ class settings_model:
             self.__block_period = datetime.strptime(value, "%d-%m-%Y")
         else:
             self.__block_period = value
-
