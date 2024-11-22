@@ -15,5 +15,6 @@
         { "type": 6, "hendler": "tbs_json_report" }
     ],
     "block_period": "10-01-2024",
-    "generate_data": true
+    "generate_data": true,
+    "log_level": 1
 }

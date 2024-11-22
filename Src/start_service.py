@@ -1,6 +1,7 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.event_type import event_type
+from Src.Core.logging import logging
 
 from Src.models.group_model import group_model
 from Src.models.nomenclature_model import nomenclature_model
@@ -24,6 +25,7 @@ class start_service(abstract_logic):
     __reposity: data_reposity = None
     __settings_manager: settings_manager = None
     __receipt_manager: receipt_book_menager = None
+    __log: logging = None
 
     def __init__(self, path: str = "", file_name: str = "") -> None:
         super().__init__()
@@ -31,6 +33,7 @@ class start_service(abstract_logic):
         self.__settings_manager = settings_manager()
         self.__settings_manager.open(path, file_name)
         self.__recipe_manager = receipt_book_menager()
+        self.__log = logging()
         observe_service.append(self)
         if self.__settings_manager.settings.generate_data:
             self.create()

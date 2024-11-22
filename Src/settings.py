@@ -1,5 +1,6 @@
 from Src.Core.formats_and_methods.format_reporting import format_reporting
 from Src.Core.custom_exceptions import custom_exceptions
+from Src.Core.formats_and_methods.log_level import log_level
 
 from datetime import datetime
 
@@ -20,6 +21,7 @@ class settings_model:
     __report_handlers: list = list()
 
     __block_period: datetime = datetime.now()
+    __log_level: log_level = log_level.DEBUG
 
     @property
     def inn(self):
@@ -122,3 +124,15 @@ class settings_model:
             self.__block_period = datetime.strptime(value, "%d-%m-%Y")
         else:
             self.__block_period = value
+
+    @property
+    def log_level(self):
+        return self.__log_level
+
+    @log_level.setter
+    def log_level(self, value: int):
+        custom_exceptions.type(value, int)
+        try:
+            self.__log_level = log_level(value)
+        except:
+            custom_exceptions.other_exception(f"Ошибка преобразования {value} в log_level")

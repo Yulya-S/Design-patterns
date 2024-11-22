@@ -1,6 +1,7 @@
 from Src.Core.Abstract_classes.abstract_logic import abstract_logic
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.event_type import event_type
+from Src.Core.formats_and_methods.log_level import log_level
 
 from Src.settings import settings_model
 from Src.Reports.report_factory import report_factory
@@ -102,6 +103,7 @@ class settings_manager(abstract_logic):
         data.type_ownership = "OOOOO"
         data.report_format = report_factory.create_default
         data.block_period = datetime.now()
+        data.log_level: log_level.DEBUG
         return data
 
     def set_exception(self, ex: Exception):
