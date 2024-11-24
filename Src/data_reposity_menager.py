@@ -2,9 +2,11 @@ from Src.data_reposity import data_reposity
 from Src.models.nomenclature_model import nomenclature_model
 from Src.Dto.filter import filter_model
 from Src.logic.nomenclature_prototype import nomenclature_prototype
+from Src.logic.observe_service import observe_service
 
 from Src.Core.custom_exceptions import custom_exceptions
 from Src.Core.formats_and_methods.comparison_format import comparison_format
+from Src.Core.event_type import event_type
 from Src.Core.Abstract_classes.abstract_manager import abstract_manager
 
 
@@ -51,8 +53,11 @@ class data_reposity_menager(abstract_manager):
     @staticmethod
     def save(path: str = "", file_name: str = ""):
         super(data_reposity_menager, data_reposity_menager()).save(path, file_name)
+        observe_service.raise_event(event_type.DEBUG_LOG, "save data_reposity")
+
 
     # загрузка данных из json файла
     @staticmethod
     def load(path: str = "", file_name: str = ""):
         super(data_reposity_menager, data_reposity_menager()).load(path, file_name)
+        observe_service.raise_event(event_type.DEBUG_LOG, "load data_reposity")
